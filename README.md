@@ -11,3 +11,7 @@ rbmtools
 * cd rbmtools
 * mvn package
 * java -cp target/rbmtools-0.1-SNAPSHOT.jar berlin.iconn.rbm.main.FXMain
+* 
+
+###IDE integraten
+* Netbeans: File -> Open Project -> Browse to dir -> Open Project (no additional project files are generated)
