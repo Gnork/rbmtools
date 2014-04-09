@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" fx:id="view" prefHeight="-1.0" prefWidth="-1.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="berlin.iconn.rbm.main.ControlCenterController">
+  <children>
+    <MenuBar prefHeight="-1.0" prefWidth="-1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <menus>
+        <Menu mnemonicParsing="false" text="File">
+          <items>
+            <MenuItem mnemonicParsing="false" onAction="#mnu_loadConfigurationAction" text="Load Configuration" fx:id="mnu_loadConfiguration" />
+            <MenuItem mnemonicParsing="false" onAction="#mnu_saveConfigurationAction" text="Save Configuration" fx:id="mnu_saveConfiguration" />
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Edit">
+          <items>
+            <MenuItem mnemonicParsing="false" onAction="#mnu_newRbmAction" text="Add RBM" fx:id="mnu_newRbm" />
+            <Menu mnemonicParsing="false" text="Remove RBM" fx:id="mnu_removeRBM" />
+          </items>
+        </Menu>
+      </menus>
+    </MenuBar>
+    <ScrollPane prefHeight="-1.0" prefWidth="-1.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="24.0">
+      <content>
+        <VBox fx:id="vbox" prefHeight="-1.0" prefWidth="-1.0" />
+      </content>
+    </ScrollPane>
+  </children>
+</AnchorPane>

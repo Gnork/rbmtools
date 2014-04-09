@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" fx:id="view" cache="true" cacheHint="QUALITY" depthTest="ENABLE" pickOnBounds="false" prefHeight="400.0" prefWidth="667.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="berlin.iconn.rbm.views.ImageBuilderController">
+  <children>
+    <Label alignment="TOP_LEFT" layoutX="10.0" layoutY="41.0" text="Input" />
+    <ToolBar layoutY="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <items>
+        <ToggleButton fx:id="btn_hiddenStates" mnemonicParsing="false" onAction="#btn_hiddenStatesAction" text="HiddenStates" />
+        <ToggleButton fx:id="btn_visibleStates" mnemonicParsing="false" onAction="#btn_visibleStatesAction" text="VisibleStates" />
+      </items>
+    </ToolBar>
+    <Label alignment="TOP_LEFT" layoutX="545.0" layoutY="41.0" text="Image" />
+    <ImageView fx:id="imgv_Result" cache="false" fitHeight="112.0" fitWidth="112.0" layoutX="545.0" layoutY="61.0" pickOnBounds="true" preserveRatio="true" />
+    <ScrollPane hbarPolicy="AS_NEEDED" layoutX="10.0" maxWidth="510.0" prefHeight="-1.0" prefViewportWidth="500.0" prefWidth="510.0" AnchorPane.bottomAnchor="10.0" AnchorPane.topAnchor="61.0">
+      <content>
+        <AnchorPane id="Content" maxWidth="495.0" minHeight="-1.0" minWidth="495.0" prefHeight="-1.0" prefWidth="495.0">
+          <children>
+            <GridPane fx:id="grid" gridLinesVisible="true" layoutX="0.0" layoutY="0.0" prefWidth="495.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="ALWAYS" maxWidth="165.0" minWidth="165.0" prefWidth="165.0" />
+                <ColumnConstraints hgrow="ALWAYS" maxWidth="165.0" minWidth="165.0" prefWidth="165.0" />
+                <ColumnConstraints hgrow="ALWAYS" maxWidth="165.0" minWidth="165.0" prefWidth="165.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints maxHeight="80.0" minHeight="80.0" prefHeight="80.0" vgrow="ALWAYS" />
+              </rowConstraints>
+            </GridPane>
+          </children>
+        </AnchorPane>
+      </content>
+    </ScrollPane>
+  </children>
+</AnchorPane>

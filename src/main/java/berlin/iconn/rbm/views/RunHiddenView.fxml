@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" fx:id="view" cache="true" cacheHint="QUALITY" depthTest="ENABLE" pickOnBounds="false" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="berlin.iconn.rbm.views.RunHiddenController">
+  <children>
+    <ImageView id="imgv_Result" fx:id="imgv_Input" cache="false" fitHeight="112.0" fitWidth="112.0" layoutX="10.0" layoutY="61.0" pickOnBounds="true" preserveRatio="true" />
+    <Label alignment="TOP_LEFT" layoutX="10.0" layoutY="41.0" text="Input" />
+    <ToolBar layoutY="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <items>
+        <Button id="btn_loadNewTestImage" mnemonicParsing="false" onAction="#btn_loadImageAction" text="Load Image" />
+        <Button id="btn_loadNewTestImage" fx:id="btn_runHidden" disable="true" mnemonicParsing="false" onAction="#btn_runHiddenAction" text="Run Hidden" />
+        <ToggleButton fx:id="btn_hiddenStates" mnemonicParsing="false" onAction="#btn_hiddenStatesAction" text="HiddenStates" />
+        <ToggleButton fx:id="btn_visibleStates" mnemonicParsing="false" onAction="#btn_visibleStatesAction" text="VisibleStates" />
+      </items>
+    </ToolBar>
+    <Label alignment="TOP_LEFT" layoutX="210.0" layoutY="41.0" text="Result" />
+    <ImageView fx:id="imgv_Result" cache="false" fitHeight="112.0" fitWidth="112.0" layoutX="210.0" layoutY="61.0" pickOnBounds="true" preserveRatio="true" />
+    <Label layoutX="210.0" layoutY="183.0" text="Hidden States" />
+    <ImageView id="imgv_" fx:id="imgv_ResultHidden" fitHeight="1.0" fitWidth="1.0" layoutX="210.0" layoutY="203.0" onMouseClicked="#imgv_ResultHiddenClicked" pickOnBounds="true" preserveRatio="true" />
+    <Label fx:id="lbl_MSE" alignment="TOP_LEFT" layoutX="10.0" layoutY="183.0" text="MSE:" />
+    <Label alignment="TOP_LEFT" layoutX="410.0" layoutY="41.0" text="Selected Feature" />
+    <ImageView id="imgv_Result" fx:id="imgv_SelectedFeature" cache="false" fitHeight="112.0" fitWidth="112.0" layoutX="410.0" layoutY="61.0" pickOnBounds="true" preserveRatio="true" />
+  </children>
+</AnchorPane>

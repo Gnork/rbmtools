@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="view" prefHeight="80.0" prefWidth="165.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="berlin.iconn.rbm.views.HiddenImageItemController">
+  <!-- TODO Add Nodes -->
+  <children>
+    <ImageView fx:id="imgv_HiddenImage" fitHeight="79.99998474121094" fitWidth="79.99998474121094" layoutX="0.0" layoutY="0.0" pickOnBounds="true" preserveRatio="false" />
+    <CheckBox fx:id="cbx_UseHiddenImage" layoutX="90.0" layoutY="33.0" mnemonicParsing="false" onAction="#cbx_UseHiddenImageAction" text="" />
+    <TextField fx:id="txt_Weight" layoutX="110.0" layoutY="30.0" onKeyReleased="#txt_WeightKeyReleased" prefWidth="44.0" />
+    <Label layoutX="111.0" layoutY="12.0" text="Weight" />
+  </children>
+</AnchorPane>

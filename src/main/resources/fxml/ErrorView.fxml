@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" fx:id="view" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="berlin.iconn.rbm.views.ErrorViewController">
+  <children>
+    <LineChart fx:id="chart_line" createSymbols="true" prefHeight="370.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <xAxis>
+        <NumberAxis fx:id="axis_epochs" label="Epochs" side="BOTTOM" />
+      </xAxis>
+      <yAxis>
+        <NumberAxis fx:id="axis_error" label="Error" minorTickCount="2" side="LEFT" tickLabelGap="2.0" tickLabelRotation="0.0" upperBound="125.0" />
+      </yAxis>
+    </LineChart>
+  </children>
+</AnchorPane>

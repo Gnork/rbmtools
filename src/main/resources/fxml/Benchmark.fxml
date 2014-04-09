@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.collections.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane id="AnchorPane" fx:id="view" maxHeight="-1.0" maxWidth="-1.0" minHeight="-1.0" minWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="berlin.iconn.rbm.main.BenchmarkController">
+  <children>
+    <TitledPane animated="false" layoutY="1.0" prefHeight="-1.0" prefWidth="-1.0" text="Benchmark" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <content>
+        <GridPane disable="false" gridLinesVisible="false" hgap="10.0" prefHeight="-1.0" prefWidth="-1.0" vgap="10.0">
+          <children>
+            <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Image Edge Size" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+            <TextField fx:id="txt_imageEdgeSize" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onKeyReleased="#txt_imageEdgeSizeKey" prefWidth="-1.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" />
+            <Label text="Functions &amp; Views" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="5">
+              <font>
+                <Font name="System Bold" size="13.0" fx:id="x1" />
+              </font>
+            </Label>
+            <Label font="$x1" text="Evaluation" GridPane.columnIndex="0" GridPane.rowIndex="8" />
+            <ComboBox id="btn_mapTests" fx:id="cmb_mAPTests" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#cmb_mAPTestsAction" prefWidth="-1.0" promptText="Select mAP Test" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="9">
+              <items>
+                <FXCollections fx:factory="observableArrayList">
+                  <String fx:value="Item 1" />
+                  <String fx:value="Item 2" />
+                  <String fx:value="Item 3" />
+                </FXCollections>
+              </items>
+            </ComboBox>
+            <Button id="btn_startTest" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btn_startmAPTestAction" prefWidth="-1.0" text="Start mAP Test" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="9" />
+            <Label font="$x1" text="Training" GridPane.columnIndex="0" GridPane.rowIndex="11" />
+            <Button id="btn_trainAll" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btn_trainAllAction" prefWidth="-1.0" text="Train All" GridPane.columnIndex="0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="12" />
+            <Button id="btn_Update" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btn_UpdateAction" prefWidth="-1.0" text="Update" GridPane.columnIndex="3" GridPane.rowIndex="12" />
+            <Button id="btn_loadImageSet" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btn_loadImageSetAction" prefWidth="-1.0" text="Load Image Set" GridPane.columnIndex="0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0">
+              <GridPane.margin>
+                <Insets />
+              </GridPane.margin>
+            </Button>
+            <Label font="$x1" text="Preprocessing" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="1" GridPane.rowSpan="1" />
+            <Label id="lbl_imageSet" fx:id="lbl_imageSetSelected" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="-1.0" text="" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="0" />
+            <Label text="Data Min:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+            <TextField id="txt_imageEdgeSize" fx:id="txt_MinData" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onKeyReleased="#txt_MinDataKey" prefWidth="-1.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <Label text="Data Max:" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+            <TextField id="txt_imageEdgeSize" fx:id="txt_MaxData" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onKeyReleased="#txt_MaxDataKey" prefWidth="-1.0" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+            <CheckBox fx:id="cbx_Shuffle" mnemonicParsing="false" onAction="#cbx_ShuffleAction" text="Shuffle" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+            <CheckBox fx:id="cbx_Binarize" mnemonicParsing="false" onAction="#cbx_BinarizeAction" prefWidth="86.0" text="Binarize" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <CheckBox id="cbx_Binarize" fx:id="cbx_Invert" mnemonicParsing="false" onAction="#cbx_InvertAction" prefWidth="86.0" text="Invert" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+            <ToggleButton fx:id="btn_OpenShowFeatures" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btn_OpenShowFeaturesAction" text="Show Features" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="6" />
+            <ToggleButton fx:id="btn_OpenShowImages" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btn_OpenShowImagesAction" text="Show Images" GridPane.columnIndex="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0" />
+            <ToggleButton fx:id="btn_OpenDaydream" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btn_OpenDaydreamAction" text="Daydream" GridPane.columnIndex="0" GridPane.rowIndex="6" />
+            <ToggleButton fx:id="btn_OpenRunHidden" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btn_OpenRunHiddenAction" text="Run Hidden" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <ToggleButton fx:id="btn_OpenTestFeatures" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btn_OpenTestFeaturesAction" text="Test Features" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+            <ToggleButton id="btn_OpenimageBuilder" fx:id="btn_OpenImageBuilder" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btn_OpenImageBuilderAction" text="Image Builder" GridPane.columnIndex="0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="7" />
+            <Button id="btn_perfomMseTest" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btn_perfomMseTestAction" text="MSE Test" GridPane.columnIndex="0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="10" />
+            <Label id="lbl_imageSet" fx:id="lbl_MseResult" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="-1.0" text="" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="10" GridPane.rowSpan="1" />
+            <CheckBox fx:id="cbx_RGB" mnemonicParsing="false" onAction="#cbx_RGBAction" text="RGB" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+            <Button id="btn_cancel" fx:id="btn_cancelTraining" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btn_cancelAction" text="Cancel" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="12" />
+          </children>
+          <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          </columnConstraints>
+          <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+          </padding>
+          <rowConstraints>
+            <RowConstraints maxHeight="22.0" minHeight="10.0" prefHeight="22.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="23.0" minHeight="10.0" prefHeight="23.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="23.0" minHeight="10.0" prefHeight="23.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="23.0" minHeight="10.0" prefHeight="23.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="23.0" minHeight="10.0" prefHeight="23.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="23.0" minHeight="10.0" prefHeight="23.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="23.0" minHeight="10.0" prefHeight="23.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="23.0" minHeight="10.0" prefHeight="23.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="23.0" minHeight="10.0" prefHeight="23.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="23.0" minHeight="10.0" prefHeight="23.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="23.0" minHeight="10.0" prefHeight="23.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="23.0" minHeight="10.0" prefHeight="23.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="23.0" minHeight="10.0" prefHeight="23.0" vgrow="SOMETIMES" />
+          </rowConstraints>
+        </GridPane>
+      </content>
+    </TitledPane>
+  </children>
+</AnchorPane>

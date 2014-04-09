@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" fx:id="view" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="berlin.iconn.rbm.views.PRTMAPController">
+  <children>
+    <BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <bottom>
+        <Button fx:id="btn_clear" mnemonicParsing="false" onAction="#btn_clearAction" text="Clear Table" BorderPane.alignment="CENTER">
+          <BorderPane.margin>
+            <Insets bottom="10.0" top="10.0" />
+          </BorderPane.margin>
+        </Button>
+      </bottom>
+      <center>
+        <LineChart fx:id="cha_PRTable" alternativeColumnFillVisible="false" animated="true" disable="false" focusTraversable="false" horizontalGridLinesVisible="true" horizontalZeroLineVisible="true" legendSide="RIGHT" title="Precision Recall Table" verticalGridLinesVisible="true" verticalZeroLineVisible="true" visible="true">
+          <xAxis>
+            <NumberAxis autoRanging="false" label="Recall" side="BOTTOM" tickUnit="0.1" upperBound="1.1" />
+          </xAxis>
+          <yAxis>
+            <NumberAxis autoRanging="false" label="Precision" side="LEFT" tickUnit="0.1" upperBound="1.1" />
+          </yAxis>
+        </LineChart>
+      </center>
+    </BorderPane>
+  </children>
+</AnchorPane>
