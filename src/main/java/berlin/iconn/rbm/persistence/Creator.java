@@ -110,6 +110,11 @@ public class Creator {
                     for(int k = 0; k < data.length; ++k){
                         //correct data set is equivalent in name and type
                         if(data[k][0].equals(name) && data[k][1].equals(type)){
+                            if(model == null){
+                                System.out.println("already null");
+                            }else{
+                                System.out.println("not null");
+                            }
                             writeDataToField(field, model, data[k][2]);
                             
                             dataFound[k] = true;
@@ -267,7 +272,8 @@ public class Creator {
         if(typeName.equalsIgnoreCase("String")) return value;
         // parsing custom classes
         if(typeName.equals("ImageManager")){
-            String path = "CBIR_Project/images/" + value;
+            String path = "images/" + value;
+            System.out.println(path);
             File imageFile = new File(path);
             return new ImageManager(imageFile);
         }

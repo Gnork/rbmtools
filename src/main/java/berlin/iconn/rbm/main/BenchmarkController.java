@@ -6,7 +6,6 @@
 package berlin.iconn.rbm.main;
 
 import berlin.iconn.rbm.tools.Chooser;
-import berlin.iconn.rbm.settings.RBMSettingsController;
 import berlin.iconn.rbm.views.DaydreamController;
 import berlin.iconn.rbm.views.ImageBuilderController;
 import berlin.iconn.rbm.views.PRTMAPController;
@@ -24,11 +23,8 @@ import java.util.logging.Logger;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.concurrent.Task;
-import javafx.concurrent.Worker;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Parent;

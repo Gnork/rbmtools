@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FilenameFilter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -17,7 +18,7 @@ import javax.imageio.ImageIO;
 
 public class ImageManager {
 
-    private static String startDirectory = "CBIR_Project/images";
+    private static String startDirectory = "images";
 
     private Pic[] images;
     private File imageDirectory;
@@ -28,7 +29,7 @@ public class ImageManager {
     public ImageManager(File imageDirectory, BenchmarkModel benchmarkModel) {
         this.benchmarkModel = benchmarkModel;
     	this.imageDirectory = imageDirectory;
-        this.imageGroups = new HashMap<String, List<Pic>>();
+        this.imageGroups = new HashMap<>();
         this.loadImages(imageDirectory);
     }
     
@@ -58,7 +59,7 @@ public class ImageManager {
      *
      * @param imageDirectory
      */
-    public void loadImages(final File imageDirectory) {
+    public final void loadImages(final File imageDirectory) {
         this.imageDirectory = imageDirectory;
 
         // besorge alle gültige Bilddateien aus dem Verzeichnis
@@ -77,7 +78,7 @@ public class ImageManager {
         final int imageCount = Math.min(maxImages, imageFiles.length);
 
         // lade alle Bilder
-        List<Pic> list = new ArrayList<Pic>();
+        List<Pic> list = new ArrayList<>();
         for (int i = 0; i < imageCount; i++) {
             Pic image = loadImage(imageFiles[i]);
             if (image != null) {
@@ -125,7 +126,7 @@ public class ImageManager {
         if (imageGroups.containsKey(key)) {
             imageGroups.get(key).add(image);
         } else {
-            List<Pic> imageList = new ArrayList<Pic>();
+            List<Pic> imageList = new ArrayList<>();
             imageList.add(image);
             imageGroups.put(key, imageList);
         }
@@ -154,12 +155,11 @@ public class ImageManager {
     	float maxData = this.benchmarkModel.getMaxData();
     	boolean isRgb = this.benchmarkModel.isRgb();
     	
-        float[] imageData = null;
+        float[] imageData;
         try {
         	imageData = DataConverter.processPixelData(ImageIO.read(imageFile), edgeLength, binarize, invert, minData, maxData, isRgb);
-        } catch (Exception e) {
+        } catch (IOException e) {
             System.out.println("Could not load: " + imageFile.getAbsolutePath());
-            e.printStackTrace();
             return null;
         }
 
