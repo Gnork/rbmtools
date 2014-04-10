@@ -18,6 +18,7 @@ import berlin.iconn.rbm.persistence.Conserve;
  * @author Moritz
  */
 public class RBMSettingsMainModel{
+	
     private final RBMSettingsMainController controller;
     
     //combobox select options
@@ -62,7 +63,7 @@ public class RBMSettingsMainModel{
     private int inputSize = 0;
     @Conserve
     private int outputSize = 150;
-
+    @Conserve
 	private boolean isRgb;
 
     public int getSelectedRbmImplementation() {

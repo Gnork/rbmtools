@@ -9,27 +9,41 @@ import java.awt.image.BufferedImage;
  */
 public class DataConverter {
 	
-	public static float[] processPixelData(BufferedImage image, int edgeLength, boolean binarize, boolean invert, float minData, float maxData, boolean isRgb) {
+	public static float[] processPixelData(BufferedImage image, int width, int height, boolean binarize, boolean invert, float minData, float maxData, boolean isRgb) {
 		if(isRgb) {
-			return processPixelRGBData(image, edgeLength, binarize, invert, minData, maxData);
+			return processPixelRGBData(image, width, height, binarize, invert, minData, maxData);
 		} else {
-			return processPixelIntensityData(image, edgeLength, binarize, invert, minData, maxData);
+			return processPixelIntensityData(image, width, height, binarize, invert, minData, maxData);
 		}
+	}
+	
+	public static float[] processPixelData(BufferedImage image, int edgeLength, boolean binarize, boolean invert, float minData, float maxData, boolean isRgb) {
+		return processPixelData(image, edgeLength, edgeLength, binarize, invert, minData, maxData, isRgb);
 	}
 	
 	public static float[] processPixelData(float[] imageData, int edgeLength, boolean binarize, boolean invert, float minData, float maxData, boolean isRgb) {
-		return processPixelIntensityData(imageData, edgeLength, binarize, invert, minData, maxData);
+		return processPixelIntensityData(imageData, binarize, invert, minData, maxData);
 	}
 	
-	public static BufferedImage pixelDataToImage(float[] data, float minData, boolean isRgb) {
+	public static BufferedImage pixelDataToImage(float[] data, float minData, boolean isRgb, int width, int height) {
 		if(isRgb) {
-			return pixelRGBDataToImage(data, minData);
+			return pixelRGBDataToImage(data, minData, width, height);
 		} else {
-			return pixelIntensityDataToImage(data, minData);
+			return pixelIntensityDataToImage(data, minData, width, height);
 		}
 	}
 	
-	private static float[] processPixelIntensityData(float[] imageData, int edgeLength, boolean binarize, boolean invert, float minData, float maxData) {
+	public static BufferedImage pixelDataToImage(float[] data, float minData, boolean isRgb) {
+		int edgeLength = 0;
+		if(isRgb) {
+			edgeLength = (int)Math.sqrt(data.length / 3);
+		} else {
+			edgeLength = (int)Math.sqrt(data.length);
+		}
+		return pixelDataToImage(data, minData, isRgb, edgeLength, edgeLength);
+	}
+	
+	private static float[] processPixelIntensityData(float[] imageData, boolean binarize, boolean invert, float minData, float maxData) {
     	float[] data = new float[imageData.length];
 
         for (int i = 0; i < imageData.length; i++) {
@@ -54,12 +68,12 @@ public class DataConverter {
     	return data;
 	}
 	
-	private static float[] processPixelIntensityData(BufferedImage image, int edgeLength, boolean binarize, boolean invert, float minData, float maxData) {
-    	float[] data = new float[edgeLength * edgeLength];
+	private static float[] processPixelIntensityData(BufferedImage image, int width, int height, boolean binarize, boolean invert, float minData, float maxData) {
+    	float[] data = new float[width * height];
 
         ImageScaler imageScaler = new ImageScaler(image);
-        BufferedImage scaledImage = imageScaler.scale(edgeLength);
-        int[] pixels = scaledImage.getRGB(0, 0, edgeLength, edgeLength, null, 0, edgeLength);
+        BufferedImage scaledImage = imageScaler.scale(width, height);
+        int[] pixels = scaledImage.getRGB(0, 0, scaledImage.getWidth(), scaledImage.getHeight(), null, 0, scaledImage.getWidth());
 
         for (int p = 0; p < pixels.length; p++) {
             int argb = pixels[p];
@@ -72,15 +86,15 @@ public class DataConverter {
             data[p] = intensity;
         }
 
-        return processPixelIntensityData(data, edgeLength, binarize, invert, minData, maxData);
+        return processPixelIntensityData(data, binarize, invert, minData, maxData);
     }
-    
-	private static float[] processPixelRGBData(BufferedImage image, int edgeLength, boolean binarize, boolean invert, float minData, float maxData) {
-    	float[] data = new float[edgeLength * edgeLength * 3];
+	
+	private static float[] processPixelRGBData(BufferedImage image, int width, int height, boolean binarize, boolean invert, float minData, float maxData) {
+    	float[] data = new float[width * height * 3];
 
         ImageScaler imageScaler = new ImageScaler(image);
-        BufferedImage scaledImage = imageScaler.scale(edgeLength);
-        int[] pixels = scaledImage.getRGB(0, 0, edgeLength, edgeLength, null, 0, edgeLength);
+        BufferedImage scaledImage = imageScaler.scale(width, height);
+        int[] pixels = scaledImage.getRGB(0, 0, scaledImage.getWidth(), scaledImage.getHeight(), null, 0, scaledImage.getWidth());
 
         for (int p = 0; p < pixels.length; p++) {
             int argb = pixels[p];
@@ -91,17 +105,17 @@ public class DataConverter {
             
             int pixel = p * 3;
             
-            data[pixel] = r;
+            data[pixel	  ] = r;
             data[pixel + 1] = g;
             data[pixel + 2] = b;
         }
 
-        return processPixelIntensityData(data, edgeLength, binarize, invert, minData, maxData);
+        return processPixelIntensityData(data, binarize, invert, minData, maxData);
     }
 	
-	private static BufferedImage pixelRGBDataToImage(float[] data, float minData) {
-		int edgeLength = (int)Math.sqrt(data.length / 3);
-		BufferedImage image = new BufferedImage(edgeLength, edgeLength, BufferedImage.TYPE_INT_RGB);
+	private static BufferedImage pixelRGBDataToImage(float[] data, float minData, int width, int height) {
+		
+		BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 		
 		int[] rgb = new int[data.length / 3];
         for (int i = 0; i < rgb.length; i++) {
@@ -119,14 +133,14 @@ public class DataConverter {
     		rgb[i] = (0xFF << 24) | (r << 16) | (g << 8) | b;
         }
 		
-        image.setRGB(0, 0, edgeLength, edgeLength, rgb, 0, edgeLength);
+        image.setRGB(0, 0, width, height, rgb, 0, width);
         
 		return image;
 	}
 	
-	private static BufferedImage pixelIntensityDataToImage(float[] data, float minData) {
-		int edgeLength = (int)Math.sqrt(data.length);
-		BufferedImage image = new BufferedImage(edgeLength, edgeLength, BufferedImage.TYPE_INT_RGB);
+	private static BufferedImage pixelIntensityDataToImage(float[] data, float minData, int width, int height) {
+		
+		BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 		
 		int[] rgb = new int[data.length];
         for (int i = 0; i < rgb.length; i++) {
@@ -141,7 +155,7 @@ public class DataConverter {
         	}
         }
 		
-        image.setRGB(0, 0, edgeLength, edgeLength, rgb, 0, edgeLength);
+        image.setRGB(0, 0, width, height, rgb, 0, width);
         
 		return image;
 	}

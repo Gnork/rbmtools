@@ -4,27 +4,24 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 
-import javafx.scene.paint.Color;
-
 public class ImageScaler {
 	
-	private BufferedImage	orgImage;
-	private int[] 			orgImagePixels;	
-	private int 			orgWidth, orgHeight;
+	private BufferedImage orgImage;
 	
 	public ImageScaler() {
 	
 	}
 	
 	public ImageScaler(BufferedImage image) {
-			this.orgImage 				= image;			
-			this.orgImagePixels 		= getPixelsFromBufferedImage(orgImage);
-			this.orgWidth 				= orgImage.getWidth();
-			this.orgHeight 				= orgImage.getHeight();			
+			this.orgImage = image;	
 	}
-
+	
 	public BufferedImage scale(int longestEdge) {
-		return getScaledImage(longestEdge);
+		return scale(longestEdge, longestEdge);
+	}
+	
+	public BufferedImage scale(int width, int height) {
+		return getScaledImage(width, height);
 	}
 	
 	private int[] getPixelsFromBufferedImage(BufferedImage bufferedImage) {
@@ -59,12 +56,13 @@ public class ImageScaler {
 		return this.getBufferedImageFromPixels(newPixels, newWidth, newHeight);
 	}
 	
-	private BufferedImage getScaledImage(int edgeLength) {
-		Image scaledImage = this.orgImage.getScaledInstance(edgeLength, edgeLength, Image.SCALE_SMOOTH);
-		BufferedImage scaledBufferedImage = new BufferedImage(edgeLength, edgeLength, BufferedImage.TYPE_INT_RGB);
+	private BufferedImage getScaledImage(int width, int height) {
+		Image scaledImage = this.orgImage.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+		BufferedImage scaledBufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         Graphics g = scaledBufferedImage.getGraphics();
         g.drawImage(scaledImage, 0, 0, null);
         g.dispose();
 		return scaledBufferedImage;
 	}
+	
 }

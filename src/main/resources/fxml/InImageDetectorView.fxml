@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" fx:id="view" cache="true" cacheHint="QUALITY" depthTest="ENABLE" pickOnBounds="false" prefHeight="400.0" prefWidth="612.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="berlin.iconn.rbm.views.InImageDetectorController">
+  <children>
+    <ImageView fx:id="imgv_Image" cache="false" fitHeight="370.0" fitWidth="610.0" onMouseMoved="#imgv_ImageMouseMovedAction" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0" />
+    <ToolBar layoutY="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <items>
+        <Button fx:id="btn_loadImage" mnemonicParsing="false" onAction="#btn_loadImageAction" text="Load" />
+        <Button id="btn_generateImage" fx:id="btn_runDetection" mnemonicParsing="false" onAction="#btn_runDetectionAction" text="Detect" />
+      </items>
+    </ToolBar>
+    <Label fx:id="lbl_Recognition" layoutX="589.0" layoutY="39.0" text="0" textAlignment="RIGHT" />
+  </children>
+</AnchorPane>

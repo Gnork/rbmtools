@@ -28,6 +28,11 @@ import javafx.scene.layout.AnchorPane;
  *
  * @author Moritz
  */
+/**
+ * FXML Controller class
+ *
+ * @author Moritz
+ */
 public class RBMSettingsMainController extends AController {
     @FXML
     private AnchorPane view;

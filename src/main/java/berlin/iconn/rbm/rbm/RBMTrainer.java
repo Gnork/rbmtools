@@ -30,8 +30,6 @@ import berlin.iconn.rbm.settings.RBMSettingsModel;
 import berlin.iconn.rbm.views.ErrorViewModel;
 import berlin.iconn.rbm.views.imageviewer.ImageViewerModel;
 
-import java.util.LinkedList;
-
 import javafx.concurrent.Task;
 
 /**

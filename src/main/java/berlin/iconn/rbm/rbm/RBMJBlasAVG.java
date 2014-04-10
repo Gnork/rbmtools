@@ -164,8 +164,8 @@ public class RBMJBlasAVG implements IRBM {
             forkBlas.pmmuli(visible.transpose(), hidden, negAssociations);
 
             // Adaptive learn rate
-           // this.learnRatePrev = learnRate;
-           // this.learnRate = (1.0f - 0.001f) * (1.0f - 0.001f) * learnRatePrev;
+            // this.learnRatePrev = learnRate;
+            // this.learnRate = (1.0f - 0.001f) * (1.0f - 0.001f) * learnRatePrev;
             
             // Update weights
             localWeights.addi((posAssociations.sub(negAssociations)).div((float)data.getRows()).mul(this.learnRate));
