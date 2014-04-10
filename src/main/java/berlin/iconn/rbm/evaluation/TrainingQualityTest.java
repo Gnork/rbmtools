@@ -10,7 +10,7 @@ import berlin.iconn.rbm.tools.Chooser;
 public class TrainingQualityTest {
 	
 	public static float getMSE(BenchmarkModel benchmarkModel) {
-		File folder = Chooser.openDirectoryChooser("CBIR_Project/images");
+		File folder = Chooser.openDirectoryChooser("images");
 		ImageManager imageManager = new ImageManager(folder, benchmarkModel);
 		
 		float[][] originalData = imageManager.getImageData();
