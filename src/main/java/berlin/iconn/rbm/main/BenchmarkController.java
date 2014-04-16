@@ -491,7 +491,7 @@ public class BenchmarkController extends AController {
 
                 this.vanGoghController.setBenchmarkModel(this.getModel());
 
-                Scene scene = new Scene(root, 600, 400);
+                Scene scene = new Scene(root, 800, 600);
                 this.vanGoghStage = new Stage();
                 this.vanGoghStage.setTitle("Van Gogh Generator");
                 this.vanGoghStage.setScene(scene);

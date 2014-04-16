@@ -10,9 +10,13 @@ import berlin.iconn.rbm.main.AController;
 import berlin.iconn.rbm.main.BenchmarkModel;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
 /**
@@ -29,10 +33,18 @@ public class VanGoghController extends AController {
     private BenchmarkModel benchmarkModel;
     @FXML
     private AnchorPane view;
+    @FXML
+    private Button btn_loadImage;
+    @FXML
+    private ImageView imgv_Image;
+    @FXML
+    private Button btn_generate;
+    
+    private VanGoghModel model;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        this.model = new VanGoghModel(this);
     }    
 
     @Override
@@ -45,8 +57,30 @@ public class VanGoghController extends AController {
         return this.view;
     }
     
+    public ImageView getImageView(){
+        return this.imgv_Image;
+    }
+    
     public void setBenchmarkModel(BenchmarkModel model){
         this.benchmarkModel = model;
+    }
+    
+    public BenchmarkModel getBenchmarkModel(){
+        return this.benchmarkModel;
+    }
+
+    @FXML
+    private void btn_loadImageAction(ActionEvent event) {
+        this.model.loadImageFile();
+    }
+
+    @FXML
+    private void imgv_ImageMouseMovedAction(MouseEvent event) {
+    }
+
+    @FXML
+    private void btn_generateAction(ActionEvent event) {
+        this.model.generateImage();
     }
     
 }
