@@ -88,8 +88,6 @@ public class BenchmarkController extends AController {
     private RunHiddenController runHiddenController;
     private Stage runHiddenStage;
 
-    @FXML
-    private ToggleButton btn_OpenTestFeatures;
     private RunHiddenController testFeaturesController;
     private Stage testFeaturesStage;
 
@@ -298,12 +296,6 @@ public class BenchmarkController extends AController {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-    }
-
-    @FXML
-    private void btn_OpenTestFeaturesAction(ActionEvent event) {
-        // TODO
-        throw new UnsupportedOperationException();
     }
 
     @FXML
