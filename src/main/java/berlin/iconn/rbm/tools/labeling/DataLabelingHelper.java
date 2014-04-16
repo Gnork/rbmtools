@@ -7,10 +7,8 @@
 package berlin.iconn.rbm.tools.labeling;
 
 import berlin.iconn.rbm.image.ImageManager;
-import berlin.iconn.rbm.tools.clustering.Cluster;
-import berlin.iconn.rbm.tools.clustering.DataSet;
-import java.util.HashMap;
-import java.util.List;
+import berlin.iconn.rbm.tools.clustering.LabeledData;
+import java.util.HashSet;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
@@ -20,61 +18,71 @@ import java.util.TreeMap;
  */
 public class DataLabelingHelper {
     
-    public static DataSet[] labelData(float[][] resultData, ImageManager imageManager) {
+    public static LabeledData[] getLabeledData(float[][] resultData, ImageManager imageManager) {
     
-        DataSet[] dataSet = new DataSet[resultData.length];
+        LabeledData[] labeledData = new LabeledData[resultData.length];
         
         for(int i = 0; i < resultData.length; i++) {
-            dataSet[i] = new DataSet(resultData[i], imageManager.get(i).getCategory());
+            labeledData[i] = new LabeledData(resultData[i], imageManager.get(i).getCategory());
     	}
-    	
-    	DataSet[] data = arrayToDataSet(resultData, dataSet);
         
-        return data;
+        return labeledData;
     }   
     
-    private static DataSet[] arrayToDataSet(float[][] resultData, DataSet[] originalData) {
-        //Length of result data must be equal to length of original data, eg. number of pics
-        if (resultData.length != originalData.length) {
-            return null;
+    public static LabeledData[] getLabeledDataUnique(float[][] resultData, ImageManager imageManager) {
+        HashSet<LabeledData> labeledDataUniqeSet = new HashSet<>();
+        
+        for(int i = 0; i < resultData.length; i++) {
+            LabeledData labeledData = new LabeledData(resultData[i], imageManager.get(i).getCategory());
+            labeledDataUniqeSet.add(labeledData);
+    	}
+        
+        LabeledData[] labeledDataArray = new LabeledData[labeledDataUniqeSet.size()];
+        
+        int i = 0;
+        for(LabeledData labeledData : labeledDataUniqeSet) {
+            labeledDataArray[i] = labeledData;
+            i++;
         }
         
-        DataSet[] result = new DataSet[resultData.length];
-        for (int i = 0; i < resultData.length; ++i) {
-            result[i] = new DataSet(resultData[i], originalData[i].getLabel());
-        }
-        
-        return result;
+        return labeledDataArray;
     }
 
-    public static SortedMap<Double, String> getLabelProbabilityMap(DataSet[] dataSet, float[] hiddenWindowData) {
-        SortedMap<Double, String> labelsSortedByDistance = new TreeMap<>();
-        
-        HashMap<Double, String> distanceLabelMap = new HashMap<>();
+    public static SortedMap<Double, String> getDistanceMap(LabeledData[] labeledDataSet, float[] hiddenWindowData) {
+        SortedMap<Double, String> distanceMap = new TreeMap<>();
         
         double maxDistance = 0;
-        for(DataSet currentDataSet : dataSet) {
-            float[] currentData = currentDataSet.getData();
-            double distance = getDistance(hiddenWindowData, currentData);
-            maxDistance = (distance > maxDistance) ? distance : maxDistance;
-            labelsSortedByDistance.put(distance, currentDataSet.getLabel());
+        for(LabeledData labeledData : labeledDataSet) {
+            
+            String label = labeledData.getLabel();
+            float[] data = labeledData.getData();
+            
+            double distance = getL1Distance(hiddenWindowData, data);
+            
+            if(distance > maxDistance) {
+                maxDistance = distance;
+            }
+            
+            distanceMap.put(distance, label);   
         }
         
-        for(Double distance : distanceLabelMap.keySet()) {
-            String label = distanceLabelMap.get(distance);
-            Double probability = maxDistance / distance;
-            labelsSortedByDistance.put(probability, label);
-        }
-        
-        return labelsSortedByDistance;
+        return distanceMap;
     }
     
-    public static double getDistance(float[] data1, float[] data2){
+    public static double getL2Distance(float[] data1, float[] data2){
         double sum = 0f;
         for(int i = 0; i < data1.length; ++i){
             sum += (data1[i] - data2[i]) * (data1[i] - data2[i]);
         }
         return Math.sqrt(sum);
+    }
+    
+    public static double getL1Distance(float[] data1, float[] data2){
+        double sum = 0f;
+        for(int i = 0; i < data1.length; ++i){
+            sum += Math.abs(data1[i] - data2[i]);
+        }
+        return sum / data1.length;
     }
     
 }

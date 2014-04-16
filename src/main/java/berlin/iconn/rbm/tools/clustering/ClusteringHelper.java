@@ -16,17 +16,17 @@ public class ClusteringHelper {
      */
     public static List<Cluster> generateClusters(float[][] resultData, ImageManager imageManager) {
     	
-    	DataSet[] dataSet = new DataSet[resultData.length];
+    	LabeledData[] dataSet = new LabeledData[resultData.length];
     	
     	for(int i = 0; i < resultData.length; i++) {
-    		dataSet[i] = new DataSet(resultData[i], imageManager.get(i).getCategory());
+    		dataSet[i] = new LabeledData(resultData[i], imageManager.get(i).getCategory());
     	}
     	
-    	DataSet[] data = arrayToDataSet(resultData, dataSet);
+    	LabeledData[] data = arrayToDataSet(resultData, dataSet);
     	
         List<Cluster> clusters = new LinkedList<Cluster>();
 
-        for (DataSet ds : data) {
+        for (LabeledData ds : data) {
             boolean found = false;
             String label = ds.getLabel();
             for (Cluster c : clusters) {
@@ -66,15 +66,15 @@ public class ClusteringHelper {
     	
     }
 	
-    private static DataSet[] arrayToDataSet(float[][] resultData, DataSet[] originalData) {
+    private static LabeledData[] arrayToDataSet(float[][] resultData, LabeledData[] originalData) {
         //Length of result data must be equal to length of original data, eg. number of pics
         if (resultData.length != originalData.length) {
             return null;
         }
         
-        DataSet[] result = new DataSet[resultData.length];
+        LabeledData[] result = new LabeledData[resultData.length];
         for (int i = 0; i < resultData.length; ++i) {
-            result[i] = new DataSet(resultData[i], originalData[i].getLabel());
+            result[i] = new LabeledData(resultData[i], originalData[i].getLabel());
         }
         
         return result;

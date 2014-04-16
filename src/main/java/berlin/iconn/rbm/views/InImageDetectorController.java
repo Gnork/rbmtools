@@ -1,14 +1,15 @@
 package berlin.iconn.rbm.views;
 
+import berlin.iconn.rbm.main.AController;
+import berlin.iconn.rbm.main.BenchmarkModel;
 import java.net.URL;
 import java.util.ResourceBundle;
-
+import java.util.TreeMap;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.control.Tooltip;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -16,16 +17,17 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.RectangleBuilder;
-import berlin.iconn.rbm.main.AController;
-import berlin.iconn.rbm.main.BenchmarkModel;
 
 public class InImageDetectorController extends AController {
 	
-	@FXML
+    @FXML
     private ImageView imgv_Image;
 	
-	@FXML
-	private Label lbl_Recognition;
+    @FXML
+    private Label lbl_Recognition;
+    
+    @FXML
+    private TextArea txt_Probabilities;
     
     private InImageDetectorModel model;
     
@@ -63,16 +65,20 @@ public class InImageDetectorController extends AController {
     
     @FXML
     private void imgv_ImageMouseMovedAction(MouseEvent event) {
-    	String label = this.model.getLabel(event.getX(), event.getY());
+        
+        if(this.model.getImageData() == null) return;
+        
+    	TreeMap<Double, String> probabilityMap = this.model.getProbabilityMap(event.getX(), event.getY());
+        
+        String probabilitiesText = "";
+        for(Double distance : probabilityMap.keySet()) {
+            probabilitiesText += probabilityMap.get(distance) + " " + distance + '\n';
+        }
+        
+        this.txt_Probabilities.setText(probabilitiesText);
     	
     	if(rect != null) {
     		view.getChildren().remove(rect);
-    	}
-    	
-    	if(label.equals("")) {
-    		lbl_Recognition.setText("");
-    	} else {
-    		lbl_Recognition.setText(label);
     	}
     	
     	rect = RectangleBuilder.create()
