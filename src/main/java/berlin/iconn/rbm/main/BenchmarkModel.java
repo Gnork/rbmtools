@@ -10,15 +10,11 @@ import berlin.iconn.rbm.statistics.PrecisionRecallTester;
 import berlin.iconn.rbm.statistics.PrecisionRecallTestResult;
 import berlin.iconn.rbm.evaluation.TrainingQualityTest;
 import berlin.iconn.rbm.image.ImageManager;
-import berlin.iconn.rbm.image.ImageViewer;
 import berlin.iconn.rbm.image.Pic;
 import berlin.iconn.rbm.persistence.Conserve;
 import berlin.iconn.rbm.rbm.RBMTrainer;
 import berlin.iconn.rbm.settings.RBMSettingsMainController;
-import berlin.iconn.rbm.settings.RBMSettingsMainModel;
-import berlin.iconn.rbm.settings.RBMSettingsModel;
 import berlin.iconn.rbm.settings.RBMSettingsWeightsController;
-import berlin.iconn.rbm.settings.RBMSettingsWeightsModel;
 import berlin.iconn.rbm.views.FeatureViewer;
 import berlin.iconn.rbm.views.PRTMAPController;
 import berlin.iconn.rbm.views.imageviewer.ImageViewerController;
@@ -33,7 +29,7 @@ import java.util.LinkedList;
 public class BenchmarkModel {
   
   private final BenchmarkController               controller;
-  private ImageViewerController                   imageViewerController;
+  private final ImageViewerController                   imageViewerController;
   private FeatureViewer                           featureViewer;
   private final PRTMAPController                  prtmapController;
   private final LinkedList<RBMSettingsController> rbmSettingsList;

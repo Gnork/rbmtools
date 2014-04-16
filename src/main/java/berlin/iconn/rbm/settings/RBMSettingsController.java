@@ -40,10 +40,6 @@ public class RBMSettingsController extends AController {
     private TreeView<String> trv_rbmSettingsMenue;
     @FXML
     private VBox vbox_rbmSettingsTemplatePane;
-    @FXML
-    private Button btn_startRBMTraining;
-    @FXML
-    private Button btn_cancelRBMTraining;
     
     private RBMSettingsModel model;
     
@@ -136,17 +132,6 @@ public class RBMSettingsController extends AController {
         return (AController) controller;
     }
     
-    @FXML
-    private void btn_startRBMTrainingAction(ActionEvent event) {
-//    	trainer.trainSingleRBM(this);
-    }
-
-	@FXML
-    private void btn_cancelRBMTrainingAction(ActionEvent event) {
-		// TODO
-		throw new UnsupportedOperationException();
-    }
-
     @Override
     public Node getView() {
         return view;
