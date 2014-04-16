@@ -61,6 +61,7 @@
             <CheckBox fx:id="cbx_RGB" mnemonicParsing="false" onAction="#cbx_RGBAction" text="RGB" GridPane.columnIndex="3" GridPane.rowIndex="3" />
             <Button id="btn_cancel" fx:id="btn_cancelTraining" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btn_cancelAction" text="Cancel" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="12" />
             <ToggleButton id="btn_InImageDetector" fx:id="btn_OpenInImageDetector" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btn_OpenInImageDetectorAction" text="In Image Detector" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="7" />
+            <ToggleButton fx:id="btn_vanGogh" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#btn_vanGoghAction" text="Van Gogh" GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="7" GridPane.vgrow="ALWAYS" />
           </children>
           <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
