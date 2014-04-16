@@ -1,22 +1,24 @@
 package berlin.iconn.rbm.views;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.util.List;
-
-import javafx.embed.swing.SwingFXUtils;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.image.WritableImage;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 import berlin.iconn.rbm.image.DataConverter;
 import berlin.iconn.rbm.image.ImageHelper;
-import berlin.iconn.rbm.image.ImageManager;
 import berlin.iconn.rbm.main.BenchmarkModel;
 import berlin.iconn.rbm.rbm.RBMTrainer;
 import berlin.iconn.rbm.tools.clustering.Cluster;
 import berlin.iconn.rbm.tools.clustering.ClusteringHelper;
+import berlin.iconn.rbm.tools.clustering.DataSet;
+import berlin.iconn.rbm.tools.labeling.DataLabelingHelper;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.util.List;
+import java.util.SortedMap;
+import java.util.SortedSet;
+import java.util.TreeMap;
+import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.image.Image;
+import javafx.scene.image.WritableImage;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 public class InImageDetectorModel {
 
@@ -25,6 +27,8 @@ public class InImageDetectorModel {
     float[] imageData;
     int width;
     int height;
+    
+    DataSet[] dataSet;
     
     List<Cluster> clusters;
     String[] codeImage;
@@ -63,22 +67,24 @@ public class InImageDetectorModel {
 	}
 
 	public void detection() {
-    	RBMTrainer trainer = new  RBMTrainer();
-    	float[][] hiddenData = trainer.getHiddenAllRBMs(this.benchmarkModel, this.benchmarkModel.getImageManager().getImageData(), false);
+            RBMTrainer trainer = new  RBMTrainer();
+            float[][] hiddenData = trainer.getHiddenAllRBMs(this.benchmarkModel, this.benchmarkModel.getImageManager().getImageData(), false);
     	
-		clusters = ClusteringHelper.generateClusters(hiddenData, this.benchmarkModel.getImageManager());
+            this.dataSet = DataLabelingHelper.labelData(hiddenData, this.benchmarkModel.getImageManager());
+            
+            
+            /*
+            codeImage = new String[imageData.length];
 		
-		codeImage = new String[imageData.length];
+            int windowEdgeLength = this.benchmarkModel.getImageEdgeSize();
 		
-		int windowEdgeLength = this.benchmarkModel.getImageEdgeSize();
-		
-		/*
-		for(int y = 0, pos = 0; y < this.height - windowEdgeLength; y++) {
-			for(int x = 0; x < this.width - windowEdgeLength; x++, pos++) {
-				codeImage[pos] = getLabel(x, y);
-			}
-		}
-		*/
+            
+            for(int y = 0, pos = 0; y < this.height - windowEdgeLength; y++) {
+            	for(int x = 0; x < this.width - windowEdgeLength; x++, pos++) {
+            		codeImage[pos] = getLabel(x, y);
+            	}
+            }
+            */
 		
 	}
 	
@@ -101,6 +107,8 @@ public class InImageDetectorModel {
 		
 		float[] hiddenWindowData = trainer.getHiddenAllRBMs1D(this.benchmarkModel, window, false);
 		
+                SortedMap<Double, String> labelsSortedByDistance = DataLabelingHelper.getLabelProbabilityMap(this.dataSet, hiddenWindowData);
+                
 		Cluster cluster = ClusteringHelper.getCluster(clusters, hiddenWindowData);
 		float distance = cluster.getDistanceToCenter(hiddenWindowData);
 		
