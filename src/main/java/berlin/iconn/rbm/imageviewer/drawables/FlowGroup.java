@@ -25,6 +25,12 @@ public class FlowGroup extends ADrawable {
 
 		int hCanvas = (int) canvas.getHeight();
 		int wCanvas = (int) canvas.getWidth();
+                
+                // ubuntu hack to avoid devide by zero exception
+                // the frame gets sized up very fast but starts with height and width 0
+                if(hCanvas < 10 || wCanvas < 10 || nThumbs < 10){
+                    return;
+                }
 
 		// Groesse eines thumbnail-Bereichs
 		int thumbSize = (int) Math.sqrt((double) wCanvas * hCanvas / nThumbs);
