@@ -1,8 +1,8 @@
 package berlin.iconn.rbm.image;
 
 import berlin.iconn.rbm.main.BenchmarkModel;
+import berlin.iconn.rbm.persistence.Conserve;
 import berlin.iconn.rbm.tools.ShuffleArrayHelper;
-
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -13,7 +13,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
-
 import javax.imageio.ImageIO;
 
 public class ImageManager {
@@ -24,7 +23,7 @@ public class ImageManager {
     private File imageDirectory;
     private HashMap<String, List<Pic>> imageGroups;
 
-	private BenchmarkModel benchmarkModel;
+    private BenchmarkModel benchmarkModel;
 
     public ImageManager(File imageDirectory, BenchmarkModel benchmarkModel) {
         this.benchmarkModel = benchmarkModel;
@@ -157,7 +156,7 @@ public class ImageManager {
     	
         float[] imageData;
         try {
-        	imageData = DataConverter.processPixelData(ImageIO.read(imageFile), edgeLength, binarize, invert, minData, maxData, isRgb);
+            imageData = DataConverter.processPixelData(ImageIO.read(imageFile), edgeLength, binarize, invert, minData, maxData, isRgb);
         } catch (IOException e) {
             System.out.println("Could not load: " + imageFile.getAbsolutePath());
             return null;

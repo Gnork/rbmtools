@@ -142,8 +142,8 @@ public class RBMTrainer {
         }
 
         
-        	ImageViewerModel featuresViewer = visualizationsModel.getImageViewController().getModel();
-        	rbmEnhancer.addEnhancement(new TrainingVisualizer(featuresInterval, featuresViewer));
+        ImageViewerModel featuresViewer = visualizationsModel.getImageViewController().getModel();
+        rbmEnhancer.addEnhancement(new TrainingVisualizer(featuresInterval, featuresViewer));
         
         
         StoppingCondition stop;

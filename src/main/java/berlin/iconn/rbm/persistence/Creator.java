@@ -266,12 +266,16 @@ public class Creator {
         if(typeName.equals("char") && value.length() == 1) return new Character(value.charAt(0));
         if(typeName.equalsIgnoreCase("String")) return value;
         // parsing custom classes
+        
+        /*
         if(typeName.equals("ImageManager")){
             String path = "images/" + value;
             System.out.println(path);
             File imageFile = new File(path);
             return new ImageManager(imageFile);
         }
+        */
+        
         // no type found
         return null;
     }
