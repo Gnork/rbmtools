@@ -29,7 +29,7 @@ public class VanGoghModel {
     
     private final VanGoghController controller;
     
-    private final int minEdgeSize = 600;
+    private final int minEdgeSize = 300;
     private BufferedImage image;
     
     public VanGoghModel(VanGoghController controller){

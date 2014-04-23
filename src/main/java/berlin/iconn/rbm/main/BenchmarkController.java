@@ -454,6 +454,7 @@ public class BenchmarkController extends AController {
         this.txt_imageEdgeSize.setText(new Integer(this.model.getImageEdgeSize()).toString());
         this.txt_MinData.setText(new Float(this.model.getMinData()).toString());
         this.txt_MaxData.setText(new Float(this.model.getMaxData()).toString());
+        this.cbx_RGB.setSelected(this.model.isRgb());
         if (this.model.getImageManager() == null) {
             lbl_imageSetSelected.setText("no image set selected");
         } else {

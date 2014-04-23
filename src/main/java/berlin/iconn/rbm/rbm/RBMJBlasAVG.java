@@ -21,6 +21,8 @@ public class RBMJBlasAVG implements IRBM {
     private FloatMatrix avgVector;
 
     public RBMJBlasAVG(int inputSize, int outputSize, float learningRate, ILogistic logisticFunction, boolean useSeed, int seed, float[][] weights) {
+        System.out.println("Creating RBMJBlasAVG");
+        
         this.learnRate = learningRate;
         this.logisticFunction = logisticFunction;
 
@@ -172,9 +174,10 @@ public class RBMJBlasAVG implements IRBM {
             error = (float)Math.sqrt(MatrixFunctions.pow(dataWithBias.sub(visible), 2.0f).sum() / trainingData.length / localWeights.getRows());
             
             stop.update(error);
+            System.out.println(error);
         }
 
-        System.out.println(error);
+        //System.out.println(error);
     }
 
     @Override

@@ -110,7 +110,7 @@ public class RBMTrainer {
         boolean useSeed = weightsModel.isUseSeed();
         float[][] weights = weightsModel.getWeights();
 
-        return new RBMJBlasAVG(inputSize, outputSize, learningRate, logisticFunction, useSeed, seed, weights);
+        return new RBMJBlas(inputSize, outputSize, learningRate, logisticFunction, useSeed, seed, weights);
     }
 
     public void trainSingleRBM(RBMSettingsController controller, RBMEnhancer rbmEnhancer) {
@@ -344,7 +344,7 @@ public class RBMTrainer {
     public void updateRBMs(BenchmarkModel benchmarkModel) {
 
         float[][] data = benchmarkModel.getInputData();
-        int inputSize = benchmarkModel.getImageEdgeSize() * benchmarkModel.getImageEdgeSize();
+        int inputSize = benchmarkModel.getOutputSize();
         
         LinkedList<RBMSettingsController> rbmSettingsList = benchmarkModel.getRbmSettingsList();
         for (RBMSettingsController settingsController : rbmSettingsList) {

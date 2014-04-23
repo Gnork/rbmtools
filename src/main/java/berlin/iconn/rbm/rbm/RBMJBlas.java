@@ -16,6 +16,8 @@ public class RBMJBlas implements IRBM {
     private FloatMatrix weights;
 
     public RBMJBlas(int inputSize, int outputSize, float learningRate, ILogistic logisticFunction, boolean useSeed, int seed, float[][] weights) {
+        System.out.println("Creating RBMJBlas");
+        
         this.learnRate = learningRate;
         this.logisticFunction = logisticFunction;
 
@@ -149,9 +151,9 @@ public class RBMJBlas implements IRBM {
             error = (float)Math.sqrt(MatrixFunctions.pow(dataWithBias.sub(negVisibleNodes), 2.0f).sum() / trainingData.length / weights.getRows());
 
             stop.update(error);
-            //zSystem.out.println(error);
+            System.out.println(error);
         }
-        System.out.println(error);
+        //System.out.println(error);
     }
 
     @Override

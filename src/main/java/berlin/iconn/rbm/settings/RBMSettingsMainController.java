@@ -118,11 +118,8 @@ public class RBMSettingsMainController extends AController {
         this.cmb_feature.getSelectionModel().select(this.model.getSelectedRbmFeature());
         this.cmb_rbmImplementation.getSelectionModel().select(this.model.getSelectedRbmImplementation());
         
-        int inputSize = this.model.getInputSize();
-        int outputSize = (this.model.isRgb()) ?  this.model.getOutputSize() : this.model.getOutputSize();
-        
-        this.txt_outputSize.setText(new Integer(outputSize).toString());
-        this.lbl_inputSize.setText(new Integer(inputSize).toString());
+        this.txt_outputSize.setText(new Integer(this.model.getOutputSize()).toString());
+        this.lbl_inputSize.setText(new Integer(this.model.getInputSize()).toString());
     }
     
 }

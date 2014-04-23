@@ -29,7 +29,7 @@ import java.util.LinkedList;
 public class BenchmarkModel {
   
   private final BenchmarkController               controller;
-  private final ImageViewerController                   imageViewerController;
+  private final ImageViewerController             imageViewerController;
   private FeatureViewer                           featureViewer;
   private final PRTMAPController                  prtmapController;
   private final LinkedList<RBMSettingsController> rbmSettingsList;
@@ -54,7 +54,8 @@ public class BenchmarkModel {
   private float                                   maxData           = 1.0f;
   @Conserve
   private int                                     imageEdgeSize     = 28;
-private boolean isRgb;
+  @Conserve
+  private boolean isRgb = false;
   
   public boolean isBinarizeImages() {
     return binarizeImages;
@@ -62,6 +63,12 @@ private boolean isRgb;
   
   public int getImageEdgeSize() {
     return imageEdgeSize;
+  }
+  
+  public int getOutputSize(){
+      if(this.isRgb())
+        return imageEdgeSize * imageEdgeSize * 3;
+      return imageEdgeSize * imageEdgeSize;
   }
   
   public float getMinData() {
@@ -81,17 +88,15 @@ private boolean isRgb;
   }
   
   public boolean isRgb() {
-	  return isRgb;
+    return isRgb;
   }
 
   public void setRgb(boolean isRgb) {
-	  this.isRgb = isRgb;
-	    for (int i = 0; i < rbmSettingsList.size(); ++i) {
-	      rbmSettingsList.get(i).getModel().getController(RBMSettingsMainController.class).getModel().setRgb(this.isRgb);
-	    }
-	    this.imageManager.applyChanges(this);
-	    this.imageViewerController.getModel().setImages(this.imageManager);
-	    this.globalUpdate();
+    this.isRgb = isRgb;
+    this.imageManager.applyChanges(this);
+    this.imageViewerController.getModel().setImages(this.imageManager);
+
+    this.globalUpdate();
   }
   
   public void setImageEdgeSize(int imageEdgeSize) {
@@ -118,7 +123,8 @@ private boolean isRgb;
   }
   
   public void add(RBMSettingsController rbmSettings) {
-    int inputSize = this.getInputSize();
+    System.out.println("add RBM");
+    int inputSize = this.getOutputSize();
     if (rbmSettingsList.size() > 0) {
       inputSize = rbmSettingsList.getLast().getModel().getController(RBMSettingsMainController.class).getModel().getOutputSize();
     }
@@ -144,7 +150,6 @@ private boolean isRgb;
     this.imageManager = new ImageManager(file, this);
     this.imageViewerController.getModel().setImages(imageManager);
     this.rbmTrainer = new RBMTrainer();
-    this.globalUpdate();
   }
   
   public boolean isShowImageViewer() {
@@ -236,11 +241,6 @@ private boolean isRgb;
   
   public FeatureViewer getFeatureViewer() {
     return this.featureViewer;
-  }
-  
-  public int getInputSize() {
-	  int size = this.imageEdgeSize * this.imageEdgeSize;
-	  return (this.isRgb) ? size * 3 : size;
   }
   
   public float[][] getInputData() {

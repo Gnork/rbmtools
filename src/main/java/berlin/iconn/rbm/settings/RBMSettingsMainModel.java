@@ -63,8 +63,6 @@ public class RBMSettingsMainModel{
     private int inputSize = 0;
     @Conserve
     private int outputSize = 150;
-    @Conserve
-	private boolean isRgb;
 
     public int getSelectedRbmImplementation() {
         return selectedRbmImplementation;
@@ -94,10 +92,6 @@ public class RBMSettingsMainModel{
         this.selectedLogisticFunction = selectedLogisticFunction;
     }
 
-    public int getInputSize() {
-        return (this.isRgb) ? 3 * inputSize : inputSize;
-    }
-
     public void setInputSize(int inputSize) {
         this.inputSize = inputSize;
         this.controller.update();
@@ -110,17 +104,8 @@ public class RBMSettingsMainModel{
     public void setOutputSize(int outputSize) {
         this.outputSize = outputSize;
     }
-    
-    public void setRgb(boolean isRgb) {
-    	this.isRgb = isRgb;
-    	this.controller.update();
-    }
-    
-    public boolean isRgb() {
-		return isRgb;
-	}
 
-	public String[] getRbmImplementations() {
+    public String[] getRbmImplementations() {
         return rbmImplementations;
     }
 
@@ -130,6 +115,10 @@ public class RBMSettingsMainModel{
 
     public String[] getLogisticFunctions() {
         return logisticFunctions;
+    }
+
+    public int getInputSize() {
+        return this.inputSize;
     }
     
 }
