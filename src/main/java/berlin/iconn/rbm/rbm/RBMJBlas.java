@@ -149,7 +149,7 @@ public class RBMJBlas implements IRBM {
             error = (float)Math.sqrt(MatrixFunctions.pow(dataWithBias.sub(negVisibleNodes), 2.0f).sum() / trainingData.length / weights.getRows());
 
             stop.update(error);
-            //System.out.println(error);
+            //zSystem.out.println(error);
         }
         System.out.println(error);
     }

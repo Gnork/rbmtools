@@ -57,9 +57,9 @@ public class RBMJBlasAVG implements IRBM {
         final FloatMatrix dataWithBias = FloatMatrix.concatHorizontally(FloatMatrix.ones(data.getRows(), 1), data);
         final FloatMatrix dataWithBiasTrans = dataWithBias.transpose();
         final FloatMatrix localWeights = this.weights;
-        final FloatMatrix hidden = new FloatMatrix(dataWithBias.rows, localWeights.columns);
+        FloatMatrix hidden = new FloatMatrix(dataWithBias.rows, localWeights.columns);
         FloatMatrix hiddenStates = new FloatMatrix(dataWithBias.rows, localWeights.columns);
-        final FloatMatrix visible = new FloatMatrix(hidden.rows, localWeights.rows);
+        FloatMatrix visible = new FloatMatrix(hidden.rows, localWeights.rows);
         final FloatMatrix posAssociations = new FloatMatrix(dataWithBiasTrans.rows, hidden.columns);
         final FloatMatrix negAssociations = new FloatMatrix(dataWithBiasTrans.rows, hidden.columns);
         final FloatMatrix resetBiasHidden = FloatMatrix.ones(hidden.getRows(), 1);
@@ -70,7 +70,7 @@ public class RBMJBlasAVG implements IRBM {
         forkBlas.pmmuli(dataWithBias, localWeights, hidden);
         
         // pos_hidden_probs
-        logisticFunction.function(hidden);
+        hidden = logisticFunction.function(hidden);
 
         // pos_hidden_states
         if (binarizeHidden) {
@@ -87,7 +87,7 @@ public class RBMJBlasAVG implements IRBM {
         forkBlas.pmmuli(hiddenStates, localWeights.transpose(), visible);
         
         // neg_visible_probs
-        logisticFunction.function(visible);
+        visible = logisticFunction.function(visible);
         
         visible.subiColumnVector(avgVector);
 
@@ -98,7 +98,7 @@ public class RBMJBlasAVG implements IRBM {
         forkBlas.pmmuli(visible, localWeights, hidden);
 
         // neg_hidden_probs
-        logisticFunction.function(hidden);
+        hidden = logisticFunction.function(hidden);
 
         // neg_associations
         forkBlas.pmmuli(visible.transpose(), hidden, negAssociations);
@@ -116,7 +116,7 @@ public class RBMJBlasAVG implements IRBM {
         final FloatMatrix dataWithBias = FloatMatrix.concatHorizontally(FloatMatrix.ones(data.getRows(), 1), data);
         final FloatMatrix dataWithBiasTrans = dataWithBias.transpose();
         final FloatMatrix localWeights = this.weights;
-        final FloatMatrix hidden = new FloatMatrix(dataWithBias.rows, localWeights.columns);
+        FloatMatrix hidden = new FloatMatrix(dataWithBias.rows, localWeights.columns);
         FloatMatrix hiddenStates = new FloatMatrix(dataWithBias.rows, localWeights.columns);
         FloatMatrix visible = new FloatMatrix(hidden.rows, localWeights.rows);
         final FloatMatrix posAssociations = new FloatMatrix(dataWithBiasTrans.rows, hidden.columns);
@@ -130,7 +130,7 @@ public class RBMJBlasAVG implements IRBM {
             forkBlas.pmmuli(dataWithBias, localWeights, hidden);
             
             // pos_hidden_probs
-            logisticFunction.function(hidden);
+            hidden = logisticFunction.function(hidden);
 
             // pos_hidden_states
             if (binarizeHidden) {
@@ -147,7 +147,7 @@ public class RBMJBlasAVG implements IRBM {
             forkBlas.pmmuli(hiddenStates, localWeights.transpose(), visible);
             
             // neg_visible_probs
-            logisticFunction.function(visible);
+            visible = logisticFunction.function(visible);
             
             visible.subiColumnVector(avgVector);
 
@@ -158,7 +158,7 @@ public class RBMJBlasAVG implements IRBM {
             forkBlas.pmmuli(visible, localWeights, hidden);
 
             // neg_hidden_probs
-            logisticFunction.function(hidden);
+            hidden = logisticFunction.function(hidden);
 
             // neg_associations
             forkBlas.pmmuli(visible.transpose(), hidden, negAssociations);

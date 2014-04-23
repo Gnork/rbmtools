@@ -20,7 +20,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.jblas</groupId>
-			<artifactId>jblas</artifactId>
+			<artifactId>WorkingJBlas</artifactId>
 			<version>1.2.3</version>
 		</dependency>
 		<dependency>
