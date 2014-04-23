@@ -22,8 +22,8 @@ public class RBMSettingsMainModel{
     private final RBMSettingsMainController controller;
     
     //combobox select options
-    private final String[] rbmImplementations = {"RBMJBlas"};
-    private final String[] rbmFeatures = {"Pixel Intensities"};
+    private final String[] rbmImplementations = {"RBM select not working"};
+    private final String[] rbmFeatures = {"Feature select not working"};
 
     public RBMSettingsMainModel(RBMSettingsMainController controller) {
         this.controller = controller;
