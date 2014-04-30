@@ -64,6 +64,9 @@ public class RunHiddenController extends AController {
     @FXML
     private void btn_loadImageAction(ActionEvent event) {
         Image image = this.model.loadImage((int) imgv_Result.getFitWidth(), (int) imgv_Result.getFitHeight());
+        if(image == null){
+            return;
+        }
         if (!image.isError()) {
             this.imgv_Input.setImage(image);
         } else {
@@ -84,7 +87,7 @@ public class RunHiddenController extends AController {
 
     @FXML
     private void btn_runHiddenAction(ActionEvent event) {
-        System.out.println("Dream");
+        System.out.println("Run Hidden");
         model.runHidden();
         imgv_Result.setImage(model.getVisibleImage((int)imgv_Result.getFitWidth(), (int)imgv_Result.getFitHeight()));
         Image hiddenImage = model.getHiddenImage(10);

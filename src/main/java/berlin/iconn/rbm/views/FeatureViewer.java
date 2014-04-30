@@ -1,5 +1,16 @@
 package berlin.iconn.rbm.views;
 
+import berlin.iconn.rbm.enhancement.IVisualizeObserver;
+import berlin.iconn.rbm.enhancement.RBMInfoPackage;
+import berlin.iconn.rbm.image.DataConverter;
+import berlin.iconn.rbm.image.ImageViewer;
+import berlin.iconn.rbm.image.Pic;
+import berlin.iconn.rbm.main.AController;
+import berlin.iconn.rbm.main.BenchmarkController;
+import berlin.iconn.rbm.rbm.RBMTrainer;
+import berlin.iconn.rbm.settings.RBMSettingsController;
+import berlin.iconn.rbm.settings.RBMSettingsMainController;
+import berlin.iconn.rbm.views.imageviewer.ImageViewerController;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
@@ -13,17 +24,7 @@ import javafx.scene.Node;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
-import berlin.iconn.rbm.enhancement.IVisualizeObserver;
-import berlin.iconn.rbm.enhancement.RBMInfoPackage;
-import berlin.iconn.rbm.image.DataConverter;
-import berlin.iconn.rbm.image.ImageViewer;
-import berlin.iconn.rbm.image.Pic;
-import berlin.iconn.rbm.main.AController;
-import berlin.iconn.rbm.main.BenchmarkController;
-import berlin.iconn.rbm.rbm.RBMTrainer;
-import berlin.iconn.rbm.settings.RBMSettingsController;
-import berlin.iconn.rbm.settings.RBMSettingsMainController;
-import berlin.iconn.rbm.views.imageviewer.ImageViewerController;
+import javafx.stage.Stage;
 
 public class FeatureViewer extends AController  {
   
@@ -82,13 +83,18 @@ public class FeatureViewer extends AController  {
     return null;
   }
   
-  public void show() {
+  public boolean show() {
     if (this.benchmarkController.getModel().getRbmSettingsList().size() == 0) {
       System.out.println("Please create a RBM first. (Edit > add RBM)");
-      return;
+      return false;
     }
     update();
     imageViewerController.show();
+    return true;
+  }
+  
+  public Stage getStage(){
+      return this.imageViewerController.getStage();
   }
   
   public void close() {

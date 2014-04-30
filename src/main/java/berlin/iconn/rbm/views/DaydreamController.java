@@ -69,6 +69,9 @@ public class DaydreamController extends AController {
     @FXML
     private void btn_loadImageAction(ActionEvent event) {
         Image image = this.model.loadImage((int) imgv_Result.getFitWidth(), (int) imgv_Result.getFitHeight());
+        if(image == null){
+            return;
+        }
         if (!image.isError()) {
             this.imgv_Input.setImage(image);
         } else {
@@ -87,6 +90,13 @@ public class DaydreamController extends AController {
 
     @FXML
     private void btn_daydreamAction(ActionEvent event) {
+        return;
+        //Threading not working
+        
+        /*
+        if(this.model.getBenchmarkModel().getRbmSettingsList().isEmpty()){
+            return;
+        }
         int delay = 0; // delay for 3 sec. 
         int period = 50;
         this.timer = new Timer();
@@ -95,7 +105,8 @@ public class DaydreamController extends AController {
             public void run() {
                 System.out.println("Dream");
                 model.daydream();
-                imgv_Result.setImage(model.getVisibleImage((int)imgv_Result.getFitWidth(), (int)imgv_Result.getFitHeight()));
+                Image visibleImage = model.getVisibleImage((int)imgv_Result.getFitWidth(), (int)imgv_Result.getFitHeight());
+                imgv_Result.setImage(visibleImage);
                 Image hiddenImage = model.getHiddenImage(10);
                 imgv_ResultHidden.setFitWidth(hiddenImage.getWidth());
                 imgv_ResultHidden.setFitHeight(hiddenImage.getHeight());
@@ -104,6 +115,7 @@ public class DaydreamController extends AController {
         }, delay, period);
         this.btn_daydream.setDisable(true);
         this.btn_stopDaydream.setDisable(false);
+        */
     }
     
     @FXML

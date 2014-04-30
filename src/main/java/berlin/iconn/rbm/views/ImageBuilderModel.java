@@ -42,6 +42,10 @@ public class ImageBuilderModel {
 	public List<Image> getHiddenImages(int visWidth, int visHeight) {
 		List<RBMSettingsController> rbmSettingsControllers = benchmarkModel.getRbmSettingsList();
 		
+                if(rbmSettingsControllers.isEmpty()){
+                    System.out.println("Please add RBM first");
+                    return null;
+                }
 		int outputSize = ((RBMSettingsMainController)(rbmSettingsControllers.get(rbmSettingsControllers.size() - 1).getModel().getController(RBMSettingsMainController.class))).getModel().getOutputSize();
 		
 		RBMTrainer rbmTrainer = new RBMTrainer();

@@ -131,7 +131,6 @@ public final class WeightsVisualizationModel implements IVisualizeObserver {
 
     @Override
     public void update(RBMInfoPackage pack) {
-        
         if (pack != null) {
             float[][] weights = pack.getWeights();
             this.weightsWidth = weights.length;

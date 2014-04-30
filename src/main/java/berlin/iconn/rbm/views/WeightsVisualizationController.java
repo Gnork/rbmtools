@@ -5,8 +5,6 @@
 package berlin.iconn.rbm.views;
 
 import berlin.iconn.rbm.main.AController;
-import berlin.iconn.rbm.enhancement.IVisualizeObserver;
-import berlin.iconn.rbm.enhancement.RBMInfoPackage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -21,8 +19,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.ImageView;
-import javafx.scene.image.PixelReader;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -61,8 +57,6 @@ public class WeightsVisualizationController extends AController implements Event
         weightViewStage.setScene(scene);
         
         this.model = new WeightsVisualizationModel(this, width, height);
-        
-        update();
         
         weightViewStage.setOnCloseRequest(this);
         

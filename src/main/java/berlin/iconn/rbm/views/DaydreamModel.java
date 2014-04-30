@@ -5,6 +5,7 @@ import berlin.iconn.rbm.rbm.RBMTrainer;
 import berlin.iconn.rbm.image.DataConverter;
 import berlin.iconn.rbm.image.ImageHelper;
 import berlin.iconn.rbm.image.ImageScaler;
+import berlin.iconn.rbm.tools.Chooser;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -41,22 +42,18 @@ public class DaydreamModel {
 	}
     
     public Image loadImage(int visWidth, int visHeight) {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setInitialDirectory(new File("images"));
-        Stage fileChooserStage = new Stage();
 
-        File file = fileChooser.showOpenDialog(fileChooserStage);
-        if (file != null) {
-            this.calcImageData = DataConverter.processPixelData(ImageHelper.loadImage(file), this.benchmarkModel.getImageEdgeSize(), this.benchmarkModel.isBinarizeImages(), this.benchmarkModel.isInvertImages(), this.benchmarkModel.getMinData(), this.benchmarkModel.getMaxData(), this.benchmarkModel.isRgb());
-
-            ImageScaler imageScaler = new ImageScaler();
-            
-            WritableImage image = SwingFXUtils.toFXImage(imageScaler.getScaledImageNeirestNeighbour(DataConverter.pixelDataToImage(this.calcImageData, this.benchmarkModel.getMinData(), this.benchmarkModel.isRgb()), visWidth, visHeight), null);
-
-            return image;
-        } else {
+        File file = Chooser.openFileChooser("images");
+        if(file == null){
             return null;
         }
+        this.calcImageData = DataConverter.processPixelData(ImageHelper.loadImage(file), this.benchmarkModel.getImageEdgeSize(), this.benchmarkModel.isBinarizeImages(), this.benchmarkModel.isInvertImages(), this.benchmarkModel.getMinData(), this.benchmarkModel.getMaxData(), this.benchmarkModel.isRgb());
+
+        ImageScaler imageScaler = new ImageScaler();
+
+        WritableImage image = SwingFXUtils.toFXImage(imageScaler.getScaledImageNeirestNeighbour(DataConverter.pixelDataToImage(this.calcImageData, this.benchmarkModel.getMinData(), this.benchmarkModel.isRgb()), visWidth, visHeight), null);
+
+        return image;
     }
 
     public Image generateImage(int visWidth, int visHeight) {
@@ -166,5 +163,9 @@ public class DaydreamModel {
 	public void setBenchmarkModel(BenchmarkModel benchmarkModel) {
 		this.benchmarkModel = benchmarkModel;
 	}
+        
+    public BenchmarkModel getBenchmarkModel(){
+        return benchmarkModel;
+    }
 
 }

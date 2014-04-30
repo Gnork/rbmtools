@@ -38,6 +38,9 @@ public class VanGoghModel {
     
     public void loadImageFile(){
         File imageFile = Chooser.openFileChooser("images");
+        if(imageFile == null){
+            return;
+        }
         BufferedImage originalImage;
         try {
             originalImage = ImageIO.read(imageFile);

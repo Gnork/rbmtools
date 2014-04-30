@@ -134,27 +134,13 @@ public class RBMTrainer {
         if (loggerModel.isFinalLoggerOn()) {
             rbmEnhancer.addEnhancement(new XMLEndTrainingLogger());
         }
-
-        int weightsInterval = visualizationsModel.getWeightsInterval();
         int errorInterval = visualizationsModel.getErrorInterval();
-        int featuresInterval = visualizationsModel.getFeaturesInterval();
-        //int featuresInterval = visualizationsModel.getFeaturesInterval();
-
-        if (visualizationsModel.isShowWeights()) {
-            rbmEnhancer.addEnhancement(new TrainingVisualizer(weightsInterval,
-                    visualizationsModel.getWeightsVisualizationController().getModel()));
-        }
 
         if (visualizationsModel.isShowErrorGraph()) {
             ErrorViewModel errorViewModel = visualizationsModel.getErrorViewController().getModel();
             errorViewModel.clear();
             rbmEnhancer.addEnhancement(new TrainingVisualizer(errorInterval, errorViewModel));
         }
-
-        
-        ImageViewerModel featuresViewer = visualizationsModel.getImageViewController().getModel();
-        rbmEnhancer.addEnhancement(new TrainingVisualizer(featuresInterval, featuresViewer));
-        
         
         StoppingCondition stop;
         if (stoppingConditionModel.isEpochsOn() && stoppingConditionModel.isErrorOn()) {

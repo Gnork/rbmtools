@@ -7,6 +7,7 @@ package berlin.iconn.rbm.main;
 
 import berlin.iconn.rbm.tools.Chooser;
 import berlin.iconn.rbm.views.DaydreamController;
+import berlin.iconn.rbm.views.FeatureViewer;
 import berlin.iconn.rbm.views.ImageBuilderController;
 import berlin.iconn.rbm.views.InImageDetectorController;
 import berlin.iconn.rbm.views.PRTMAPController;
@@ -56,6 +57,7 @@ public class BenchmarkController extends AController {
     // Loading
     @FXML
     private ToggleButton btn_OpenShowImages;
+    
     @FXML
     private Label lbl_imageSetSelected;
 
@@ -141,6 +143,12 @@ public class BenchmarkController extends AController {
         } catch (IOException ex) {
             Logger.getLogger(BenchmarkController.class.getName()).log(Level.SEVERE, null, ex);
         }
+        imageViewerController.getStage().setOnCloseRequest(new EventHandler<WindowEvent>() {
+            public void handle(WindowEvent we) {
+                btn_OpenShowImages.setSelected(false);
+                model.getImageViewerController().getStage().close();
+            }
+        });
         model = new BenchmarkModel(this, prtmapController, imageViewerController);
 
         loadImageSet(new File("images/Test_10x5/"));
@@ -169,6 +177,7 @@ public class BenchmarkController extends AController {
 
     @FXML
     private void btn_OpenShowImagesAction(ActionEvent event) {
+        
         this.model.setShowImageViewer(this.btn_OpenShowImages.isSelected());
         if (this.model.getImageViewerController() != null) {
             if (this.model.isShowImageViewer()) {
@@ -301,22 +310,32 @@ public class BenchmarkController extends AController {
     @FXML
     private void btn_OpenShowFeaturesAction(ActionEvent event) {
 
+        if (this.model.getFeatureViewer() == null) {
+            FeatureViewer featureViewer = new FeatureViewer(this);
+            featureViewer.getStage().setOnCloseRequest(new EventHandler<WindowEvent>() {
+                public void handle(WindowEvent we) {
+                    btn_OpenShowFeatures.setSelected(false);
+                    featureViewer.getStage().close();
+                }
+            });
+            this.model.setFeatureViewer(featureViewer);
+        }
+        
         if (!btn_OpenShowFeatures.isSelected()) {
             this.model.getFeatureViewer().close();
             return;
         }
 
-        this.model.setShowFeatureViewer(this.btn_OpenShowFeatures.isSelected());
 
-        if (this.model.getFeatureViewer() == null) {
-            this.model.initFeatureViewer(this);
-        }
-
-        if (this.model.isShowFeatureViewer()) {
-            this.model.getFeatureViewer().show();
+        if (this.btn_OpenShowFeatures.isSelected()) {
+            if(!this.model.getFeatureViewer().show()){
+                this.btn_OpenShowFeatures.setSelected(false);
+            }
         } else {
             this.model.getFeatureViewer().close();
         }
+        
+        this.model.setShowFeatureViewer(this.btn_OpenShowFeatures.isSelected());
     }
 
     @FXML
@@ -411,7 +430,6 @@ public class BenchmarkController extends AController {
 
     @FXML
     private void btn_startmAPTestAction(ActionEvent event) {
-
         // who can do it better?:
         int index = this.cmb_mAPTests.getSelectionModel().getSelectedIndex();
         String name = this.model.getImageManager().getNameFromIndex(index);

@@ -216,7 +216,10 @@ public class BenchmarkModel {
   }
   
   public void startMAPTest(String imageCategory) {
-    
+    if(this.rbmSettingsList.isEmpty()){
+        return;
+    }
+    this.globalUpdate();
     float[][] features = this.rbmTrainer.getHiddenAllRBMs(controller.getModel(), null, showImageViewer);
     PrecisionRecallTester prTester = new PrecisionRecallTester(features, imageManager);
     
@@ -235,8 +238,8 @@ public class BenchmarkModel {
     return this.imageViewerController;
   }
   
-  public void initFeatureViewer(BenchmarkController benchmarkController) {
-    this.featureViewer = new FeatureViewer(benchmarkController);
+  public void setFeatureViewer(FeatureViewer featureViewer) {
+    this.featureViewer = featureViewer;
   }
   
   public FeatureViewer getFeatureViewer() {

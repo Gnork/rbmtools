@@ -1,8 +1,6 @@
 package berlin.iconn.rbm.views.imageviewer;
 
-import java.awt.image.BufferedImage;
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.beans.value.ChangeListener;
@@ -119,6 +117,10 @@ public class ImageViewerController extends AController implements EventHandler {
   
   public void close() {
     viewStage.close();
+  }
+  
+  public Stage getStage(){
+      return viewStage;
   }
   
   @Override

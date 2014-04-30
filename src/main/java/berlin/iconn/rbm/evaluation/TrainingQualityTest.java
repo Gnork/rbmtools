@@ -11,6 +11,9 @@ public class TrainingQualityTest {
 	
 	public static float getMSE(BenchmarkModel benchmarkModel) {
 		File folder = Chooser.openDirectoryChooser("images");
+                if(folder == null){
+                    return 0.0f;
+                }
 		ImageManager imageManager = new ImageManager(folder, benchmarkModel);
 		
 		float[][] originalData = imageManager.getImageData();

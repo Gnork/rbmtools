@@ -68,6 +68,10 @@ public class ImageManager {
                 return (name.endsWith("jpg") || name.endsWith("png") || name.endsWith("gif"));
             }
         });
+        
+        if(imageFiles == null){
+            return;
+        }
 
         // erlaube nur ca. 65536 Bilder
         final int maxImages = 65536;

@@ -74,10 +74,13 @@ public class ImageBuilderController extends AController {
     	this.model.setBenchmarkModel(benchmarkModel);
     	
         List<Image> hiddenImages = this.model.getHiddenImages(80, 80);
+        if(hiddenImages == null){
+            return;
+        }
         int index = 0;
         for(Image hiddenImage : hiddenImages) {
 			try {
-				HiddenImageItemController hiddenImageItemController = (HiddenImageItemController)loadController("HiddenImageItem.fxml");
+				HiddenImageItemController hiddenImageItemController = (HiddenImageItemController)loadController("fxml/HiddenImageItem.fxml");
 				hiddenImageItemController.getModel().setHiddenImage(hiddenImage);
 				hiddenImageItemController.getModel().setUseFeature(false);
 				hiddenImageItemController.getModel().setWeight(0.0f);

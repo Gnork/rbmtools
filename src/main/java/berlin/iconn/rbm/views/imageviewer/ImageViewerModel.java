@@ -10,8 +10,6 @@ import berlin.iconn.rbm.imageviewer.drawables.FlowGroup;
 import berlin.iconn.rbm.imageviewer.drawables.Image;
 import berlin.iconn.rbm.logistic.DefaultLogisticMatrixFunction;
 import berlin.iconn.rbm.rbm.IRBM;
-import berlin.iconn.rbm.rbm.RBMJBlas;
-import berlin.iconn.rbm.rbm.RBMJBlasAVG;
 import berlin.iconn.rbm.rbm.RBMJBlasOpti;
 import com.badlogic.gdx.math.Vector2;
 import java.awt.image.BufferedImage;
@@ -23,7 +21,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.paint.Color;
 
-public class ImageViewerModel implements IVisualizeObserver {
+public class ImageViewerModel{
 
 	private final ImageViewerController controller;
 
@@ -44,7 +42,6 @@ public class ImageViewerModel implements IVisualizeObserver {
 		setSize(new Vector2(600, 400));
 		gc = canvas.getGraphicsContext2D();
 		camera = new Camera();
-
 	}
 
 	public void setImages(Pic[] images) {
@@ -139,12 +136,14 @@ public class ImageViewerModel implements IVisualizeObserver {
 	}
 
 	void draw() {
+                if(paper == null){
+                    return;
+                }
 		// draw background
 		gc.setFill(new Color(0.2, 0.2, 0.2, 1));
 		gc.fillRect(0, 0, getSize().x, getSize().y);
 
 		// draw all drawables
-
 		for (ADrawable d : paper.getDrawables()) {
 			d.draw(gc, camera.getPos(), camera.getZoomFactor());
 		}
@@ -168,7 +167,7 @@ public class ImageViewerModel implements IVisualizeObserver {
 		return pos;
 	}
 	
-	  @Override
+	/*  @Override
 	  public void update(RBMInfoPackage pack) {
 		  
 		  int inputSize =  pack.getWeights().length;
@@ -196,4 +195,5 @@ public class ImageViewerModel implements IVisualizeObserver {
 	      
 	      this.setImages(pics);
 	  }
+        */
 }

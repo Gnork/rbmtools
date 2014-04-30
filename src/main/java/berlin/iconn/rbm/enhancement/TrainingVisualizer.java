@@ -13,7 +13,7 @@ public class TrainingVisualizer implements IRBMTrainingEnhancement {
 
 	@Override
 	public void action(RBMInfoPackage info) {
-		
+		System.out.println("Action performed on: " + visObserver.getClass().getName());
 		this.visObserver.update(info);
 		
 	}

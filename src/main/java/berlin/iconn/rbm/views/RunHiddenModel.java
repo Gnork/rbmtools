@@ -15,6 +15,7 @@ import berlin.iconn.rbm.image.ImageManager;
 import berlin.iconn.rbm.image.ImageScaler;
 import berlin.iconn.rbm.image.Pic;
 import berlin.iconn.rbm.main.BenchmarkModel;
+import berlin.iconn.rbm.tools.Chooser;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -59,21 +60,16 @@ public class RunHiddenModel {
     }
     
     public Image loadImage(int visWidth, int visHeight) {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setInitialDirectory(new File("CBIR_Project/images"));
-        Stage fileChooserStage = new Stage();
-
-        File file = fileChooser.showOpenDialog(fileChooserStage);
-        if (file != null) {
-            this.calcImageData = DataConverter.processPixelData(ImageHelper.loadImage(file), this.benchmarkModel.getImageEdgeSize(), this.benchmarkModel.isBinarizeImages(), this.benchmarkModel.isInvertImages(), this.benchmarkModel.getMinData(), this.benchmarkModel.getMaxData(), this.benchmarkModel.isRgb());
-
-            ImageScaler imageScaler = new ImageScaler();
-            WritableImage image = SwingFXUtils.toFXImage(imageScaler.getScaledImageNeirestNeighbour(DataConverter.pixelDataToImage(this.calcImageData, this.benchmarkModel.getMinData(), this.benchmarkModel.isRgb()), visWidth, visHeight), null);
-
-            return image;
-        } else {
+        File file = Chooser.openFileChooser("images");
+        if(file == null){
             return null;
         }
+        this.calcImageData = DataConverter.processPixelData(ImageHelper.loadImage(file), this.benchmarkModel.getImageEdgeSize(), this.benchmarkModel.isBinarizeImages(), this.benchmarkModel.isInvertImages(), this.benchmarkModel.getMinData(), this.benchmarkModel.getMaxData(), this.benchmarkModel.isRgb());
+
+        ImageScaler imageScaler = new ImageScaler();
+        WritableImage image = SwingFXUtils.toFXImage(imageScaler.getScaledImageNeirestNeighbour(DataConverter.pixelDataToImage(this.calcImageData, this.benchmarkModel.getMinData(), this.benchmarkModel.isRgb()), visWidth, visHeight), null);
+
+        return image;
     }
     
     public void runHidden() {
@@ -83,8 +79,8 @@ public class RunHiddenModel {
     	int height = this.benchmarkModel.getImageEdgeSize();
         
         // Create hidden and visible daydream data, which is used for visualization
-        float[] hiddenDataForVis = trainer.getHiddenAllRBMs1D(this.benchmarkModel, this.calcImageData, false);
-        float[] visibleDataForVis = trainer.getVisibleAllRBMs1D(this.benchmarkModel, hiddenDataForVis, false);
+        float[] hiddenDataForVis = trainer.getHiddenAllRBMs1D(this.benchmarkModel, this.calcImageData, this.useHiddenStates);
+        float[] visibleDataForVis = trainer.getVisibleAllRBMs1D(this.benchmarkModel, hiddenDataForVis, this.useVisibleStates);
         
         // Convert hiddenData to pixels
         int hiddenImageEdgeLength = (int)Math.sqrt(hiddenDataForVis.length);
