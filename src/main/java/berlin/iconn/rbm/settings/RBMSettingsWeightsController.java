@@ -16,6 +16,7 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
@@ -39,6 +40,8 @@ public class RBMSettingsWeightsController extends AController {
     private TextField txt_seed;
     
     private RBMSettingsWeightsModel model;
+    @FXML
+    private Button btn_loadDat;
 
     /**
      * Initializes the controller class.
@@ -101,5 +104,10 @@ public class RBMSettingsWeightsController extends AController {
         this.cbx_useBinarizeVisible.setSelected((this.model.isBinarizeVisible()));
         this.cbx_useSeed.setSelected(this.model.isUseSeed());
         this.txt_seed.setText(new Integer(this.model.getSeed()).toString());
+    }
+
+    @FXML
+    private void btn_loadDatAction(ActionEvent event) {
+        this.model.loadDat(Chooser.openFileChooser("DatWeights"));
     }
 }

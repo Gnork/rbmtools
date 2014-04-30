@@ -1,17 +1,5 @@
 package berlin.iconn.rbm.views.imageviewer;
 
-import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.input.ScrollEvent;
-import javafx.scene.paint.Color;
-
-import com.badlogic.gdx.math.Vector2;
-
 import berlin.iconn.rbm.enhancement.IVisualizeObserver;
 import berlin.iconn.rbm.enhancement.RBMInfoPackage;
 import berlin.iconn.rbm.image.DataConverter;
@@ -22,7 +10,18 @@ import berlin.iconn.rbm.imageviewer.drawables.FlowGroup;
 import berlin.iconn.rbm.imageviewer.drawables.Image;
 import berlin.iconn.rbm.logistic.DefaultLogisticMatrixFunction;
 import berlin.iconn.rbm.rbm.IRBM;
+import berlin.iconn.rbm.rbm.RBMJBlas;
 import berlin.iconn.rbm.rbm.RBMJBlasAVG;
+import berlin.iconn.rbm.rbm.RBMJBlasOpti;
+import com.badlogic.gdx.math.Vector2;
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
+import javafx.scene.paint.Color;
 
 public class ImageViewerModel implements IVisualizeObserver {
 
@@ -175,7 +174,7 @@ public class ImageViewerModel implements IVisualizeObserver {
 		  int inputSize =  pack.getWeights().length;
 		  int outputSize = pack.getWeights()[0].length;
 	      
-	      IRBM rbm = new RBMJBlasAVG(inputSize, outputSize, 0.01f, new DefaultLogisticMatrixFunction(), false, 0, pack.getWeights());
+	      IRBM rbm = new RBMJBlasOpti(inputSize, outputSize, 0.01f, new DefaultLogisticMatrixFunction(), false, 0, pack.getWeights());
 	      
 	      Pic[] pics = new Pic[outputSize - 1];
 	      

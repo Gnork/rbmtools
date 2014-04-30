@@ -5,31 +5,33 @@
  */
 package berlin.iconn.rbm.rbm;
 
-import java.util.LinkedList;
-import java.util.ListIterator;
-
 import berlin.iconn.rbm.enhancement.RBMEnhancer;
 import berlin.iconn.rbm.enhancement.TrainingVisualizer;
-import berlin.iconn.rbm.persistence.XMLEndTrainingLogger;
 import berlin.iconn.rbm.logistic.ILogistic;
+import berlin.iconn.rbm.main.BenchmarkModel;
+import berlin.iconn.rbm.persistence.XMLEndTrainingLogger;
+import berlin.iconn.rbm.settings.RBMSettingsController;
 import berlin.iconn.rbm.settings.RBMSettingsLearningRateController;
 import berlin.iconn.rbm.settings.RBMSettingsLearningRateModel;
 import berlin.iconn.rbm.settings.RBMSettingsLoggerController;
 import berlin.iconn.rbm.settings.RBMSettingsLoggerModel;
 import berlin.iconn.rbm.settings.RBMSettingsMainController;
 import berlin.iconn.rbm.settings.RBMSettingsMainModel;
+import berlin.iconn.rbm.settings.RBMSettingsModel;
 import berlin.iconn.rbm.settings.RBMSettingsStoppingConditionController;
 import berlin.iconn.rbm.settings.RBMSettingsStoppingConditionModel;
 import berlin.iconn.rbm.settings.RBMSettingsVisualizationsController;
 import berlin.iconn.rbm.settings.RBMSettingsVisualizationsModel;
 import berlin.iconn.rbm.settings.RBMSettingsWeightsController;
 import berlin.iconn.rbm.settings.RBMSettingsWeightsModel;
-import berlin.iconn.rbm.main.BenchmarkModel;
-import berlin.iconn.rbm.settings.RBMSettingsController;
-import berlin.iconn.rbm.settings.RBMSettingsModel;
 import berlin.iconn.rbm.views.ErrorViewModel;
 import berlin.iconn.rbm.views.imageviewer.ImageViewerModel;
-
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.util.LinkedList;
+import java.util.ListIterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.concurrent.Task;
 
 /**
@@ -110,7 +112,15 @@ public class RBMTrainer {
         boolean useSeed = weightsModel.isUseSeed();
         float[][] weights = weightsModel.getWeights();
 
-        return new RBMJBlasAVG(inputSize, outputSize, learningRate, logisticFunction, useSeed, seed, weights);
+        Class rbmImplementation = mainModel.getSelectedRbmImplementationClass();
+        try {
+            Constructor rbmConstructor = rbmImplementation.getConstructor(int.class, int.class, float.class, ILogistic.class, boolean.class, int.class, float[][].class);
+            return (IRBM)rbmConstructor.newInstance(inputSize, outputSize, learningRate, logisticFunction, useSeed, seed, weights);
+        } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
+            Logger.getLogger(RBMTrainer.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return null;
     }
 
     public void trainSingleRBM(RBMSettingsController controller, RBMEnhancer rbmEnhancer) {
@@ -357,6 +367,7 @@ public class RBMTrainer {
             if(weights != null){
                 if(weights.length != mainModel.getInputSize() + 1 || weights[0].length != mainModel.getOutputSize() + 1){
                     weightsModel.setWeights(null);
+                    System.out.println("ATTENTION: Weights have been reset to null, because array dimensions do not fit input or output size!");
                 }
             }
             data = getHiddenSingleRBM(settingsController, data);

@@ -41,8 +41,6 @@ public class RBMSettingsMainController extends AController {
     @FXML
     private ComboBox<?> cmb_rbmImplementation;
     @FXML
-    private ComboBox<?> cmb_feature;
-    @FXML
     private ComboBox<?> cmb_logisticFunction;
     @FXML
     private TextField txt_outputSize;
@@ -67,11 +65,6 @@ public class RBMSettingsMainController extends AController {
         this.cmb_rbmImplementation.setItems(rbmImplementationObs);
         this.cmb_rbmImplementation.getSelectionModel().selectFirst();
 
-        List<String> feature = new LinkedList<>(Arrays.asList(this.model.getFeatures()));
-        ObservableList rbmFeatureObs = FXCollections.observableList(feature);
-        this.cmb_feature.setItems(rbmFeatureObs);
-        this.cmb_feature.getSelectionModel().select(1);
-
         List<String> logisticFunction = new LinkedList<>(Arrays.asList(this.model.getLogisticFunctions()));
         ObservableList logisticFunctionObs = FXCollections.observableList(logisticFunction);
         this.cmb_logisticFunction.setItems(logisticFunctionObs);
@@ -81,11 +74,6 @@ public class RBMSettingsMainController extends AController {
     @FXML
     private void cmb_rbmImplementationAction(ActionEvent event) {
         this.model.setSelectedRbmImplementation(cmb_rbmImplementation.getSelectionModel().getSelectedIndex());
-    }
-
-    @FXML
-    private void cmb_featureAction(ActionEvent event) {
-        this.model.setSelectedRbmFeature(cmb_feature.getSelectionModel().getSelectedIndex());
     }
 
     @FXML
@@ -115,7 +103,6 @@ public class RBMSettingsMainController extends AController {
     public void update() {
         System.out.println("update view RBMSettingsMain");
         this.cmb_logisticFunction.getSelectionModel().select(this.model.getSelectedLogisticFunction());
-        this.cmb_feature.getSelectionModel().select(this.model.getSelectedRbmFeature());
         this.cmb_rbmImplementation.getSelectionModel().select(this.model.getSelectedRbmImplementation());
         
         this.txt_outputSize.setText(new Integer(this.model.getOutputSize()).toString());

@@ -12,6 +12,10 @@ import berlin.iconn.rbm.logistic.RectifierMatrixFunction;
 import berlin.iconn.rbm.logistic.SquareRootLogistic;
 import berlin.iconn.rbm.logistic.TanHMatrixFunction;
 import berlin.iconn.rbm.persistence.Conserve;
+import berlin.iconn.rbm.rbm.IRBM;
+import berlin.iconn.rbm.rbm.RBMJBlas;
+import berlin.iconn.rbm.rbm.RBMJBlasAVG;
+import berlin.iconn.rbm.rbm.RBMJBlasOpti;
 
 /**
  *
@@ -22,8 +26,11 @@ public class RBMSettingsMainModel{
     private final RBMSettingsMainController controller;
     
     //combobox select options
-    private final String[] rbmImplementations = {"RBM select not working"};
-    private final String[] rbmFeatures = {"Feature select not working"};
+    private final String[] rbmImplementations = {
+        "RBMJBlasAVG",
+        "RBMJBlasOpti",
+        "RBMJBlas"
+    };
 
     public RBMSettingsMainModel(RBMSettingsMainController controller) {
         this.controller = controller;
@@ -56,8 +63,6 @@ public class RBMSettingsMainModel{
     @Conserve
     private int selectedRbmImplementation = 0;
     @Conserve
-    private int selectedRbmFeature = 0;
-    @Conserve
     private int selectedLogisticFunction = 0;
     @Conserve
     private int inputSize = 0;
@@ -67,17 +72,22 @@ public class RBMSettingsMainModel{
     public int getSelectedRbmImplementation() {
         return selectedRbmImplementation;
     }
+    
+    public Class getSelectedRbmImplementationClass(){
+        switch(this.getSelectedRbmImplementation()){
+        case 0:
+            return RBMJBlasAVG.class;
+        case 1:
+            return RBMJBlasOpti.class;
+        case 2:
+            return RBMJBlas.class;
+        default:
+            return RBMJBlas.class;
+        }       
+    }
 
     public void setSelectedRbmImplementation(int selectedRbmImplementation) {
         this.selectedRbmImplementation = selectedRbmImplementation;
-    }
-
-    public int getSelectedRbmFeature() {
-        return this.selectedRbmFeature;      
-    }
-
-    public void setSelectedRbmFeature(int selectedRbmFeature) {
-        this.selectedRbmFeature = selectedRbmFeature;
     }
 
     public int getSelectedLogisticFunction() {
@@ -107,10 +117,6 @@ public class RBMSettingsMainModel{
 
     public String[] getRbmImplementations() {
         return rbmImplementations;
-    }
-
-    public String[] getFeatures() {
-        return rbmFeatures;
     }
 
     public String[] getLogisticFunctions() {

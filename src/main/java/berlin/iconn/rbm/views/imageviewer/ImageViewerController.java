@@ -21,18 +21,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import com.badlogic.gdx.math.Vector2;
-
-import berlin.iconn.rbm.enhancement.IVisualizeObserver;
-import berlin.iconn.rbm.enhancement.RBMInfoPackage;
-import berlin.iconn.rbm.image.DataConverter;
-import berlin.iconn.rbm.image.Pic;
-import berlin.iconn.rbm.logistic.DefaultLogisticMatrixFunction;
 import berlin.iconn.rbm.main.AController;
-import berlin.iconn.rbm.rbm.IRBM;
-import berlin.iconn.rbm.rbm.RBMJBlasAVG;
-import berlin.iconn.rbm.rbm.RBMTrainer;
-import berlin.iconn.rbm.settings.RBMSettingsController;
-import berlin.iconn.rbm.settings.RBMSettingsMainController;
 
 public class ImageViewerController extends AController implements EventHandler {
   

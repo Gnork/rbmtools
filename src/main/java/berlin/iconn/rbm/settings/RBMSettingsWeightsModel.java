@@ -7,6 +7,7 @@
 package berlin.iconn.rbm.settings;
 
 import berlin.iconn.rbm.persistence.Conserve;
+import berlin.iconn.rbm.persistence.DatWeightsLoader;
 import berlin.iconn.rbm.persistence.XMLWeightsLoader;
 import berlin.iconn.rbm.persistence.XMLWeightsSaver;
 import java.io.File;
@@ -97,6 +98,16 @@ public class RBMSettingsWeightsModel{
             this.saver.singleWeights(this.weights);
             System.out.println("Save Weights");
         } catch (IOException | ParserConfigurationException | TransformerException ex) {
+            Logger.getLogger(RBMSettingsWeightsModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void loadDat(File file) {
+        try {
+            weights = DatWeightsLoader.loadWeights(file);
+            System.out.println("Load .dat weights");
+            System.out.println("Input: " + weights.length + ", Output: " + weights[0].length);
+        } catch (Exception ex) {
             Logger.getLogger(RBMSettingsWeightsModel.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
