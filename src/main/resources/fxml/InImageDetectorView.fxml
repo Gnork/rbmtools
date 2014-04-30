@@ -5,15 +5,15 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" fx:id="view" cache="true" cacheHint="QUALITY" depthTest="ENABLE" pickOnBounds="false" prefHeight="400.0" prefWidth="612.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="berlin.iconn.rbm.views.InImageDetectorController">
+<AnchorPane id="AnchorPane" fx:id="view" cache="true" cacheHint="QUALITY" depthTest="ENABLE" pickOnBounds="false" prefHeight="400.0" prefWidth="612.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="berlin.iconn.rbm.views.InImageDetectorController">
   <children>
     <ToolBar layoutY="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
       <items>
         <Button fx:id="btn_loadImage" mnemonicParsing="false" onAction="#btn_loadImageAction" text="Load" />
-        <Button fx:id="btn_runDetection" id="btn_generateImage" mnemonicParsing="false" onAction="#btn_runDetectionAction" text="Detect" />
+        <Button id="btn_generateImage" fx:id="btn_runDetection" mnemonicParsing="false" onAction="#btn_runDetectionAction" text="Detect" />
       </items>
     </ToolBar>
     <ImageView fx:id="imgv_Image" cache="false" fitHeight="370.0" fitWidth="610.0" onMouseMoved="#imgv_ImageMouseMovedAction" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0" />
-    <TextArea fx:id="txt_Probabilities" id="txt_Probabilities" prefHeight="320.0" prefWidth="60.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="43.0" />
+    <TextArea fx:id="txt_Probabilities" prefHeight="320.0" prefWidth="120.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="43.0" />
   </children>
 </AnchorPane>
