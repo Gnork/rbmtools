@@ -4,8 +4,6 @@ import berlin.iconn.rbm.image.DataConverter;
 import berlin.iconn.rbm.image.ImageHelper;
 import berlin.iconn.rbm.main.BenchmarkModel;
 import berlin.iconn.rbm.rbm.RBMTrainer;
-import berlin.iconn.rbm.tools.clustering.Cluster;
-import berlin.iconn.rbm.tools.clustering.ClusteringHelper;
 import berlin.iconn.rbm.tools.clustering.LabeledData;
 import berlin.iconn.rbm.tools.labeling.DataLabelingHelper;
 import java.awt.image.BufferedImage;
@@ -13,7 +11,6 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
 import java.util.SortedMap;
 import java.util.TreeMap;
 import javafx.embed.swing.SwingFXUtils;
@@ -39,7 +36,15 @@ public class InImageDetectorModel {
         this.controller = controller;
     }
     
-    public Image loadImage(int visWidth, int visHeight) {
+    
+    
+    public BenchmarkModel getBenchmarkModel() {
+		return benchmarkModel;
+	}
+
+
+
+	public Image loadImage(int visWidth, int visHeight) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setInitialDirectory(new File("images"));
         Stage fileChooserStage = new Stage();
@@ -88,15 +93,20 @@ public class InImageDetectorModel {
 		
 	}
 	
-	public TreeMap<Double, String> getProbabilityMap(double xPos, double yPos) {
+	public HashMap<String, Double> getProbabilityMap(double xPos, double yPos) {
+            
+            int windowEdgeLength = this.benchmarkModel.getImageEdgeSize();
+            
+            if(xPos > this.width - windowEdgeLength || yPos > this.height - windowEdgeLength) {
+                return null;
+            }
+            
             TreeMap<Double, String> probabilityMap = new TreeMap<>();	
             
             RBMTrainer trainer = new RBMTrainer();
 		
             int x = (int)xPos;
             int y = (int)yPos;
-		
-            int windowEdgeLength = this.benchmarkModel.getImageEdgeSize();
 		
             float[] window = new float[windowEdgeLength * windowEdgeLength];
             for(int yW = 0, iW = 0; yW < windowEdgeLength; yW++) {
@@ -123,7 +133,7 @@ public class InImageDetectorModel {
                 String label = distanceMap.get(distance);
                 if(!labelsInside.contains(label)) {
                     labelsInside.add(label);
-                    probabilityMap.put(distance, label);
+                    probabilityMap.put(1 - distance / maxDistance, label);
                 }
             }
 		
@@ -132,12 +142,34 @@ public class InImageDetectorModel {
 			return "posX: " + xPos + " posX: " + yPos + " label: " + cluster.getLabel() + " distance: " + distance;
 		} else return "";
 		*/
+            
+        HashMap<String, Double> toReturn = new HashMap<String, Double>();
+        
+        for(String name : this.benchmarkModel.getImageManager().getGroupNames()) {
+        	
+        	Double distance = 0.0;
+        	for(Double key : probabilityMap.keySet()) {
+        		if(probabilityMap.get(key).equals(name)) {
+        			distance = key;
+        		}
+        	}
+        	
+        	toReturn.put(name, distance);
+        }
 		
-            return probabilityMap;
+        return toReturn;
 	}
 	
 	public float[] getImageData() {
             return imageData;
+        }
+        
+        public float getWidth() {
+            return this.width;
+        }
+        
+        public float getHeight() {
+            return this.height;
         }
 	
 }

@@ -7,12 +7,11 @@ package berlin.iconn.rbm.views;
 
 import berlin.iconn.rbm.main.AController;
 import berlin.iconn.rbm.main.BenchmarkModel;
-
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
-
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -90,10 +89,6 @@ public class DaydreamController extends AController {
 
     @FXML
     private void btn_daydreamAction(ActionEvent event) {
-        return;
-        //Threading not working
-        
-        /*
         if(this.model.getBenchmarkModel().getRbmSettingsList().isEmpty()){
             return;
         }
@@ -103,19 +98,23 @@ public class DaydreamController extends AController {
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                System.out.println("Dream");
-                model.daydream();
-                Image visibleImage = model.getVisibleImage((int)imgv_Result.getFitWidth(), (int)imgv_Result.getFitHeight());
-                imgv_Result.setImage(visibleImage);
-                Image hiddenImage = model.getHiddenImage(10);
-                imgv_ResultHidden.setFitWidth(hiddenImage.getWidth());
-                imgv_ResultHidden.setFitHeight(hiddenImage.getHeight());
-                imgv_ResultHidden.setImage(hiddenImage);
+                
+                Platform.runLater(() -> {
+                    System.out.println("Dream");
+                    model.daydream();
+                    Image visibleImage = model.getVisibleImage((int)imgv_Result.getFitWidth(), (int)imgv_Result.getFitHeight());
+                    imgv_Result.setImage(visibleImage);
+                    Image hiddenImage = model.getHiddenImage(10);
+                    imgv_ResultHidden.setFitWidth(hiddenImage.getWidth());
+                    imgv_ResultHidden.setFitHeight(hiddenImage.getHeight());
+                    imgv_ResultHidden.setImage(hiddenImage);
+                });
+                
+
             }
         }, delay, period);
         this.btn_daydream.setDisable(true);
         this.btn_stopDaydream.setDisable(false);
-        */
     }
     
     @FXML

@@ -381,7 +381,7 @@ public class BenchmarkController extends AController {
             this.inImageDetectorController = (InImageDetectorController) new InImageDetectorController().loadController("fxml/InImageDetectorView.fxml");
             Parent root = (Parent) this.inImageDetectorController.getView();
 
-            Scene scene = new Scene(root, 610, 400);
+            Scene scene = new Scene(root, 900, 400);
             this.inImageDetectorStage = new Stage();
             this.inImageDetectorStage.setTitle("Image Builder");
             this.inImageDetectorStage.setScene(scene);
