@@ -56,6 +56,9 @@ public class InImageDetectorController extends AController {
     @FXML
     private void btn_loadImageAction(ActionEvent event) {
         Image image = this.model.loadImage((int) imgv_Image.getFitWidth(), (int) imgv_Image.getFitHeight());
+        if(image == null){
+            return;
+        }
         
         if (!image.isError()) {
             this.imgv_Image.setImage(image);
@@ -80,6 +83,7 @@ public class InImageDetectorController extends AController {
         if(this.model.getImageData() == null) return;
         
     	HashMap<String, Double> probabilityMap = this.model.getProbabilityMap(event.getX(), event.getY());
+        if(probabilityMap == null) return;
         
         List<String> keys = new ArrayList(probabilityMap.keySet());
         int index = 0;
