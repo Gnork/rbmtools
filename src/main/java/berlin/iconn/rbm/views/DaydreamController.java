@@ -109,7 +109,6 @@ public class DaydreamController extends AController {
                     imgv_ResultHidden.setFitHeight(hiddenImage.getHeight());
                     imgv_ResultHidden.setImage(hiddenImage);
                 });
-                
 
             }
         }, delay, period);
