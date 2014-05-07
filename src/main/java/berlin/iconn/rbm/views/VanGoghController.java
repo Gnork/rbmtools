@@ -14,6 +14,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -41,15 +43,17 @@ public class VanGoghController extends AController {
     private Button btn_generate;
     
     private VanGoghModel model;
+    @FXML
+    private TextField txt_minEdgeSize;
+    @FXML
+    private CheckBox cbx_binarize;
+    @FXML
+    private Button btn_export;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         this.model = new VanGoghModel(this);
-    }    
-
-    @Override
-    public void update() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.update();
     }
 
     @Override
@@ -81,6 +85,27 @@ public class VanGoghController extends AController {
     @FXML
     private void btn_generateAction(ActionEvent event) {
         this.model.generateImage();
+    }
+
+    @FXML
+    private void txt_minEdgeSizeAction(ActionEvent event) {
+        this.model.setMinEdgeSize(new Integer(this.txt_minEdgeSize.getText()));
+    }
+
+    @FXML
+    private void cbx_binarizeAction(ActionEvent event) {
+        this.model.setBinarize(this.cbx_binarize.isSelected());
+    }
+    
+    @Override
+    public void update(){
+        txt_minEdgeSize.setText(Integer.toString(this.model.getMinEdgeSize()));
+        cbx_binarize.setSelected(this.model.isBinarize());
+    }
+
+    @FXML
+    private void btn_exportAction(ActionEvent event) {
+        this.model.exportImage();
     }
     
 }

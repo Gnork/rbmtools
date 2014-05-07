@@ -12,6 +12,10 @@
     <items>
       <Button fx:id="btn_loadImage" mnemonicParsing="false" onAction="#btn_loadImageAction" text="Load" />
       <Button id="btn_generateImage" fx:id="btn_generate" mnemonicParsing="false" onAction="#btn_generateAction" text="Generate" />
+      <Label text="Mininum Edge Size" />
+      <TextField fx:id="txt_minEdgeSize" onAction="#txt_minEdgeSizeAction" prefWidth="100.0" />
+      <CheckBox fx:id="cbx_binarize" mnemonicParsing="false" onAction="#cbx_binarizeAction" text="Binarize" />
+      <Button fx:id="btn_export" mnemonicParsing="false" onAction="#btn_exportAction" text="Export" />
     </items>
   </ToolBar>
   <ImageView fx:id="imgv_Image" cache="false" fitHeight="0.0" fitWidth="0.0" onMouseMoved="#imgv_ImageMouseMovedAction" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0" />

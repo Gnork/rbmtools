@@ -12,10 +12,10 @@ import berlin.iconn.rbm.logistic.RectifierMatrixFunction;
 import berlin.iconn.rbm.logistic.SquareRootLogistic;
 import berlin.iconn.rbm.logistic.TanHMatrixFunction;
 import berlin.iconn.rbm.persistence.Conserve;
-import berlin.iconn.rbm.rbm.IRBM;
 import berlin.iconn.rbm.rbm.RBMJBlas;
 import berlin.iconn.rbm.rbm.RBMJBlasAVG;
 import berlin.iconn.rbm.rbm.RBMJBlasOpti;
+import berlin.iconn.rbm.rbm.RBMJBlasSemiBinarize;
 
 /**
  *
@@ -29,7 +29,8 @@ public class RBMSettingsMainModel{
     private final String[] rbmImplementations = {
         "RBMJBlasAVG",
         "RBMJBlasOpti",
-        "RBMJBlas"
+        "RBMJBlas",
+        "RBMJBlasSemiBinarize"
     };
 
     public RBMSettingsMainModel(RBMSettingsMainController controller) {
@@ -81,6 +82,8 @@ public class RBMSettingsMainModel{
             return RBMJBlasOpti.class;
         case 2:
             return RBMJBlas.class;
+        case 3:
+            return RBMJBlasSemiBinarize.class;
         default:
             return RBMJBlas.class;
         }       

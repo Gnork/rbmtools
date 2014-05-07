@@ -6,7 +6,7 @@ import java.util.Random;
 import org.jblas.FloatMatrix;
 import org.jblas.MatrixFunctions;
 
-public class RBMJBlas implements IRBM {
+public class RBMJBlasSemiBinarize implements IRBM {
 
     private final float learnRate;
     private final ILogistic logisticFunction;
@@ -15,9 +15,9 @@ public class RBMJBlas implements IRBM {
 
     private FloatMatrix weights;
 
-    public RBMJBlas(int inputSize, int outputSize, float learningRate, ILogistic logisticFunction, boolean useSeed, int seed, float[][] weights) {
+    public RBMJBlasSemiBinarize(int inputSize, int outputSize, float learningRate, ILogistic logisticFunction, boolean useSeed, int seed, float[][] weights) {
 
-        System.out.println("Create RBMJBlas");
+        //System.out.println("Create RBMJBlasSemiBinarize");
         
         this.learnRate = learningRate;
         this.logisticFunction = logisticFunction;
@@ -179,7 +179,7 @@ public class RBMJBlas implements IRBM {
             float[][] tmpHiddenStates = hiddenNodes.dup().toArray2();
             for (int y = 0; y < tmpHiddenStates.length; y++) {
                 for (int x = 0; x < tmpHiddenStates[y].length; x++) {
-                    tmpHiddenStates[y][x] = (tmpHiddenStates[y][x] > randomMatrix[y][x]) ? 1 : 0;
+                    tmpHiddenStates[y][x] = (tmpHiddenStates[y][x] > randomMatrix[y][x]) ? Math.min(1, tmpHiddenStates[y][x] + 0.2f) : Math.max(0, tmpHiddenStates[y][x] - 0.2f);
                 }
             }
             hiddenNodes = new FloatMatrix(tmpHiddenStates);
