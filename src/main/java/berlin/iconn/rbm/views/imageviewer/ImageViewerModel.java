@@ -1,19 +1,11 @@
 package berlin.iconn.rbm.views.imageviewer;
 
-import berlin.iconn.rbm.enhancement.IVisualizeObserver;
-import berlin.iconn.rbm.enhancement.RBMInfoPackage;
-import berlin.iconn.rbm.image.DataConverter;
 import berlin.iconn.rbm.image.ImageManager;
 import berlin.iconn.rbm.image.Pic;
+import berlin.iconn.rbm.image.V2;
 import berlin.iconn.rbm.imageviewer.drawables.ADrawable;
 import berlin.iconn.rbm.imageviewer.drawables.FlowGroup;
 import berlin.iconn.rbm.imageviewer.drawables.Image;
-import berlin.iconn.rbm.logistic.DefaultLogisticMatrixFunction;
-import berlin.iconn.rbm.rbm.IRBM;
-import berlin.iconn.rbm.rbm.RBMJBlasOpti;
-import com.badlogic.gdx.math.Vector2;
-import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
@@ -21,6 +13,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.paint.Color;
 
+import java.util.ArrayList;
 public class ImageViewerModel{
 
 	private final ImageViewerController controller;
@@ -28,18 +21,18 @@ public class ImageViewerModel{
 	Camera camera;
 	Paper paper;
 
-	Vector2 pos = new Vector2(0, 0);
+	V2 pos = new V2(0, 0);
 
 	Canvas canvas;
 	GraphicsContext gc;
 
-	private Vector2 lastMousePosition = new Vector2(0, 0);
+	private V2 lastMousePosition = new V2(0, 0);
 
 	ImageViewerModel(ImageViewerController controller) {
 		this.controller = controller;
 		canvas = controller.canvas;
 
-		setSize(new Vector2(600, 400));
+		setSize(new V2(600, 400));
 		gc = canvas.getGraphicsContext2D();
 		camera = new Camera();
 	}
@@ -86,26 +79,26 @@ public class ImageViewerModel{
 		}
 	}
 
-	Vector2 getMousePos(MouseEvent e) {
+	V2 getMousePos(MouseEvent e) {
 		float a = (float) e.getX();
 		float b = (float) e.getY();
-		return new Vector2(a, b);
+		return new V2(a, b);
 	}
 
-	Vector2 getMousePos(ScrollEvent e) {
+	V2 getMousePos(ScrollEvent e) {
 		float a = (float) e.getX();
 		float b = (float) e.getY();
-		return new Vector2(a, b);
+		return new V2(a, b);
 	}
 
 	void onResize(int w, int h) {
-		setSize(new Vector2(w, h));
+		setSize(new V2(w, h));
 	}
 
 	void onMouseWheel(ScrollEvent e) {
 
-		Vector2 mpos = getMousePos(e);
-		Vector2 a = (mpos.add(camera.getRelPos())).mul((float) (1 / camera
+		V2 mpos = getMousePos(e);
+		V2 a = (mpos.add(camera.getRelPos())).mul((float) (1 / camera
 				.getZoomFactor()));
 
 		if (e.getDeltaY() > 0)
@@ -113,7 +106,7 @@ public class ImageViewerModel{
 		else
 			camera.setZoomFactor(camera.getZoomFactor() / 1.1f);
 
-		Vector2 newPos = (a.mul(camera.getZoomFactor())).sub(getMousePos(e));
+		V2 newPos = (a.mul(camera.getZoomFactor())).sub(getMousePos(e));
 
 		camera.setRelPos(newPos);
 	}
@@ -123,15 +116,15 @@ public class ImageViewerModel{
 	}
 
 	void onMouseDragging(MouseEvent e) {
-		Vector2 offset = lastMousePosition.sub(getMousePos(e));
+		V2 offset = lastMousePosition.sub(getMousePos(e));
 		camera.setPos(camera.getPos().add(
 				offset.mul(1 / camera.getZoomFactor())));
 		lastMousePosition.set(getMousePos(e));
 	}
 
 	void centerCamera() {
-		Vector2 desiredPaperSize = paper.getSize().mul(camera.getZoomFactor());
-		Vector2 tmp = desiredPaperSize.sub(getSize());
+		V2 desiredPaperSize = paper.getSize().mul(camera.getZoomFactor());
+		V2 tmp = desiredPaperSize.sub(getSize());
 		camera.setPos(tmp.mul(1 / (2 * camera.getZoomFactor())));
 	}
 
@@ -149,21 +142,21 @@ public class ImageViewerModel{
 		}
 	}
 
-	void setSize(Vector2 s) {
+	void setSize(V2 s) {
 		canvas.setWidth(s.x);
 		canvas.setHeight(s.y);
 	}
 
-	Vector2 getSize() {
-		return new Vector2((float) canvas.getWidth(),
+	V2 getSize() {
+		return new V2((float) canvas.getWidth(),
 				(float) canvas.getHeight());
 	}
 
-	void setPos(Vector2 p) {
+	void setPos(V2 p) {
 		pos.set(p);
 	}
 
-	Vector2 getPos() {
+	V2 getPos() {
 		return pos;
 	}
 	

@@ -3,6 +3,7 @@ package berlin.iconn.rbm.views.imageviewer;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import berlin.iconn.rbm.image.V2;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.Event;
@@ -18,7 +19,6 @@ import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-import com.badlogic.gdx.math.Vector2;
 import berlin.iconn.rbm.main.AController;
 
 public class ImageViewerController extends AController implements EventHandler {
@@ -53,7 +53,7 @@ public class ImageViewerController extends AController implements EventHandler {
       @Override
       public void changed(ObservableValue<? extends Number> ov, Number oldValue, Number newHeight) {
         
-        ImageViewerController.this.model.setSize(new Vector2((float) ImageViewerController.this.scene.widthProperty().get(),
+        ImageViewerController.this.model.setSize(new V2((float) ImageViewerController.this.scene.widthProperty().get(),
             (float) ImageViewerController.this.scene.heightProperty().get()));
         ImageViewerController.this.model.draw();
       }

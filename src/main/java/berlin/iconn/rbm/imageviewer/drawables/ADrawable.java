@@ -4,21 +4,21 @@ import java.util.ArrayList;
 
 import javafx.scene.canvas.GraphicsContext;
 
-import com.badlogic.gdx.math.Vector2;
+import berlin.iconn.rbm.image.V2;
 
 public abstract class ADrawable {
 
 	protected ArrayList<ADrawable> drawables = new ArrayList<>();
-	protected final Vector2 pos = new Vector2();
-	protected final Vector2 size = new Vector2();
+	protected final V2 pos = new V2();
+	protected final V2 size = new V2();
 
-	public abstract void draw(GraphicsContext gc, Vector2 offset, double zoom);
+	public abstract void draw(GraphicsContext gc, V2 offset, double zoom);
 
-	public abstract void draw(GraphicsContext gc, Vector2 offset, double zoom,
-			Vector2 newSize);
+	public abstract void draw(GraphicsContext gc, V2 offset, double zoom,
+			V2 newSize);
 
-	public Vector2 getPos() {
-		return pos.cpy();
+	public V2 getPos() {
+		return pos.copy();
 	}
 
 	public void addDrawable(ADrawable d) {
@@ -29,11 +29,11 @@ public abstract class ADrawable {
 		return drawables;
 	}
 
-	public Vector2 getSize() {
-		return size.cpy();
+	public V2 getSize() {
+		return size.copy();
 	}
 
-	public void setPos(Vector2 v) {
+	public void setPos(V2 v) {
 		this.pos.set(v);
 	}
 }
