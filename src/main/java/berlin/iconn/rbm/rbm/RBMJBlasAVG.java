@@ -22,8 +22,6 @@ public class RBMJBlasAVG implements IRBM {
 
     public RBMJBlasAVG(int inputSize, int outputSize, float learningRate, ILogistic logisticFunction, boolean useSeed, int seed, float[][] weights) {
         
-        System.out.println("Create RBMJBlasAVG");
-        
         this.learnRate = learningRate;
         this.logisticFunction = logisticFunction;
 

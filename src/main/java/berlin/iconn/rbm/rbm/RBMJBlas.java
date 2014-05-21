@@ -16,8 +16,6 @@ public class RBMJBlas implements IRBM {
     private FloatMatrix weights;
 
     public RBMJBlas(int inputSize, int outputSize, float learningRate, ILogistic logisticFunction, boolean useSeed, int seed, float[][] weights) {
-
-        System.out.println("Create RBMJBlas");
         
         this.learnRate = learningRate;
         this.logisticFunction = logisticFunction;

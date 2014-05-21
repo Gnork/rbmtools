@@ -7,6 +7,7 @@ package berlin.iconn.rbm.main;
 
 import berlin.iconn.rbm.tools.Chooser;
 import berlin.iconn.rbm.views.DaydreamController;
+import berlin.iconn.rbm.views.FaceRepairController;
 import berlin.iconn.rbm.views.FeatureViewer;
 import berlin.iconn.rbm.views.ImageBuilderController;
 import berlin.iconn.rbm.views.InImageDetectorController;
@@ -112,6 +113,11 @@ public class BenchmarkController extends AController {
     private ToggleButton btn_vanGogh;
     private VanGoghController vanGoghController;
     private Stage vanGoghStage;
+    
+    @FXML
+    private ToggleButton btn_faceRepair;
+    private FaceRepairController faceRepairController;
+    private Stage faceRepairStage;
 
     // Evaluation
     @FXML
@@ -515,6 +521,43 @@ public class BenchmarkController extends AController {
             }
 
             this.vanGoghStage.show();
+
+            
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void btn_faceRepairAction(ActionEvent event) {
+        try {
+            if (!btn_faceRepair.isSelected()) {
+                if(this.faceRepairStage != null){
+                    this.faceRepairStage.close();
+                }
+                return;
+            }
+            
+            if(this.faceRepairStage == null || this.faceRepairController == null){
+
+                this.faceRepairController = (FaceRepairController) new FaceRepairController().loadController("fxml/FaceRepair.fxml");
+                Parent root = (Parent) this.faceRepairController.getView();
+
+                this.faceRepairController.setBenchmarkModel(this.getModel());
+
+                Scene scene = new Scene(root, 800, 600);
+                this.faceRepairStage = new Stage();
+                this.faceRepairStage.setTitle("Face Repair");
+                this.faceRepairStage.setScene(scene);
+                this.faceRepairStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                    public void handle(WindowEvent we) {
+                        btn_faceRepair.setSelected(false);
+                        faceRepairStage.close();
+                    }
+                });
+            }
+
+            this.faceRepairStage.show();
 
             
         } catch (IOException ex) {

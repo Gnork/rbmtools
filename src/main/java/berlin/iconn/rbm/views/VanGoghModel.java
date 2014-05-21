@@ -131,7 +131,7 @@ public class VanGoghModel {
 
         int numOfCores= Runtime.getRuntime().availableProcessors();
         System.out.println("Available Processors: " + numOfCores);
-        pool.invoke(new VanGoghReconstruct(this.image, imageEdgeSize, 0, xShifts-1, 0, yShifts-1, numOfCores, benchmarkModel, this.binarize));
+        pool.invoke(new VanGoghReconstruct(this.image, imageEdgeSize, 0, xShifts-1, 0, yShifts-1, 2, benchmarkModel, this.binarize));
 
         drawImage();
     }

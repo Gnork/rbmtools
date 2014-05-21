@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" fx:id="view" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="berlin.iconn.rbm.views.FaceRepairController">
+  <ToolBar layoutY="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+    <items>
+      <Button fx:id="btn_loadImage" mnemonicParsing="false" onAction="#btn_loadImageAction" text="Load" />
+      <Button fx:id="btn_repair" mnemonicParsing="false" onAction="#btn_repairAction" text="Repair" />
+      <Label text="MinEdgeSize" />
+      <TextField fx:id="txt_minEdgeSize" onAction="#txt_minEdgeSizeAction" prefWidth="100.0" />
+      <CheckBox fx:id="cbx_binarize" mnemonicParsing="false" onAction="#cbx_binarizeAction" text="Binarize" />
+      <Button fx:id="btn_export" mnemonicParsing="false" onAction="#btn_exportAction" text="Export" />
+      <Label fx:id="lbl_mousePos" text="MousePos" />
+    </items>
+  </ToolBar>
+  <Pane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="-1.0" prefWidth="-1.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="38.0">
+    <children>
+      <ImageView fx:id="imgv_Image" cache="false" fitHeight="0.0" fitWidth="0.0" layoutX="0.0" layoutY="0.0" onMouseClicked="#imgv_ImageMouseClicked" pickOnBounds="true" preserveRatio="true" />
+    </children>
+  </Pane>
+</AnchorPane>
