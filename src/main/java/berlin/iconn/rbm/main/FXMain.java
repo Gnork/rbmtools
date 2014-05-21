@@ -1,5 +1,7 @@
 package berlin.iconn.rbm.main;
 
+import berlin.iconn.rbm.cl.CLFloatMatrix;
+import berlin.iconn.rbm.cl.OCL;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,13 +22,16 @@ public class FXMain extends Application{
     
     @Override
     public void start(Stage stage) {
-        try {
+        try(final OCL ocl = new OCL()) {
+            
+            CLFloatMatrix.setUpOCL(ocl);
+            
             Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/ControlCenter.fxml"));         
             Scene scene = new Scene(root, 700, 700); 
             stage.setTitle("ICONN");
             stage.setScene(scene);
             stage.show();
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(FXMain.class.getName()).log(Level.SEVERE, null, ex);
         }
     }  

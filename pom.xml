@@ -33,6 +33,54 @@
 			<version>3.0.3</version>
 		</dependency>
                 
+<dependency>
+                        <groupId>gluegen</groupId>
+                        <artifactId>gluegen-rt</artifactId>
+                        <version>1.0</version>
+                </dependency>
+
+                <dependency>
+                        <groupId>gluegen</groupId>
+                        <artifactId>gluegen-rt-natives-linux-amd64</artifactId>
+                        <version>1.0</version>
+                </dependency>
+
+                <dependency>
+                        <groupId>gluegen</groupId>
+                        <artifactId>gluegen-rt-natives-macosx-universal</artifactId>
+                        <version>1.0</version>
+                </dependency>
+
+                <dependency>
+                        <groupId>gluegen</groupId>
+                        <artifactId>gluegen-rt-natives-windows-amd64</artifactId>
+                        <version>1.0</version>
+                </dependency>
+
+                <dependency>
+                        <groupId>jocl</groupId>
+                        <artifactId>jocl</artifactId>
+                        <version>1.0</version>
+                </dependency>
+
+                <dependency>
+                        <groupId>jocl</groupId>
+                        <artifactId>jocl-natives-linux-amd64</artifactId>
+                        <version>1.0</version>
+                </dependency>
+
+                <dependency>
+                        <groupId>jocl</groupId>
+                        <artifactId>jocl-natives-macosx-universal</artifactId>
+                        <version>1.0</version>
+                </dependency>
+
+                <dependency>
+                        <groupId>jocl</groupId>
+                        <artifactId>jocl-natives-windows-amd64</artifactId>
+                        <version>1.0</version>
+                </dependency>
+                
 	</dependencies>
 	<repositories>
 		<repository>

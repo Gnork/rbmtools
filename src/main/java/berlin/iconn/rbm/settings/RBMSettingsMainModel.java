@@ -12,6 +12,7 @@ import berlin.iconn.rbm.logistic.RectifierMatrixFunction;
 import berlin.iconn.rbm.logistic.SquareRootLogistic;
 import berlin.iconn.rbm.logistic.TanHMatrixFunction;
 import berlin.iconn.rbm.persistence.Conserve;
+import berlin.iconn.rbm.rbm.RBMCL;
 import berlin.iconn.rbm.rbm.RBMJBlas;
 import berlin.iconn.rbm.rbm.RBMJBlasAVG;
 import berlin.iconn.rbm.rbm.RBMJBlasOpti;

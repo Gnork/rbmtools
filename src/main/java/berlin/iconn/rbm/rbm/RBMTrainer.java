@@ -5,6 +5,8 @@
  */
 package berlin.iconn.rbm.rbm;
 
+import berlin.iconn.rbm.cl.CLFloatMatrix;
+import berlin.iconn.rbm.cl.OCL;
 import berlin.iconn.rbm.enhancement.RBMEnhancer;
 import berlin.iconn.rbm.enhancement.TrainingVisualizer;
 import berlin.iconn.rbm.logistic.ILogistic;
@@ -112,15 +114,21 @@ public class RBMTrainer {
         boolean useSeed = weightsModel.isUseSeed();
         float[][] weights = weightsModel.getWeights();
 
-        Class rbmImplementation = mainModel.getSelectedRbmImplementationClass();
-        try {
-            Constructor rbmConstructor = rbmImplementation.getConstructor(int.class, int.class, float.class, ILogistic.class, boolean.class, int.class, float[][].class);
-            return (IRBM)rbmConstructor.newInstance(inputSize, outputSize, learningRate, logisticFunction, useSeed, seed, weights);
-        } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
-            Logger.getLogger(RBMTrainer.class.getName()).log(Level.SEVERE, null, ex);
-        }
+                
+                                    RBMCL rbmcl = new RBMCL(inputSize, outputSize, learningRate, logisticFunction, useSeed, seed, weights);
+                                    return rbmcl;
+                                
+                                
         
-        return null;
+//        Class rbmImplementation = mainModel.getSelectedRbmImplementationClass();
+//        try {
+//            Constructor rbmConstructor = rbmImplementation.getConstructor(int.class, int.class, float.class, ILogistic.class, boolean.class, int.class, float[][].class);
+//            return (IRBM)rbmConstructor.newInstance(inputSize, outputSize, learningRate, logisticFunction, useSeed, seed, weights);
+//        } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
+//            Logger.getLogger(RBMTrainer.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+        
+        //return null;
     }
 
     public void trainSingleRBM(RBMSettingsController controller, RBMEnhancer rbmEnhancer) {
