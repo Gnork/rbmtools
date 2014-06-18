@@ -38,7 +38,18 @@
                         <artifactId>ij</artifactId>
                         <version>1.48v</version>
                 </dependency>
+
+		<dependency>
+                        <groupId>org.scalanlp</groupId>
+                        <artifactId>jcuda</artifactId>
+                        <version>0.6</version>
+                </dependency>
                 
+		<dependency>
+                        <groupId>org.scalanlp</groupId>
+                        <artifactId>jcublas</artifactId>
+                        <version>0.6</version>
+                </dependency>
 	</dependencies>
 	<repositories>
 		<repository>
@@ -68,6 +79,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	<build>
+<!--
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -83,5 +95,6 @@
         </executions>
       </plugin>
     </plugins>
+-->
   </build>
 </project>
