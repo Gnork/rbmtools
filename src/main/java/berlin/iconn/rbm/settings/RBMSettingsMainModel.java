@@ -15,6 +15,7 @@ import berlin.iconn.rbm.persistence.Conserve;
 import berlin.iconn.rbm.rbm.RBMJBlas;
 import berlin.iconn.rbm.rbm.RBMJBlasAVG;
 import berlin.iconn.rbm.rbm.RBMJBlasOpti;
+import berlin.iconn.rbm.rbm.cuda.RBMJCuda;
 
 /**
  *
@@ -28,7 +29,8 @@ public class RBMSettingsMainModel{
     private final String[] rbmImplementations = {
         "RBMJBlasAVG",
         "RBMJBlasOpti",
-        "RBMJBlas"
+        "RBMJBlas",
+        "RBMJCuda"
     };
 
     public RBMSettingsMainModel(RBMSettingsMainController controller) {
@@ -80,6 +82,8 @@ public class RBMSettingsMainModel{
             return RBMJBlasOpti.class;
         case 2:
             return RBMJBlas.class;
+        case 3:
+            return RBMJCuda.class;
         default:
             return RBMJBlasOpti.class;
         }       

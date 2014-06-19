@@ -7,7 +7,7 @@ import java.util.Random;
 import org.jblas.FloatMatrix;
 import org.jblas.MatrixFunctions;
 
-public class RBMHintonCuda implements IRBM {
+public class RBMJCuda implements IRBM {
 
     private final float learnRate;
     private final ILogistic logisticFunction;
@@ -16,7 +16,7 @@ public class RBMHintonCuda implements IRBM {
 
     private FloatMatrix weights;
 
-    public RBMHintonCuda(int inputSize, int outputSize, float learningRate, ILogistic logisticFunction, boolean useSeed, int seed, float[][] weights) {
+    public RBMJCuda(int inputSize, int outputSize, float learningRate, ILogistic logisticFunction, boolean useSeed, int seed, float[][] weights) {
         
         this.learnRate = learningRate;
         this.logisticFunction = logisticFunction;
@@ -51,7 +51,8 @@ public class RBMHintonCuda implements IRBM {
         final FloatMatrix oneVector = FloatMatrix.ones(data.getRows(), 1);
         final FloatMatrix dataWithBias = FloatMatrix.concatHorizontally(oneVector, data);
 
-        final FloatMatrix posHiddenActivations = dataWithBias.mmul(this.weights);
+        //final FloatMatrix posHiddenActivations = dataWithBias.mmul(this.weights);
+        final FloatMatrix posHiddenActivations = JCUDAMatrixUtils.multiply(dataWithBias, this.weights, false, false);
 
         FloatMatrix posHiddenNodes = logisticFunction.function(posHiddenActivations);
 
@@ -69,7 +70,8 @@ public class RBMHintonCuda implements IRBM {
 
         posHiddenNodes.putColumn(0, FloatMatrix.ones(posHiddenNodes.getRows(), 1));
 
-        final FloatMatrix negVisibleActivations = posHiddenNodes.mmul(this.weights.transpose());
+        //final FloatMatrix negVisibleActivations = posHiddenNodes.mmul(this.weights.transpose());
+        final FloatMatrix negVisibleActivations = JCUDAMatrixUtils.multiply(posHiddenNodes, this.weights, false, true);
 
         FloatMatrix negVisibleNodes = logisticFunction.function(negVisibleActivations);
 
@@ -99,7 +101,8 @@ public class RBMHintonCuda implements IRBM {
 
         while(stop.isNotDone()) {
 
-            final FloatMatrix posHiddenActivations = dataWithBias.mmul(this.weights);
+            //final FloatMatrix posHiddenActivations = dataWithBias.mmul(this.weights);
+            final FloatMatrix posHiddenActivations = JCUDAMatrixUtils.multiply(dataWithBias, this.weights, false, false);
 
             FloatMatrix posHiddenProbs = logisticFunction.function(posHiddenActivations);
             FloatMatrix posHiddenStates;
@@ -120,9 +123,11 @@ public class RBMHintonCuda implements IRBM {
 
             //posHiddenNodes.putColumn(0, FloatMatrix.ones(posHiddenNodes.getRows(), 1));
 
-            final FloatMatrix posAssociations = dataWithBias.transpose().mmul(posHiddenProbs);
+            //final FloatMatrix posAssociations = dataWithBias.transpose().mmul(posHiddenProbs);
+            final FloatMatrix posAssociations = JCUDAMatrixUtils.multiply(dataWithBias, posHiddenProbs, true, false);
 
-            final FloatMatrix negVisibleActivations = posHiddenStates.mmul(this.weights.transpose());
+            //final FloatMatrix negVisibleActivations = posHiddenStates.mmul(this.weights.transpose());
+            final FloatMatrix negVisibleActivations = JCUDAMatrixUtils.multiply(posHiddenStates, this.weights, false, true);
 
             FloatMatrix negVisibleNodes = logisticFunction.function(negVisibleActivations);
 
@@ -140,11 +145,13 @@ public class RBMHintonCuda implements IRBM {
 
             negVisibleNodes.putColumn(0, FloatMatrix.ones(negVisibleNodes.getRows(), 1));
 
-            final FloatMatrix negHiddenActivations = negVisibleNodes.mmul(this.weights);
+            //final FloatMatrix negHiddenActivations = negVisibleNodes.mmul(this.weights);
+            final FloatMatrix negHiddenActivations = JCUDAMatrixUtils.multiply(negVisibleNodes, this.weights, false, false);
 
             final FloatMatrix negHiddenProbs = logisticFunction.function(negHiddenActivations);
 
-            final FloatMatrix negAssociations = negVisibleNodes.transpose().mmul(negHiddenProbs);
+            //final FloatMatrix negAssociations = negVisibleNodes.transpose().mmul(negHiddenProbs);
+            final FloatMatrix negAssociations = JCUDAMatrixUtils.multiply(negVisibleNodes, negHiddenProbs, true, false);
 
             // Update weights
             this.weights.addi((posAssociations.sub(negAssociations)).mul(this.learnRate / data.getRows()));
@@ -166,7 +173,8 @@ public class RBMHintonCuda implements IRBM {
         final FloatMatrix dataWithBias = FloatMatrix.concatHorizontally(oneVector, dataMatrix);
 
         // Calculate the activations of the hidden units.
-        final FloatMatrix hiddenActivations = dataWithBias.mmul(this.weights);
+        //final FloatMatrix hiddenActivations = dataWithBias.mmul(this.weights);
+        final FloatMatrix hiddenActivations = JCUDAMatrixUtils.multiply(dataWithBias, this.weights, false, false);
 
         // Calculate the probabilities of turning the hidden units on.
         FloatMatrix hiddenNodes = logisticFunction.function(hiddenActivations);
@@ -200,7 +208,8 @@ public class RBMHintonCuda implements IRBM {
         final FloatMatrix dataWithBias = FloatMatrix.concatHorizontally(oneVector, dataMatrix);
 
         // Calculate the activations of the visible units.
-        final FloatMatrix visibleActivations = dataWithBias.mmul(weights.transpose());
+        //final FloatMatrix visibleActivations = dataWithBias.mmul(weights.transpose());
+        final FloatMatrix visibleActivations = JCUDAMatrixUtils.multiply(dataWithBias, this.weights, false, true);
 
         // Calculate the probabilities of turning the visible units on.
         FloatMatrix visibleNodes = logisticFunction.function(visibleActivations);
