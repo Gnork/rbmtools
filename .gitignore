@@ -5,3 +5,4 @@ nbactions.xml
 RBMLogs/*
 Persistor
 images/tiny_images.bin
+images/rbm_face_images_png
