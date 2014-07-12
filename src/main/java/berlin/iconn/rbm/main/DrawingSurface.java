@@ -1,0 +1,141 @@
+package berlin.iconn.rbm.main;
+
+/**
+ * Created by G on 12.07.14.
+ */
+/**
+
+ @author John M (http://sourceforge.net/users/nextdesign)
+
+ <b>Changelog:</b>
+ <ul>
+ <li>2010/01/16 by Nicol�s Carranza: - changed to make it work with the mouse too - draw always when pressure &gt; 0</li>
+ <li>2011/06/23 by Nicol�s Carranza: - changed to use the AwtPenToolkit - added note about technique to get better performance</li>
+ </ul>
+ */
+
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.geom.Line2D;
+import java.awt.geom.Point2D;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import jpen.PKind;
+import jpen.PLevel;
+import jpen.PLevelEvent;
+import jpen.PenManager;
+import jpen.event.PenAdapter;
+import jpen.owner.multiAwt.AwtPenToolkit;
+
+public class DrawingSurface extends PenAdapter
+{
+    private static final long serialVersionUID = 1L;
+
+    public static void main(String... args) throws Throwable{
+        DrawingSurface drawingSurface = new DrawingSurface();
+    }
+
+    JFrame frame=new JFrame("Drawing Surface");;
+    JPanel panel=new JPanel();
+    Graphics2D g2d;
+
+    Point2D.Float prevLoc=new Point2D.Float();// previous location of cursor
+    Point2D.Float loc=new Point2D.Float();// current location of cursor
+
+    /* brush dynamics */
+    float       brushSize;
+    float       opacity;
+    BasicStroke stroke;
+
+    {
+        // setup the window and the panel
+        panel.setBackground(Color.white);
+		/* set the cursor to the crosshair so we can see
+		 what we're drawing
+		 underneath */
+        panel.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
+        frame.setContentPane(panel);
+        frame.setSize(new Dimension(800, 600));
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        // Use the AwtPenToolkit to register a PenListener on the panel:
+        AwtPenToolkit.addPenListener(panel, this);
+        // setup the mouse to cause a pressure level event when the left button is pressed:
+        PenManager pm=AwtPenToolkit.getPenManager();
+        pm.pen.levelEmulator.setPressureTriggerForLeftCursorButton(0.5f);
+
+        // show the window and setup the g2d
+        frame.setVisible(true);
+        g2d = (Graphics2D)panel.getGraphics();
+        // make the lines smooth
+        g2d.setRenderingHint(RenderingHints.KEY_RENDERING,
+                RenderingHints.VALUE_RENDER_QUALITY);
+        g2d.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL,
+                RenderingHints.VALUE_STROKE_PURE);
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                RenderingHints.VALUE_ANTIALIAS_ON);
+    }
+
+    @Override
+    public void penLevelEvent(PLevelEvent ev)
+    {
+        // if this event was not a movement, do nothing
+        if(!ev.isMovement())
+            return;
+
+        // set the brush's size, and opacity relative to the pressure
+        float pressure=ev.pen.getLevelValue(PLevel.Type.PRESSURE);
+        brushSize = pressure * 10;
+        opacity = pressure * 255;
+		/* since getLevelValue(PLevel.Type.PRESSURE) returns 0 -> 1,
+		 we need to multiply that by 255 to
+		 get the correct amount of color
+		 (0 -> 255). When then subtract it
+		 from 255 so we start with a black line
+		 with full pressure */
+
+        // get the current cursor location
+        loc.x = ev.pen.getLevelValue(PLevel.Type.X);
+        loc.y = ev.pen.getLevelValue(PLevel.Type.Y);
+
+        if (brushSize>0)
+        {
+            if (ev.pen.getKind() == PKind.valueOf(PKind.Type.ERASER))	// using the eraser, create a white line, effectively "erasing" the black line
+            {
+                // set the color to white, and create the stroke
+                g2d.setColor(Color.white);
+                stroke = new BasicStroke(brushSize * 2); // make it a bit more sensitive
+            }else// default, we want to draw a black line onto the screen.
+            {
+                // set the opacity, and create the stroke
+                //g2d.setColor(new Color((int)opacity, (int)opacity, 255, 255));
+                stroke=new BasicStroke(brushSize,
+                        BasicStroke.CAP_ROUND, // round line endings
+                        BasicStroke.JOIN_MITER
+                );
+            }
+
+            // draw a line between the current and previous locations
+            g2d.setStroke(stroke);
+            g2d.draw(new Line2D.Float(prevLoc, loc));
+        }
+
+        // set the current position to the previous position
+        prevLoc.setLocation(loc);
+
+        // paint pane to draw brush info on
+        g2d.setColor(Color.white);
+        g2d.fillRect(0, 5, 155, 35);
+
+        // draw the brush info in the top-left corner
+        g2d.setColor(Color.black);
+        g2d.drawString(("Brush size: " + brushSize), 5, 20);
+        g2d.drawString(("Opacity: " + opacity), 5, 35);
+
+        //NOTE: if performance is an issue, you can get better performance by painting on an off-screen image and requesting a paint of the dirty region when penTock() is called, check the jpen.demo.PenCanvas source code for an example of this technique.
+    }
+}
