@@ -20,6 +20,9 @@ public class FXMain extends Application{
     
     @Override
     public void start(Stage stage) {
+
+        //TabletCanvas drawingSurface = new TabletCanvas();
+
         try {
             Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/ControlCenter.fxml"));         
             Scene scene = new Scene(root, 700, 700); 

@@ -2,6 +2,7 @@ package berlin.iconn.rbm.views;
 
 import berlin.iconn.rbm.image.DataConverter;
 import berlin.iconn.rbm.image.ImageHelper;
+import berlin.iconn.rbm.image.ImageScaler;
 import berlin.iconn.rbm.main.BenchmarkModel;
 import berlin.iconn.rbm.rbm.RBMTrainer;
 import berlin.iconn.rbm.tools.clustering.LabeledData;
@@ -35,8 +36,8 @@ public class InImageDetectorModel {
     public InImageDetectorModel(InImageDetectorController controller) {
         this.controller = controller;
     }
-    
-    
+
+
     
     public BenchmarkModel getBenchmarkModel() {
 		return benchmarkModel;

@@ -8,13 +8,14 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" fx:id="view" cache="true" cacheHint="QUALITY" depthTest="ENABLE" pickOnBounds="false" prefHeight="400.0" prefWidth="612.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="berlin.iconn.rbm.views.DaydreamController">
+<AnchorPane id="AnchorPane" fx:id="view" cache="true" cacheHint="QUALITY" depthTest="ENABLE" maxHeight="-1.0" maxWidth="-1.0" minHeight="-Infinity" minWidth="-Infinity" pickOnBounds="false" prefHeight="487.0" prefWidth="764.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="berlin.iconn.rbm.views.DaydreamController">
   <children>
     <ImageView fx:id="imgv_Input" cache="false" fitHeight="112.0" fitWidth="112.0" layoutX="10.0" layoutY="61.0" pickOnBounds="true" preserveRatio="true" />
     <Label alignment="TOP_LEFT" layoutX="10.0" layoutY="41.0" text="Input" />
     <ToolBar layoutY="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
       <items>
         <Button fx:id="btn_loadImage" mnemonicParsing="false" onAction="#btn_loadImageAction" text="Load" />
+        <Button id="btn_Draw" fx:id="btn_drawImage" mnemonicParsing="false" onAction="#btn_drawImageAction" text="Draw" />
         <Button fx:id="btn_generateImage" mnemonicParsing="false" onAction="#btn_generateImageAction" text="Generate" />
         <Button fx:id="btn_daydream" disable="true" mnemonicParsing="false" onAction="#btn_daydreamAction" text="Daydream" />
         <Button fx:id="btn_stopDaydream" disable="true" mnemonicParsing="false" onAction="#btn_stopDaydreamAction" text="Wake Up" />

@@ -15,6 +15,7 @@
     <ToolBar layoutY="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
       <items>
         <Button id="btn_loadNewTestImage" mnemonicParsing="false" onAction="#btn_loadImageAction" text="Load Image" />
+        <Button fx:id="btn_drawImage" mnemonicParsing="false" onAction="#btn_drawImageAction" text="Draw" />
         <Button id="btn_loadNewTestImage" fx:id="btn_runHidden" disable="true" mnemonicParsing="false" onAction="#btn_runHiddenAction" text="Run Hidden" />
         <ToggleButton fx:id="btn_hiddenStates" mnemonicParsing="false" onAction="#btn_hiddenStatesAction" text="HiddenStates" />
         <ToggleButton fx:id="btn_visibleStates" mnemonicParsing="false" onAction="#btn_visibleStatesAction" text="VisibleStates" />

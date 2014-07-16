@@ -19,12 +19,16 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import berlin.iconn.rbm.views.TabletCanvasController;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.AnchorPane;
@@ -54,10 +58,10 @@ public class ControlCenterController extends AController {
     @FXML
     private MenuItem mnu_saveConfiguration;
     @FXML
-    private MenuItem mnu_loadConfiguration; 
+    private MenuItem mnu_loadConfiguration;
     @FXML
     private Menu mnu_removeRBM;
-    
+
     private Persistor persistor;
     private Creator creator;
 
@@ -73,11 +77,11 @@ public class ControlCenterController extends AController {
         this.creator = new Creator();
         this.createBenchmark();
     }
-    
-    private void createBenchmark(){
+
+    private void createBenchmark() {
         try {
             benchmarkController = (BenchmarkController) loadController("fxml/Benchmark.fxml");
-            AnchorPane benchmarkView = (AnchorPane)(benchmarkController.getView());       
+            AnchorPane benchmarkView = (AnchorPane) (benchmarkController.getView());
             benchmarkView.prefWidthProperty().bind(this.view.widthProperty().subtract(15));
             vbox.getChildren().add(benchmarkView);
 
@@ -86,25 +90,25 @@ public class ControlCenterController extends AController {
         }
     }
 
-    private void addRemover(){
+    private void addRemover() {
         ObservableList<MenuItem> items = mnu_removeRBM.getItems();
         int rbmIndex = items.size();
         MenuItem mnu = new MenuItem("RBM " + rbmIndex);
-        mnu.setOnAction(new EventHandler<ActionEvent>(){
+        mnu.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent t) {
                 MenuItem item = (MenuItem) t.getSource();
                 removeRBM(item);
             }
-            
-        });  
+
+        });
         items.add(mnu);
     }
-    
-    public RBMSettingsController createRBM(){
+
+    public RBMSettingsController createRBM() {
         try {
             RBMSettingsController controller = (RBMSettingsController) loadController("fxml/RBMSettings.fxml");
-            AnchorPane rbmSettingsView = (AnchorPane)(controller.getView());       
+            AnchorPane rbmSettingsView = (AnchorPane) (controller.getView());
             rbmSettingsView.prefWidthProperty().bind(this.view.widthProperty().subtract(15));
             benchmarkController.getModel().add(controller);
             vbox.getChildren().add(rbmSettingsView);
@@ -122,12 +126,13 @@ public class ControlCenterController extends AController {
         this.createRBM();
     }
 
+
     @Override
     public Node getView() {
         return this.view;
     }
-    
-    public BenchmarkController getBenchmarkController(){
+
+    public BenchmarkController getBenchmarkController() {
         return benchmarkController;
     }
 
@@ -145,46 +150,46 @@ public class ControlCenterController extends AController {
     private void mnu_loadConfigurationAction(ActionEvent event) {
         this.reset();
         File file = Chooser.openFileChooser("Persistor");
-        if(file != null){
+        if (file != null) {
             try {
                 this.creator.load(this, file);
                 BenchmarkModel benchmarkModel = benchmarkController.getModel();
-                
+
                 ImageManager imageManager = benchmarkModel.getImageManager();
                 String path = imageManager.getImageSetName();
 
                 benchmarkModel.setImageManager(new File("images/" + path));
                 benchmarkModel.updateAllViews();
-                
+
             } catch (ParserConfigurationException | SAXException | IOException ex) {
                 System.err.println("ERROR: could not parse file");
                 Logger.getLogger(ControlCenterController.class.getName()).log(Level.SEVERE, null, ex);
-            }          
+            }
         }
     }
-    
-    private void reset(){
+
+    private void reset() {
         ObservableList<Node> children = vbox.getChildren();
         children.remove(0, children.size());
         createBenchmark();
     }
-    
-    private void removeRBM(MenuItem menuItem){
+
+    private void removeRBM(MenuItem menuItem) {
         BenchmarkModel benchmarkModel = benchmarkController.getModel();
         ObservableList<MenuItem> items = mnu_removeRBM.getItems();
         int i = 0;
-        for(MenuItem item : items){
-            if(menuItem == item){
+        for (MenuItem item : items) {
+            if (menuItem == item) {
                 System.out.println(i);
                 benchmarkModel.remove(i);
-                vbox.getChildren().remove(i+1);
+                vbox.getChildren().remove(i + 1);
                 items.remove(i);
                 break;
             }
             ++i;
         }
         i = 0;
-        for(MenuItem item : items){
+        for (MenuItem item : items) {
             item.setText("RBM " + (i++));
         }
         benchmarkModel.globalUpdate();

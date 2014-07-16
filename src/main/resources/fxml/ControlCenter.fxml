@@ -9,6 +9,11 @@
 
 <AnchorPane id="AnchorPane" fx:id="view" prefHeight="-1.0" prefWidth="-1.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="berlin.iconn.rbm.main.ControlCenterController">
   <children>
+    <ScrollPane prefHeight="-1.0" prefWidth="-1.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="24.0">
+      <content>
+        <VBox fx:id="vbox" prefHeight="-1.0" prefWidth="-1.0" />
+      </content>
+    </ScrollPane>
     <MenuBar prefHeight="-1.0" prefWidth="-1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <menus>
         <Menu mnemonicParsing="false" text="File">
@@ -25,10 +30,5 @@
         </Menu>
       </menus>
     </MenuBar>
-    <ScrollPane prefHeight="-1.0" prefWidth="-1.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="24.0">
-      <content>
-        <VBox fx:id="vbox" prefHeight="-1.0" prefWidth="-1.0" />
-      </content>
-    </ScrollPane>
   </children>
 </AnchorPane>
