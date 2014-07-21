@@ -56,11 +56,9 @@
             <version>0.9.9</version>
         </dependency>
         <dependency>
-            <groupId>jpen</groupId>
+            <groupId>nicarran.jpen</groupId>
             <artifactId>jpen</artifactId>
-            <version>0.9.2</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/jpen-2.jar</systemPath>
+            <version>2</version>
         </dependency>
     </dependencies>
     <repositories>

@@ -109,16 +109,6 @@ public class BenchmarkController extends AController {
     private InImageDetectorController inImageDetectorController;
     private Stage inImageDetectorStage;
 
-    @FXML
-    private ToggleButton btn_vanGogh;
-    private VanGoghController vanGoghController;
-    private Stage vanGoghStage;
-    
-    @FXML
-    private ToggleButton btn_faceRepair;
-    private FaceRepairController faceRepairController;
-    private Stage faceRepairStage;
-
     // Evaluation
     @FXML
     private ComboBox<?> cmb_mAPTests;
@@ -489,80 +479,6 @@ public class BenchmarkController extends AController {
     @FXML
     private void btn_cancelAction(ActionEvent event) {
         this.model.cancelTraining();
-    }
-
-    @FXML
-    private void btn_vanGoghAction(ActionEvent event) {
-        try {
-            if (!btn_vanGogh.isSelected()) {
-                if(this.vanGoghStage != null){
-                    this.vanGoghStage.close();
-                }
-                return;
-            }
-            
-            if(this.vanGoghStage == null || this.vanGoghController == null){
-
-                this.vanGoghController = (VanGoghController) new VanGoghController().loadController("fxml/VanGogh.fxml");
-                Parent root = (Parent) this.vanGoghController.getView();
-
-                this.vanGoghController.setBenchmarkModel(this.getModel());
-
-                Scene scene = new Scene(root, 800, 600);
-                this.vanGoghStage = new Stage();
-                this.vanGoghStage.setTitle("Van Gogh Generator");
-                this.vanGoghStage.setScene(scene);
-                this.vanGoghStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-                    public void handle(WindowEvent we) {
-                        btn_vanGogh.setSelected(false);
-                        vanGoghStage.close();
-                    }
-                });
-            }
-
-            this.vanGoghStage.show();
-
-            
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-    }
-
-    @FXML
-    private void btn_faceRepairAction(ActionEvent event) {
-        try {
-            if (!btn_faceRepair.isSelected()) {
-                if(this.faceRepairStage != null){
-                    this.faceRepairStage.close();
-                }
-                return;
-            }
-            
-            if(this.faceRepairStage == null || this.faceRepairController == null){
-
-                this.faceRepairController = (FaceRepairController) new FaceRepairController().loadController("fxml/FaceRepair.fxml");
-                Parent root = (Parent) this.faceRepairController.getView();
-
-                this.faceRepairController.setBenchmarkModel(this.getModel());
-
-                Scene scene = new Scene(root, 800, 600);
-                this.faceRepairStage = new Stage();
-                this.faceRepairStage.setTitle("Face Repair");
-                this.faceRepairStage.setScene(scene);
-                this.faceRepairStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-                    public void handle(WindowEvent we) {
-                        btn_faceRepair.setSelected(false);
-                        faceRepairStage.close();
-                    }
-                });
-            }
-
-            this.faceRepairStage.show();
-
-            
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
     }
 
 }
