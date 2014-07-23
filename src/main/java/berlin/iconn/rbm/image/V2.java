@@ -1,7 +1,7 @@
 package berlin.iconn.rbm.image;
 
 /**
- * Created by GDur on 14.05.14.
+ *  simple Vector class two store x, y value pairs
  */
 public class V2 {
     public float x, y;

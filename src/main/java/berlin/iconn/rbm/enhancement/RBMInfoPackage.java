@@ -10,7 +10,7 @@ import java.util.LinkedList;
 
 /**
  *
- * @author moritz
+ * RBMInfoPackage stores data to be shared between training and visualization threads
  */
 public class RBMInfoPackage {
     

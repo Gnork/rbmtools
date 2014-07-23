@@ -8,7 +8,8 @@ package berlin.iconn.rbm.main;
 
 /**
  *
- * @author christoph
+ * to be implemented by the models of the controller classes
+ * there is always one model per controller class
  */
 public abstract class AModel {
     

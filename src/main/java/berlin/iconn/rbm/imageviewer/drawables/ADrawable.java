@@ -6,6 +6,10 @@ import javafx.scene.canvas.GraphicsContext;
 
 import berlin.iconn.rbm.image.V2;
 
+/**
+ * 
+ * Should be extended by Visualizations to draw on Image
+ */
 public abstract class ADrawable {
 
 	protected ArrayList<ADrawable> drawables = new ArrayList<>();

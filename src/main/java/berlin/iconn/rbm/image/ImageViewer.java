@@ -27,8 +27,8 @@ import javafx.stage.WindowEvent;
 
 /**
  * FXML Controller class
- *
- * @author moritz
+ * shows a frame for a Buffered Image to be displayed
+ * 
  */
 public class ImageViewer { //extends AController implements IVisualizeObserver
 

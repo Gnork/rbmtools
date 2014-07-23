@@ -13,7 +13,7 @@ import org.xml.sax.SAXException;
 
 /**
  *
- * @author moritz
+ * can log weights to XML when training finished
  */
 public class XMLEndTrainingLogger implements IRBMEndTrainingEnhancement  {
     

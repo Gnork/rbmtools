@@ -9,6 +9,11 @@ import berlin.iconn.rbm.tools.Chooser;
 
 public class TrainingQualityTest {
 	
+    /**
+     * returns mean squared error for rbm stack
+     * @param benchmarkModel
+     * @return 
+     */
 	public static float getMSE(BenchmarkModel benchmarkModel) {
 		File folder = Chooser.openDirectoryChooser("images");
                 if(folder == null){

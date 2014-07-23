@@ -9,7 +9,7 @@ import java.util.Random;
 
 /**
  *
- * @author christoph
+ * deprecated class implementing FloatMatrix functionality of OpenBlas in Java
  */
 public final class FloatMatrix {
 

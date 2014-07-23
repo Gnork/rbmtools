@@ -8,6 +8,11 @@ import java.util.Random;
 import org.jblas.FloatMatrix;
 import org.jblas.MatrixFunctions;
 
+/**
+ * 
+ * RBM implementation with JBlas lib
+ * substracts the mean value of FloatMatrix after each Training epoch
+ */
 public class RBMJBlasAVG implements IRBM {
 
     private float learnRate;

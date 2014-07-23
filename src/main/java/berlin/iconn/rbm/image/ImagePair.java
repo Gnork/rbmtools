@@ -5,6 +5,12 @@ public class ImagePair implements Comparable<ImagePair> {
 	private double distance;
 	private Pic searchImage;
 	private Pic queryImage;
+        /**
+         * image pair calculates and stores the distance between two images
+         * @param queryImage
+         * @param searchImage
+         * @param distance 
+         */
 	
 	public ImagePair(Pic queryImage, Pic searchImage, double distance) {
 		this.distance = distance;

@@ -3,12 +3,25 @@ package berlin.iconn.rbm.image;
 import java.awt.image.BufferedImage;
 
 /**
- * DataConverter
+ * DataConverter converts different kinds of pixel data
  *
- * @author Radek
+ * 
  */
 public class DataConverter {
 	
+    /**
+     * takes a BufferedImage and converts it to float array
+     * data can be binarized, inverted and normalized by minData and maxData attributes
+     * @param image
+     * @param width
+     * @param height
+     * @param binarize
+     * @param invert
+     * @param minData
+     * @param maxData
+     * @param isRgb
+     * @return 
+     */
 	public static float[] processPixelData(BufferedImage image, int width, int height, boolean binarize, boolean invert, float minData, float maxData, boolean isRgb) {
 		if(isRgb) {
 			return processPixelRGBData(image, width, height, binarize, invert, minData, maxData);

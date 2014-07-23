@@ -18,6 +18,11 @@ public class ImageHelper {
 		
 	}
 	
+        /**
+         * load image files from hard drive
+         * @param imageFile
+         * @return 
+         */
     public static BufferedImage loadImage(File imageFile) {
         BufferedImage image = null;
         try {

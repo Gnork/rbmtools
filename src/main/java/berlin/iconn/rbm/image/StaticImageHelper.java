@@ -16,6 +16,13 @@ import java.awt.image.BufferedImage;
  */
 public class StaticImageHelper {
     
+    /** image scale function to replace ImageScaler class
+     * 
+     * @param image
+     * @param width
+     * @param height
+     * @return 
+     */
     public static BufferedImage getScaledImage(BufferedImage image, int width, int height){
         
         Image scaledImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);

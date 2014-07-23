@@ -18,7 +18,7 @@ import org.xml.sax.SAXException;
 
 /**
  *
- * @author christoph
+ * Can load XML weights from hard drive
  */
 public class XMLWeightsLoader {
     

@@ -23,6 +23,11 @@ import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+/**
+ * 
+ * can save RBM weights to hard drive in XML format
+ */
+
 public final class XMLWeightsSaver {
 
     private final String baseFolder;

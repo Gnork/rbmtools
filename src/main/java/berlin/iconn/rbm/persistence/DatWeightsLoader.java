@@ -9,12 +9,13 @@ import java.io.File;
 import java.io.ObjectInputStream;
 import java.nio.file.Files;
 
-/**
- *
- * @author christoph
- */
+
 public class DatWeightsLoader {
 
+    /**
+    *
+    * loads .dat binary files with two dimensional float array RBM weights
+    */
     public static float[][] loadWeights(File file) throws Exception {
         try (ObjectInputStream ois = new ObjectInputStream(Files.newInputStream(file.toPath()))) {
             return (float[][]) ois.readObject();
