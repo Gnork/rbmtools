@@ -7,6 +7,10 @@ import java.util.Random;
 import org.jblas.FloatMatrix;
 import org.jblas.MatrixFunctions;
 
+/**
+ * 
+ * RBM implementation with native NVIDIA CUDA support for Matrix multiplications
+ */
 public class RBMJCuda implements IRBM {
 
     private final float learnRate;

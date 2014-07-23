@@ -3,6 +3,12 @@ package berlin.iconn.rbm.rbm;
 import berlin.iconn.rbm.logistic.ILogistic;
 import java.util.Random;
 
+/**
+ * 
+ * RBM implementation in Java
+ * multithreaded and optimized for fast calculations
+ */
+
 public class RBMOpti implements IRBM {
 
     private final float learnRate;

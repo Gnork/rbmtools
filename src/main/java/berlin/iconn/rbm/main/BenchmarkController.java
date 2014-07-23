@@ -7,13 +7,11 @@ package berlin.iconn.rbm.main;
 
 import berlin.iconn.rbm.tools.Chooser;
 import berlin.iconn.rbm.views.DaydreamController;
-import berlin.iconn.rbm.views.FaceRepairController;
 import berlin.iconn.rbm.views.FeatureViewer;
 import berlin.iconn.rbm.views.ImageBuilderController;
 import berlin.iconn.rbm.views.InImageDetectorController;
 import berlin.iconn.rbm.views.PRTMAPController;
 import berlin.iconn.rbm.views.RunHiddenController;
-import berlin.iconn.rbm.views.VanGoghController;
 import berlin.iconn.rbm.views.imageviewer.ImageViewerController;
 import java.io.File;
 import java.io.IOException;
@@ -46,7 +44,8 @@ import javafx.stage.WindowEvent;
 /**
  * FXML Controller class
  *
- * @author Moritz
+ * manages the benchmark modul of the gui
+ * there is only one benchmark modul per program instance
  */
 public class BenchmarkController extends AController {
 

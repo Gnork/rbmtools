@@ -5,6 +5,10 @@ import java.util.Random;
 
 import org.jblas.FloatMatrix;
 import org.jblas.MatrixFunctions;
+/**
+ * 
+ * RBM implementation with JBlas lib
+ */
 
 public class RBMJBlas implements IRBM {
 

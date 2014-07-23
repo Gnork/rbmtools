@@ -13,7 +13,7 @@ import java.lang.annotation.Target;
 
 /**
  *
- * @author christoph
+ * custom annotation which labels model fields to be stored with Persistor class and loaded with Creator class
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)

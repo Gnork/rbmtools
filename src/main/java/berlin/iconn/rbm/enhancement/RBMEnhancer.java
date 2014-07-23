@@ -21,7 +21,11 @@ public class RBMEnhancer implements IRBM {
         this.endEnhancements = new LinkedList<>();
         this.info = new RBMInfoPackage(0, rbm.getWeights(), 0);
     }
-
+    /**
+     * add Enhancement to Enhancer, to call its action method on update interval
+     * @param enhancement
+     * @return 
+     */
     public boolean addEnhancement(IRBMEnhancement enhancement) {
 
         boolean added = false;
@@ -40,6 +44,14 @@ public class RBMEnhancer implements IRBM {
         return added;
     }
 
+    /**
+     * works like a wrapper function for RBM training
+     * manages training of RBM and calls enhancements on each update epoch
+     * @param trainingData
+     * @param stop
+     * @param useHiddenStates
+     * @param useVisibleStates 
+     */
     @Override
     public void train(float[][] trainingData, StoppingCondition stop, boolean useHiddenStates, boolean useVisibleStates) {
 
@@ -87,27 +99,51 @@ public class RBMEnhancer implements IRBM {
         this.info.setEpochs(epochs);
     }
 
+    /**
+     * wrapper function
+     * @param trainingData
+     * @param useHiddenStates
+     * @param useVisibleStates
+     * @return 
+     */
     @Override
     public float error(float[][] trainingData, boolean useHiddenStates, boolean useVisibleStates) {
         return rbm.error(trainingData, useHiddenStates, useVisibleStates);
     }
-
+    
+    /**
+     * wrapper function
+     * @param userData
+     * @param useHiddenStates
+     * @return 
+     */
     @Override
     public float[][] getHidden(float[][] userData, boolean useHiddenStates) {
         return rbm.getHidden(userData, useHiddenStates);
     }
 
+    /**
+     * wrapper function
+     * @param hiddenData
+     * @param useVisibleStates
+     * @return 
+     */
     @Override
     public float[][] getVisible(float[][] hiddenData, boolean useVisibleStates) {
         return rbm.getVisible(hiddenData, useVisibleStates);
     }
 
+    /**
+     * wrapper function
+     * @return 
+     */
     @Override
     public float[][] getWeights() {
         return rbm.getWeights();
     }
 
     /**
+     * set a task
      * @param task the task to set
      */
     public void setTask(Task<Void> task) {

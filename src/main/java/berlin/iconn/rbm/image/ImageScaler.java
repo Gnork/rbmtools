@@ -11,11 +11,20 @@ public class ImageScaler {
 	public ImageScaler() {
 	
 	}
-	
+        
+	/**
+         * Image Scaler takes BufferedImage to scale it in various ways
+         * @param image 
+         */
 	public ImageScaler(BufferedImage image) {
 			this.orgImage = image;	
 	}
 	
+        /**
+         * scale BufferedImage
+         * @param longestEdge
+         * @return 
+         */
 	public BufferedImage scale(int longestEdge) {
 		return scale(longestEdge, longestEdge);
 	}

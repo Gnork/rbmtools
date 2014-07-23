@@ -1,5 +1,9 @@
 package berlin.iconn.rbm.enhancement;
 
+/**
+ * concrete training visualizer
+ * 
+ */
 public class TrainingVisualizer implements IRBMTrainingEnhancement {
 
 	private final int updateInterval;

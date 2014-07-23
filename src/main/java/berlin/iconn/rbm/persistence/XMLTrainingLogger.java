@@ -7,7 +7,7 @@ import berlin.iconn.rbm.enhancement.RBMInfoPackage;
 
 /**
  *
- * @author moritz
+ * can log weights to XML while training is running
  */
 public class XMLTrainingLogger implements IRBMTrainingEnhancement {
 

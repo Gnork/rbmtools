@@ -32,9 +32,18 @@ import org.xml.sax.SAXException;
 
 /**
  *
- * @author christoph
+ * Creator loads xml configuration stored by Persistor class
  */
 public class Creator {
+    
+    /**
+     * load configuration from hard drive
+     * @param controller
+     * @param file
+     * @throws ParserConfigurationException
+     * @throws SAXException
+     * @throws IOException 
+     */
     public void load(ControlCenterController controller, File file) throws ParserConfigurationException, SAXException, IOException{     
         System.out.println("Load Configuration");
         

@@ -13,7 +13,7 @@ import javafx.scene.Node;
 
 /**
  *
- * @author Moritz
+ * To be extended by the fxml gui controllers
  */
 public abstract class AController implements Initializable {
    

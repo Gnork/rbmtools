@@ -6,6 +6,11 @@ import java.util.Random;
 import org.jblas.FloatMatrix;
 import org.jblas.MatrixFunctions;
 
+/**
+ * 
+ * RBM implementation with JBlas lib
+ * multithreaded and optimized for fast calculations
+ */
 public class RBMJBlasOpti implements IRBM {
 
     private final float learnRate;

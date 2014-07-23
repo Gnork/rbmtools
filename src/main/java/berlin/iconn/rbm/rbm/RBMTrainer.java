@@ -25,7 +25,6 @@ import berlin.iconn.rbm.settings.RBMSettingsVisualizationsModel;
 import berlin.iconn.rbm.settings.RBMSettingsWeightsController;
 import berlin.iconn.rbm.settings.RBMSettingsWeightsModel;
 import berlin.iconn.rbm.views.ErrorViewModel;
-import berlin.iconn.rbm.views.imageviewer.ImageViewerModel;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.LinkedList;
@@ -36,12 +35,17 @@ import javafx.concurrent.Task;
 
 /**
  *
- * @author radek, christoph
+ * RBMTrainer is able to manage training of complete RBM stack
+ * training is handled in different thread than GUI
  */
 public class RBMTrainer {
     
     private Task<Void> task = null;
 
+    /** train complete RBM stack
+     * 
+     * @param benchmarkModel 
+     */
     public void trainAllRBMs(BenchmarkModel benchmarkModel) {
             if (task == null || !task.isRunning()) {
                 this.updateRBMs(benchmarkModel);
@@ -98,6 +102,11 @@ public class RBMTrainer {
         }
     }
 
+    /**
+     * create RBM from model field values
+     * @param controller
+     * @return 
+     */
     public IRBM createRBMForTemporaryUse(RBMSettingsController controller) {
         RBMSettingsModel model = controller.getModel();
         RBMSettingsMainModel mainModel = model.getController(RBMSettingsMainController.class).getModel();
@@ -123,6 +132,11 @@ public class RBMTrainer {
         return null;
     }
 
+    /**
+     * train a single RBM
+     * @param controller
+     * @param rbmEnhancer 
+     */
     public void trainSingleRBM(RBMSettingsController controller, RBMEnhancer rbmEnhancer) {
         System.out.println("Training started...");
         RBMSettingsModel model = controller.getModel();
@@ -160,11 +174,23 @@ public class RBMTrainer {
         weightsModel.setWeights(rbmEnhancer.getWeights());
     }
 
-    // GET HIDDEN
+    /**
+     * class getHidden function for all RBMs in stack in a row
+     * @param benchmarkModel
+     * @param data
+     * @return 
+     */
     public float[][] getHiddenAllRBMs(BenchmarkModel benchmarkModel, float[][] data) {
         return getHiddenAllRBMs(benchmarkModel, data, false, false);
     }
 
+    /**
+     * class getHidden function for all RBMs in stack in a row
+     * for only one image in data
+     * @param benchmarkModel
+     * @param data
+     * @return 
+     */
     public float[] getHiddenAllRBMs1D(BenchmarkModel benchmarkModel, float[] data, boolean binarizeHidden) {
         float[][] data2Dimensions = vectorToMatrix(data);
 
@@ -203,6 +229,13 @@ public class RBMTrainer {
         return this.getHiddenSingleRBM(controller, data, binarizeHidden);
     }
 
+    /**
+     * create temporary RBM and call getHidden function of this RBM with data as input
+     * @param controller
+     * @param data
+     * @param binarizeHidden
+     * @return 
+     */
     public float[][] getHiddenSingleRBM(RBMSettingsController controller, float[][] data, boolean binarizeHidden) {
         float[][] hiddenData = null;
 
@@ -235,11 +268,23 @@ public class RBMTrainer {
         return hiddenData;
     }
 
-    // GET VISIBLE
+    /**
+     * class getVisible function for all RBMs in stack in a row
+     * @param benchmarkModel
+     * @param data
+     * @return 
+     */
     public float[][] getVisibleAllRBMs(BenchmarkModel benchmarkModel, float[][] data) {
         return getVisibleAllRBMs(benchmarkModel, data, false, false);
     }
 
+    /**
+     * class getVisible function for all RBMs in stack in a row
+     * for only one image in data
+     * @param benchmarkModel
+     * @param data
+     * @return 
+     */
     public float[] getVisibleAllRBMs1D(BenchmarkModel benchmarkModel, float[] data, boolean binarizeVisible) {
         float[][] data2Dimensions = vectorToMatrix(data);
         // TODO
@@ -276,6 +321,13 @@ public class RBMTrainer {
         return visibleDataFinal;
     }
 
+    /**
+     * create temporary RBM and call getVisible on this RBM
+     * @param controller
+     * @param data
+     * @param binarizeVisible
+     * @return 
+     */
     public float[][] getVisibleSingleRBM(RBMSettingsController controller, float[][] data, boolean binarizeVisible) {
         IRBM rbm = this.createRBMForTemporaryUse(controller);
         return rbm.getVisible(data, binarizeVisible);
@@ -301,7 +353,15 @@ public class RBMTrainer {
         return visibleData;
     }
 
-    // DAYDREAM
+    /**
+     * daydream on complete RBM stack
+     * cycle through runHidden - runVisible for one epoch
+     * @param benchmarkModel
+     * @param data
+     * @param binarizeHidden
+     * @param binarizeVisible
+     * @return 
+     */
     public float[] daydreamAllRBMs(BenchmarkModel benchmarkModel, float[] data, boolean binarizeHidden, boolean binarizeVisible) {
         float[][] data2Dimensions = vectorToMatrix(data);
 
@@ -313,6 +373,15 @@ public class RBMTrainer {
         return visibleData;
     }
 
+    /**
+     * daydream on single RBM
+     * cycle through runHidden - runVisible for one epoch
+     * @param benchmarkModel
+     * @param data
+     * @param binarizeHidden
+     * @param binarizeVisible
+     * @return 
+     */
     public float[] daydreamSingleRBM(RBMSettingsController controller, float[] data, boolean binarizeHidden, boolean binarizeVisible) {
 
         float[] hiddenData = this.getHiddenSingleRBM(controller, data, binarizeHidden);

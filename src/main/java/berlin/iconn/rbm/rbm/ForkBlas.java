@@ -19,6 +19,12 @@ import java.util.concurrent.RecursiveAction;
 public class ForkBlas {
     private final static ForkJoinPool pool = new ForkJoinPool();
 
+    /**
+     * multiply two FloatMatrices multithreaded with ForkJoinPool
+     * @param self
+     * @param other
+     * @param result 
+     */
     public void pmmuli(FloatMatrix self, FloatMatrix other, FloatMatrix result) {
         pool.invoke(new MulitplyPartly(self, other, result, 0, self.getRows(), 0, other.getColumns()));
     }

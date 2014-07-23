@@ -10,7 +10,8 @@ import berlin.iconn.rbm.enhancement.RBMInfoPackage;
 
 /**
  *
- * @author Moritz
+ * this class defines when to stop RBM training
+ * can be stopped by number of epochs and/or by error
  */
 public class StoppingCondition {
     private final boolean errorDisabled;

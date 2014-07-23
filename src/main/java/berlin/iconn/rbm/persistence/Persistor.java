@@ -44,11 +44,21 @@ import org.w3c.dom.Text;
 
 /**
  *
- * @author christoph
+ * saves configuration which can be loaded by Creator class
+ *
  */
 public class Persistor {
     private final String baseFolder = "Persistor";
     
+    
+    /**
+     * save all model fields with Conserve annotation
+     * @param benchmarkController
+     * @throws IOException
+     * @throws ParserConfigurationException
+     * @throws TransformerConfigurationException
+     * @throws TransformerException 
+     */
     public void save(BenchmarkController benchmarkController) throws IOException, ParserConfigurationException, TransformerConfigurationException, TransformerException{     
         BenchmarkModel benchmarkModel = benchmarkController.getModel();
         benchmarkModel.globalUpdate();
