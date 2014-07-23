@@ -40,6 +40,14 @@ public class DaydreamModel {
         this.controller = controller;
     }
 
+    public void showTC() {
+        if (drawingSurface == null)
+            drawingSurface = new TabletCanvas();
+        else
+            drawingSurface.setVisible(true);
+    }
+
+
     public Image loadImage(int visWidth, int visHeight) {
 
         File file = Chooser.openFileChooser("images");
@@ -54,23 +62,83 @@ public class DaydreamModel {
 
         return image;
     }
-
-    public void showTC() {
-        if (drawingSurface == null)
-            drawingSurface = new TabletCanvas();
-        else
-            drawingSurface.setVisible(true);
-    }
-
+    
     public Image loadCanvasImage(int visWidth, int visHeight) {
 
-        this.calcImageData = DataConverter.processPixelData(drawingSurface.getCurrentImage(), this.benchmarkModel.getImageEdgeSize(), this.benchmarkModel.isBinarizeImages(), this.benchmarkModel.isInvertImages(), this.benchmarkModel.getMinData(), this.benchmarkModel.getMaxData(), this.benchmarkModel.isRgb());
+        this.calcImageData = DataConverter.processPixelData(cropImage(drawingSurface.getCurrentImage()), this.benchmarkModel.getImageEdgeSize(), this.benchmarkModel.isBinarizeImages(), this.benchmarkModel.isInvertImages(), this.benchmarkModel.getMinData(), this.benchmarkModel.getMaxData(), this.benchmarkModel.isRgb());
 
         ImageScaler imageScaler = new ImageScaler();
 
         WritableImage image = SwingFXUtils.toFXImage(imageScaler.getScaledImageNeirestNeighbour(DataConverter.pixelDataToImage(this.calcImageData, this.benchmarkModel.getMinData(), this.benchmarkModel.isRgb()), visWidth, visHeight), null);
 
         return image;
+    }
+    
+    public BufferedImage cropImage(BufferedImage drawing) {
+        BufferedImage clipped;
+
+        int left = Integer.MAX_VALUE;
+        int top = Integer.MAX_VALUE;
+        int bottom = 0;
+        int right = 0;
+
+        for (int y = 0; y < drawing.getHeight(); y++) {
+            for (int x = 0; x < drawing.getWidth(); x++) {
+                if (drawing.getRGB(x, y) != new Color(255, 255, 255).getRGB()) {
+
+                    if (x < left) {
+                        left = x;
+                    }
+                    if (y < top) {
+                        top = y;
+                    }
+
+                    if (x > right) {
+                        right = x;
+                    }
+                    if (y > bottom) {
+                        bottom = y;
+                    }
+
+                }
+            }
+        }
+        System.out.println("l: " + left + " ,r: " + right + " ,t: " + top + " ,b: " + bottom);
+
+        int maxSize = (int) (Math.max(right - left, bottom - top) * 1.4);
+        System.out.println("max " + maxSize);
+        
+        clipped = new BufferedImage(maxSize, maxSize, BufferedImage.TYPE_INT_ARGB);
+        mergeImages(clipped, drawing.getSubimage(left, top, right - left, bottom - top));
+        return clipped;
+        /*
+        // saveCurrentImage("bla1.jpeg", clipped);
+        int edgeLength = 28;
+        boolean binarize = true;
+        boolean invert = true;
+        float minData = 0.0f;
+        float maxData = 1.0f;
+        boolean isRgb = false;
+        return DataConverter.processPixelData(clipped, edgeLength, binarize, invert, minData, maxData, isRgb);*/
+    }
+    
+    private void mergeImages(BufferedImage img1, BufferedImage img2) {
+        // http://stackoverflow.com/questions/20826216/copy-two-buffered-image-into-one-image-side-by-side
+
+        //do some calculate first
+        int offsetw = (int) ((img1.getWidth() - img2.getWidth()) / 2.0f);
+        int offseth = (int) ((img1.getHeight() - img2.getHeight()) / 2.0f);
+
+        //create a new buffer and draw two image into the new image
+        Graphics2D g2 = img1.createGraphics();
+
+        //fill background
+        g2.setPaint(Color.WHITE);
+        g2.fillRect(0, 0, img1.getWidth(), img1.getHeight());
+
+        //draw image
+        g2.drawImage(img2, null, offsetw, offseth);
+        g2.dispose();
     }
 
     public Image generateImage(int visWidth, int visHeight) {

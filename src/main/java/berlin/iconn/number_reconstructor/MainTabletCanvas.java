@@ -27,10 +27,11 @@ public class MainTabletCanvas extends javax.swing.JFrame {
      *
      * @throws java.net.MalformedURLException
      */
+    public TabletCanvas tabletCanvas;
     public MainTabletCanvas() throws MalformedURLException {
         initComponents();
         // canvasContainer.setBorder(javax.swing.BorderFactory.createTitledBorder("blululul"));
-        TabletCanvas tabletCanvas = new TabletCanvas(canvas);
+        tabletCanvas = new TabletCanvas(canvas);
         addComponentListener(new ComponentListener() {  
             @Override
             public void componentResized(ComponentEvent ce) {

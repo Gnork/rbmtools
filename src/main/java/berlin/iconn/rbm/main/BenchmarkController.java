@@ -5,6 +5,7 @@
  */
 package berlin.iconn.rbm.main;
 
+import berlin.iconn.number_reconstructor.MainTabletCanvas;
 import berlin.iconn.rbm.tools.Chooser;
 import berlin.iconn.rbm.views.DaydreamController;
 import berlin.iconn.rbm.views.FaceRepairController;
@@ -17,6 +18,7 @@ import berlin.iconn.rbm.views.VanGoghController;
 import berlin.iconn.rbm.views.imageviewer.ImageViewerController;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
@@ -51,7 +53,9 @@ import javafx.stage.WindowEvent;
 public class BenchmarkController extends AController {
 
     private BenchmarkModel model;
-
+    
+    private MainTabletCanvas tabletCanvas;
+    
     @FXML
     private AnchorPane view;
 
@@ -86,6 +90,7 @@ public class BenchmarkController extends AController {
     private DaydreamController daydreamController;
     private Stage daydreamStage;
 
+    
     @FXML
     private ToggleButton btn_OpenRunHidden;
     private RunHiddenController runHiddenController;
@@ -149,6 +154,16 @@ public class BenchmarkController extends AController {
 
         loadImageSet(new File("images/Test_10x5/"));
         this.update();
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    tabletCanvas = new MainTabletCanvas();
+                } catch (MalformedURLException ex) {
+                    Logger.getLogger(MainTabletCanvas.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
     }
 
   // Loading
@@ -269,7 +284,8 @@ public class BenchmarkController extends AController {
             ex.printStackTrace();
         }
     }
-
+    
+    
     @FXML
     private void btn_OpenRunHiddenAction(ActionEvent event) {
         try {

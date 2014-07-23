@@ -107,27 +107,6 @@ public class RunHiddenController extends AController {
     public void update(){
         
     }
-    @FXML
-    private void btn_drawImageAction(ActionEvent event) {
-
-        if (!isDrawingUsable) {
-            System.out.println("Open TabletCanvas");
-            model.showTC();
-            isDrawingUsable = !isDrawingUsable;
-        } else {
-
-            Image image = this.model.loadCanvasImage((int) imgv_Result.getFitWidth(), (int) imgv_Result.getFitHeight());
-            if(image == null) {
-                return;
-            }
-            if (!image.isError()) {
-                this.imgv_Input.setImage(image);
-            } else {
-                System.out.println("error");
-            }
-            this.btn_runHidden.setDisable(false);
-        }
-    }
 	public void setBenchmarkModel(BenchmarkModel benchmarkModel) {
 		this.model.setBenchmarkModel(benchmarkModel);
 	}

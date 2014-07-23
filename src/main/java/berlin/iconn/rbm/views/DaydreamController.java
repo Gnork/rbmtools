@@ -103,7 +103,7 @@ public class DaydreamController extends AController {
             model.showTC();
             isDrawingUsable = !isDrawingUsable;
         } else {
-            Image image = this.model.loadCanvasImage(64, 64);
+            Image image = this.model.loadCanvasImage((int) imgv_Result.getFitWidth(), (int) imgv_Result.getFitHeight());
             if (image == null) {
                 return;
             }

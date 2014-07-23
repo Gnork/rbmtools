@@ -9,8 +9,11 @@ package berlin.iconn.number_reconstructor;
  * @author John M (http://sourceforge.net/users/nextdesign)
  *
  */
-
 import berlin.iconn.rbm.image.DataConverter;
+import berlin.iconn.rbm.image.ImageScaler;
+import berlin.iconn.rbm.main.BenchmarkModel;
+import berlin.iconn.rbm.rbm.RBMTrainer;
+import berlin.iconn.rbm.tools.ColorConverter;
 import jpen.PKind;
 import jpen.PLevel;
 import jpen.PLevelEvent;
@@ -26,6 +29,10 @@ import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.TimerTask;
+import javafx.application.Platform;
+import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.image.WritableImage;
 
 public class TabletCanvas extends PenAdapter {
 
@@ -33,6 +40,7 @@ public class TabletCanvas extends PenAdapter {
 
     public static void main(String[] args) {
         new TabletCanvas(new JPanel());
+
         /*
          frame.setSize(new Dimension(300, 330));
          frame.add(jp);
@@ -40,6 +48,9 @@ public class TabletCanvas extends PenAdapter {
          frame.setVisible(true);
          */
     }
+
+    private boolean useHiddenStates;
+    private boolean useVisibleStates;
 
     BufferedImage image;
     Graphics2D imageg;
@@ -56,8 +67,13 @@ public class TabletCanvas extends PenAdapter {
     float brushSize;
     float opacity;
     BasicStroke stroke;
+    private BenchmarkModel benchmarkModel;
 
+    float[] calcImageData;
+    
     public TabletCanvas(JPanel a) {
+        this.useHiddenStates = false;
+        this.useVisibleStates = false;
         panel = a;
 
         // Use the AwtPenToolkit to register a PenListener on the panel:
@@ -135,13 +151,22 @@ public class TabletCanvas extends PenAdapter {
         } else {
             float t = ev.pen.getLevelValue(PLevel.Type.PRESSURE);
             if (t == 0.0f) {
-                float[] preparedImage = getFloatImage();
-                
-                saveCurrentImage("D:\\bla3.jpeg", DataConverter.pixelDataToImage(preparedImage, 0.0f, false));
-                saveCurrentImage("D:\\bla2.jpeg", image);
+                onRelease();
             }
             System.out.println("ev: " + ev);
         }
+    }
+
+    public void onRelease() {
+        /* prepare image */
+        calcImageData = getFloatImage();
+        saveCurrentImage("bla3.jpeg", DataConverter.pixelDataToImage(calcImageData, 0.0f, false));
+        saveCurrentImage("bla2.jpeg", image);
+
+        /* send image to rbm  , run hidden, run visible    return image  */
+        runRBM();
+
+        // show result in the right panel
     }
 
     public float[] getFloatImage() {
@@ -155,7 +180,7 @@ public class TabletCanvas extends PenAdapter {
         for (int y = 0; y < image.getHeight(); y++) {
             for (int x = 0; x < image.getWidth(); x++) {
                 if (image.getRGB(x, y) != new Color(255, 255, 255).getRGB()) {
-                    
+
                     if (x < left) {
                         left = x;
                     }
@@ -174,9 +199,12 @@ public class TabletCanvas extends PenAdapter {
             }
         }
         System.out.println("l: " + left + " ,r: " + right + " ,t: " + top + " ,b: " + bottom);
-        clipped = image.getSubimage(left, top, right - left, bottom - top);
 
-        saveCurrentImage("D:\\bla1.jpeg", clipped);
+        int maxSize = (int) (Math.max(right - left, bottom - top) * 1.4);
+        System.out.println("max " + maxSize);
+        clipped = new BufferedImage(maxSize, maxSize, BufferedImage.TYPE_INT_ARGB);
+        mergeImages(clipped, image.getSubimage(left, top, right - left, bottom - top));
+        saveCurrentImage("bla1.jpeg", clipped);
         int edgeLength = 28;
         boolean binarize = true;
         boolean invert = true;
@@ -196,9 +224,10 @@ public class TabletCanvas extends PenAdapter {
         panel.repaint();
     }
 
-    public void saveCurrentImage(String path, BufferedImage i) {
+    public void saveCurrentImage(String name, BufferedImage i) {
         try {
-            ImageIO.write(i, "JPEG", new File(path));
+            String path = "E:\\";
+            ImageIO.write(i, "JPEG", new File(path + name));
         } catch (IOException e) {
         }
     }
@@ -211,4 +240,93 @@ public class TabletCanvas extends PenAdapter {
 
     }
 
+    public void setBenchmarkModel(BenchmarkModel b) {
+        benchmarkModel = b;
+    }
+
+    private void runRBM() {
+
+        if (benchmarkModel.getRbmSettingsList().isEmpty()) {
+            return;
+        }
+
+        int delay = 0; // delay for 3 sec. 
+        int period = 50;
+        java.util.Timer timer = new java.util.Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                Platform.runLater(() -> {
+                    System.out.println("Dream");
+                    daydream();
+                    System.out.println("daydream over");
+                    /*
+                    javafx.scene.image.Image visibleImage = model.getVisibleImage((int) imgv_Result.getFitWidth(), (int) imgv_Result.getFitHeight());
+                    imgv_Result.setImage(visibleImage);
+                    javafx.scene.image.Image hiddenImage = model.getHiddenImage(10);
+                    imgv_ResultHidden.setFitWidth(hiddenImage.getWidth());
+                    imgv_ResultHidden.setFitHeight(hiddenImage.getHeight());
+                    imgv_ResultHidden.setImage(hiddenImage);
+                    */
+                });
+
+            }
+        }, delay, period);
+    }
+
+    public void daydream() {
+        RBMTrainer trainer = new RBMTrainer();
+
+        // Create visible daydream data, which is used for the next calculation step
+        float[] visibleDataForCalc = trainer.daydreamAllRBMs(this.benchmarkModel, this.calcImageData, this.useHiddenStates, this.useVisibleStates);
+
+        // Create hidden and visible daydream data, which is used for visualization
+        float[] hiddenData = trainer.getHiddenAllRBMs1D(this.benchmarkModel, this.calcImageData, this.useHiddenStates);
+        float[] visibleDataForVis = trainer.getVisibleAllRBMs1D(this.benchmarkModel, hiddenData, this.useVisibleStates);
+
+        // Convert hiddenData to pixels
+        int hiddenImageEdgeLength = (int) Math.sqrt(hiddenData.length);
+        int[] hiddenImagePixels = new int[hiddenImageEdgeLength * (hiddenImageEdgeLength + 1)];
+
+        int counter = 0;
+        for (int y = 0; y < hiddenImageEdgeLength + 1; y++) {
+            for (int x = 0; x < hiddenImageEdgeLength; x++) {
+                int pos = y * hiddenImageEdgeLength + x;
+                if (counter < hiddenData.length) {
+                    int hiddenValue = (int) Math.round(hiddenData[pos] * 255);
+                    hiddenImagePixels[pos] = (0xFF << 24) | (hiddenValue << 16) | (hiddenValue << 8) | hiddenValue;
+                } else {
+                    hiddenImagePixels[pos] = (0xFF << 24) | (255 << 16) | (0 << 8) | 0;
+                }
+                counter++;
+            }
+        }
+
+        this.calcImageData = visibleDataForCalc;
+        BufferedImage visibleImage = DataConverter.pixelDataToImage(visibleDataForVis, 0.0f, this.benchmarkModel.isRgb());
+        
+        BufferedImage hiddenImage = new BufferedImage(hiddenImageEdgeLength, hiddenImageEdgeLength + 1, BufferedImage.TYPE_INT_RGB);
+        hiddenImage.setRGB(0, 0, hiddenImageEdgeLength, hiddenImageEdgeLength + 1, hiddenImagePixels, 0, hiddenImageEdgeLength);
+        
+        
+    }
+
+    private void mergeImages(BufferedImage img1, BufferedImage img2) {
+        // http://stackoverflow.com/questions/20826216/copy-two-buffered-image-into-one-image-side-by-side
+
+        //do some calculate first
+        int offsetw = (int) ((img1.getWidth() - img2.getWidth()) / 2.0f);
+        int offseth = (int) ((img1.getHeight() - img2.getHeight()) / 2.0f);
+
+        //create a new buffer and draw two image into the new image
+        Graphics2D g2 = img1.createGraphics();
+
+        //fill background
+        g2.setPaint(Color.WHITE);
+        g2.fillRect(0, 0, img1.getWidth(), img1.getHeight());
+
+        //draw image
+        g2.drawImage(img2, null, offsetw, offseth);
+        g2.dispose();
+    }
 }
