@@ -58,7 +58,7 @@ public class TabletCanvas extends PenAdapter {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 System.out.println("Do " + ae.getActionCommand());
-                saveCurrentImage("E:\\assinatura.jpg");
+                //saveCurrentImage("E:\\assinatura.jpg");
                 clearImage();
             }
 
