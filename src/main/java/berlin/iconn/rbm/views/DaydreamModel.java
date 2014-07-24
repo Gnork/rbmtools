@@ -85,7 +85,6 @@ public class DaydreamModel {
         for (int y = 0; y < drawing.getHeight(); y++) {
             for (int x = 0; x < drawing.getWidth(); x++) {
                 if (drawing.getRGB(x, y) != new Color(255, 255, 255).getRGB()) {
-
                     if (x < left) {
                         left = x;
                     }
@@ -99,44 +98,28 @@ public class DaydreamModel {
                     if (y > bottom) {
                         bottom = y;
                     }
-
                 }
             }
         }
-        System.out.println("l: " + left + " ,r: " + right + " ,t: " + top + " ,b: " + bottom);
 
         int maxSize = (int) (Math.max(right - left, bottom - top) * 1.4);
-        System.out.println("max " + maxSize);
         
         clipped = new BufferedImage(maxSize, maxSize, BufferedImage.TYPE_INT_ARGB);
         mergeImages(clipped, drawing.getSubimage(left, top, right - left, bottom - top));
         return clipped;
-        /*
-        // saveCurrentImage("bla1.jpeg", clipped);
-        int edgeLength = 28;
-        boolean binarize = true;
-        boolean invert = true;
-        float minData = 0.0f;
-        float maxData = 1.0f;
-        boolean isRgb = false;
-        return DataConverter.processPixelData(clipped, edgeLength, binarize, invert, minData, maxData, isRgb);*/
     }
     
     private void mergeImages(BufferedImage img1, BufferedImage img2) {
-        // http://stackoverflow.com/questions/20826216/copy-two-buffered-image-into-one-image-side-by-side
-
-        //do some calculate first
+        // put the second image into the center of the first image
+        
         int offsetw = (int) ((img1.getWidth() - img2.getWidth()) / 2.0f);
         int offseth = (int) ((img1.getHeight() - img2.getHeight()) / 2.0f);
 
-        //create a new buffer and draw two image into the new image
         Graphics2D g2 = img1.createGraphics();
 
-        //fill background
         g2.setPaint(Color.WHITE);
         g2.fillRect(0, 0, img1.getWidth(), img1.getHeight());
 
-        //draw image
         g2.drawImage(img2, null, offsetw, offseth);
         g2.dispose();
     }

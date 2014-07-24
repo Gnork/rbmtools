@@ -4,16 +4,18 @@ package berlin.iconn.rbm.views;
  * Created by G on 12.07.14.
  */
 /**
-
- @author John M (http://sourceforge.net/users/nextdesign)
-
- <b>Changelog:</b>
- <ul>
- <li>2010/01/16 by Nicol�s Carranza: - changed to make it work with the mouse too - draw always when pressure &gt; 0</li>
- <li>2011/06/23 by Nicol�s Carranza: - changed to use the AwtPenToolkit - added note about technique to get better performance</li>
- </ul>
+ *
+ * @author John M (http://sourceforge.net/users/nextdesign)
+ *
+ * <b>Changelog:</b>
+ * <ul>
+ * <li>2010/01/16 by Nicol�s Carranza: - changed to make it work with the mouse
+ * too - draw always when pressure &gt; 0</li>
+ * <li>2011/06/23 by Nicol�s Carranza: - changed to use the AwtPenToolkit -
+ * added note about technique to get better performance</li>
+ * </ul>
  */
-
+import berlin.iconn.rbm.image.DataConverter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -33,6 +35,7 @@ import jpen.event.PenAdapter;
 import jpen.owner.multiAwt.AwtPenToolkit;
 
 public class TabletCanvas extends PenAdapter {
+
     private static final long serialVersionUID = 1L;
 
     BufferedImage image;
@@ -57,7 +60,7 @@ public class TabletCanvas extends PenAdapter {
         jbutton1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                System.out.println("Do " + ae.getActionCommand());
+                //System.out.println("Do " + ae.getActionCommand());
                 //saveCurrentImage("E:\\assinatura.jpg");
                 clearImage();
             }
@@ -69,10 +72,8 @@ public class TabletCanvas extends PenAdapter {
         frame.add(jp);
 
         //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
         jp.add(panel);
         jp.add(jbutton1);
-
 
         // Use the AwtPenToolkit to register a PenListener on the panel:
         AwtPenToolkit.addPenListener(panel, this);
@@ -98,61 +99,59 @@ public class TabletCanvas extends PenAdapter {
         imageg.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
     }
 
-
     @Override
     public void penLevelEvent(PLevelEvent ev) {
-        // if this event was not a movement, do nothing
-        if (!ev.isMovement())
-            return;
+        
+        if (ev.isMovement()) {
+            // set the brush's size, and opacity relative to the pressure
+            float pressure = ev.pen.getLevelValue(PLevel.Type.PRESSURE);
+            brushSize = pressure * 30;
 
-        // set the brush's size, and opacity relative to the pressure
-        float pressure = ev.pen.getLevelValue(PLevel.Type.PRESSURE);
-        brushSize = pressure * 30;
-        opacity = pressure * 255;
+            // get the current cursor location
+            loc.x = ev.pen.getLevelValue(PLevel.Type.X);
+            loc.y = ev.pen.getLevelValue(PLevel.Type.Y);
 
-
-        // get the current cursor location
-        loc.x = ev.pen.getLevelValue(PLevel.Type.X);
-        loc.y = ev.pen.getLevelValue(PLevel.Type.Y);
-
-        if (brushSize > 0) {
-            if (ev.pen.getKind() == PKind.valueOf(PKind.Type.ERASER))    // using the eraser, create a white line, effectively "erasing" the black line
-            {
-                // set the color to white, and create the stroke
-                imageg.setColor(Color.white);
-                stroke = new BasicStroke(brushSize * 2); // make it a bit more sensitive
-            } else// default, we want to draw a black line onto the screen.
-            {
+            if (brushSize > 0) {
+                if (ev.pen.getKind() == PKind.valueOf(PKind.Type.ERASER)) // using the eraser, create a white line, effectively "erasing" the black line
+                {
+                    // set the color to white, and create the stroke
+                    imageg.setColor(Color.white);
+                    stroke = new BasicStroke(brushSize * 2); // make it a bit more sensitive
+                } else// default, we want to draw a black line onto the screen.
+                {
                 // set the opacity, and create the stroke
-                //panelg.setColor(new Color((int)opacity, (int)opacity, 255, 255));
-                stroke = new BasicStroke(brushSize,
-                        BasicStroke.CAP_ROUND, // round line endings
-                        BasicStroke.JOIN_MITER
-                );
+                    //panelg.setColor(new Color((int)opacity, (int)opacity, 255, 255));
+                    stroke = new BasicStroke(brushSize,
+                            BasicStroke.CAP_ROUND, // round line endings
+                            BasicStroke.JOIN_MITER
+                    );
+                }
+
+                // draw a line between the current and previous locations
+                imageg.setStroke(stroke);
+                imageg.draw(new Line2D.Float(prevLoc, loc));
             }
 
-            // draw a line between the current and previous locations
-            imageg.setStroke(stroke);
-            imageg.draw(new Line2D.Float(prevLoc, loc));
+            // set the current position to the previous position
+            prevLoc.setLocation(loc);
+
+            // paint pane to draw brush info on
+            imageg.setColor(Color.black);
+
+            panelg.drawImage(image, null, 0, 0);
+
+        } else {
+            float t = ev.pen.getLevelValue(PLevel.Type.PRESSURE);
+            if (t == 0.0f) {
+                onRelease();
+            }
         }
-
-        // set the current position to the previous position
-        prevLoc.setLocation(loc);
-
-        // paint pane to draw brush info on
-
-        imageg.setColor(Color.black);
-
-        panelg.drawImage(image, null, 0, 0);
-
-        panelg.setColor(Color.white);
-        panelg.fillRect(0, 5, 155, 35);
-        panelg.setColor(Color.black);
-        panelg.drawString(("Brush size: " + brushSize), 5, 20);
-        panelg.drawString(("Opacity: " + opacity), 5, 35);
-
     }
 
+    public void onRelease() {
+        
+    }
+    
     private void clearImage() {
         imageg.setColor(Color.white);
         imageg.fillRect(0, 0, panel.getWidth(), panel.getHeight());
@@ -169,7 +168,6 @@ public class TabletCanvas extends PenAdapter {
         try {
             ImageIO.write(image, "JPEG", new File(path));
         } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 

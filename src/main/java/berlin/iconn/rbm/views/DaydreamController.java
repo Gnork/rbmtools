@@ -138,7 +138,7 @@ public class DaydreamController extends AController {
             public void run() {
 
                 Platform.runLater(() -> {
-                    System.out.println("Dream");
+                    // System.out.println("Dream");
                     model.daydream();
                     Image visibleImage = model.getVisibleImage((int) imgv_Result.getFitWidth(), (int) imgv_Result.getFitHeight());
                     imgv_Result.setImage(visibleImage);
