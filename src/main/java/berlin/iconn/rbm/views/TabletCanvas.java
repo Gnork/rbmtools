@@ -44,37 +44,25 @@ public class TabletCanvas extends PenAdapter {
     JPanel panel = new JPanel();
     Graphics2D panelg;
 
-    JFrame frame = new JFrame("Drawing Surface");
-    JPanel jp = new JPanel();
 
-    Point2D.Float prevLoc = new Point2D.Float();// previous location of cursor
-    Point2D.Float loc = new Point2D.Float();// current location of cursor
+    Point2D.Float prevLoc = new Point2D.Float();
+    Point2D.Float loc = new Point2D.Float();
 
-    /* brush dynamics */
     float brushSize;
-    float opacity;
+    
     BasicStroke stroke;
+    
     DaydreamController daydreamController;
 
-    public TabletCanvas(DaydreamController dm) {
-        daydreamController = dm;
-        JButton clearButton = new JButton("Clear");
-        clearButton.addActionListener((ActionEvent ae) -> {
-            clearImage();
-        });
-        JButton sendButton = new JButton("Send");
-        sendButton.addActionListener((ActionEvent ae) -> {
-            daydreamController.sendCanvasImage();
-        });
+    public TabletCanvas(JPanel p) {
+        panel = p;
+        
+        // onclear
+           // clearImage();
+        // on sendimage
+            //daydreamController.sendCanvasImage();
+            
         panel.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
-        frame.setSize(new Dimension(300, 330));
-        jp.setLayout(new BoxLayout(jp, BoxLayout.PAGE_AXIS));
-        frame.add(jp);
-
-        //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        jp.add(panel);
-        jp.add(clearButton);
-        jp.add(sendButton);
 
         // Use the AwtPenToolkit to register a PenListener on the panel:
         AwtPenToolkit.addPenListener(panel, this);
@@ -82,8 +70,6 @@ public class TabletCanvas extends PenAdapter {
         PenManager pm = AwtPenToolkit.getPenManager();
         pm.pen.levelEmulator.setPressureTriggerForLeftCursorButton(0.5f);
 
-        // show the window and setup the panelg
-        frame.setVisible(true);
         panelg = (Graphics2D) panel.getGraphics();
         // make the lines smooth
         panelg.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
@@ -150,10 +136,11 @@ public class TabletCanvas extends PenAdapter {
     }
 
     public void onRelease() {
+        //System.out.println("on relaese action");
         //daydreamModel.sendTabletImage();
     }
     
-    private void clearImage() {
+    public void clearImage() {
         imageg.setColor(Color.white);
         imageg.fillRect(0, 0, panel.getWidth(), panel.getHeight());
 
@@ -172,7 +159,4 @@ public class TabletCanvas extends PenAdapter {
         }
     }
 
-    public void setVisible(boolean tmp) {
-        frame.setVisible(tmp);
-    }
 }

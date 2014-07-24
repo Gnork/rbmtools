@@ -59,8 +59,6 @@ public class DaydreamController extends AController {
     @FXML
     private AnchorPane view;
 
-    TabletCanvasController tabletCanvasController;
-    private Stage tabletCanvasStage;
     DaydreamModel model;
 
     Timer timer;
@@ -98,9 +96,9 @@ public class DaydreamController extends AController {
 
     @FXML
     private void btn_drawImageAction(ActionEvent event) {
-        if (!isDrawingUsable) {
-            isDrawingUsable = !isDrawingUsable;
-            model.showTC(isDrawingUsable);
+        if (!model.isTCVisible()) {
+            model.showTC();
+            btn_drawImage.setText("Use Image");
         } else {
             sendCanvasImage();
         }

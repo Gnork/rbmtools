@@ -15,7 +15,7 @@
     <ToolBar layoutY="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
       <items>
         <Button fx:id="btn_loadImage" mnemonicParsing="false" onAction="#btn_loadImageAction" text="Load" />
-        <Button id="btn_Draw" fx:id="btn_drawImage" mnemonicParsing="false" onAction="#btn_drawImageAction" text="Draw" />
+        <Button id="btn_Draw" fx:id="btn_drawImage" mnemonicParsing="false" onAction="#btn_drawImageAction" prefWidth="93.0" text="Draw" />
         <Button fx:id="btn_generateImage" mnemonicParsing="false" onAction="#btn_generateImageAction" text="Generate" />
         <Button fx:id="btn_daydream" disable="true" mnemonicParsing="false" onAction="#btn_daydreamAction" text="Daydream" />
         <Button fx:id="btn_stopDaydream" disable="true" mnemonicParsing="false" onAction="#btn_stopDaydreamAction" text="Wake Up" />

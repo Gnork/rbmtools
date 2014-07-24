@@ -230,7 +230,7 @@ public class BenchmarkController extends AController {
         try {
             this.model.setMaxData(Float.parseFloat(this.txt_MaxData.getText()));
         } catch (NumberFormatException ex) {
-            ex.printStackTrace();
+        ex.printStackTrace();
             this.model.setMaxData(1.0f);
         }
     }

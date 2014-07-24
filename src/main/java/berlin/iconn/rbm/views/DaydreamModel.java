@@ -22,7 +22,7 @@ public class DaydreamModel {
 
     private final DaydreamController controller;
 
-    TabletCanvas drawingSurface;
+    TabletCanvasGUI drawingSurface;
     Random random = new Random();
 
     float[] calcImageData;
@@ -40,15 +40,24 @@ public class DaydreamModel {
         this.controller = controller;
     }
 
-    public void showTC(boolean b) {
-        if (drawingSurface == null){
-            drawingSurface = new TabletCanvas(this.controller);
-            return;
+    public boolean isTCVisible() {
+        if (drawingSurface == null) {
+            return false;
         }
-        
-        drawingSurface.setVisible(b);
+        return drawingSurface.isVisible();
     }
 
+    public void showTC() {
+        if (drawingSurface == null) {
+            java.awt.EventQueue.invokeLater(() -> {
+                drawingSurface = new TabletCanvasGUI();
+                drawingSurface.setController(this.controller);
+                drawingSurface.setVisible(true);
+            });
+        } else {
+            drawingSurface.setVisible(true);
+        }
+    }
 
     public Image loadImage(int visWidth, int visHeight) {
 
@@ -64,7 +73,7 @@ public class DaydreamModel {
 
         return image;
     }
-    
+
     public Image loadCanvasImage(int visWidth, int visHeight) {
 
         this.calcImageData = DataConverter.processPixelData(cropImage(drawingSurface.getCurrentImage()), this.benchmarkModel.getImageEdgeSize(), this.benchmarkModel.isBinarizeImages(), this.benchmarkModel.isInvertImages(), this.benchmarkModel.getMinData(), this.benchmarkModel.getMaxData(), this.benchmarkModel.isRgb());
@@ -75,7 +84,7 @@ public class DaydreamModel {
 
         return image;
     }
-    
+
     public BufferedImage cropImage(BufferedImage drawing) {
         BufferedImage clipped;
 
@@ -105,15 +114,15 @@ public class DaydreamModel {
         }
 
         int maxSize = (int) (Math.max(right - left, bottom - top) * 1.4);
-        
+
         clipped = new BufferedImage(maxSize, maxSize, BufferedImage.TYPE_INT_ARGB);
         mergeImages(clipped, drawing.getSubimage(left, top, right - left, bottom - top));
         return clipped;
     }
-    
+
     private void mergeImages(BufferedImage img1, BufferedImage img2) {
         // put the second image into the center of the first image
-        
+
         int offsetw = (int) ((img1.getWidth() - img2.getWidth()) / 2.0f);
         int offseth = (int) ((img1.getHeight() - img2.getHeight()) / 2.0f);
 
