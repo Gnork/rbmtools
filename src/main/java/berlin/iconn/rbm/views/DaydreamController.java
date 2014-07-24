@@ -66,6 +66,7 @@ public class DaydreamController extends AController {
     Timer timer;
 
     private boolean isDrawingUsable = false;
+
     ;
 
     /**
@@ -97,26 +98,28 @@ public class DaydreamController extends AController {
 
     @FXML
     private void btn_drawImageAction(ActionEvent event) {
-
         if (!isDrawingUsable) {
-            System.out.println("Open TabletCanvas");
-            model.showTC();
             isDrawingUsable = !isDrawingUsable;
+            model.showTC(isDrawingUsable);
         } else {
-            Image image = this.model.loadCanvasImage((int) imgv_Result.getFitWidth(), (int) imgv_Result.getFitHeight());
-            if (image == null) {
-                return;
-            }
-            if (!image.isError()) {
-                this.imgv_Input.setImage(image);
-            } else {
-                System.out.println("error");
-            }
-            this.btn_daydream.setDisable(false);
-            this.btn_Next.setDisable(false);
+            sendCanvasImage();
         }
     }
 
+    public void sendCanvasImage() {
+        System.out.println("send image");
+        Image image = this.model.loadCanvasImage((int) imgv_Result.getFitWidth(), (int) imgv_Result.getFitHeight());
+        if (image == null) {
+            return;
+        }
+        if (!image.isError()) {
+            this.imgv_Input.setImage(image);
+        } else {
+            System.out.println("error");
+        }
+        this.btn_daydream.setDisable(false);
+        this.btn_Next.setDisable(false);
+    }
 
     @FXML
     private void btn_generateImageAction(ActionEvent event) {

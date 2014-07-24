@@ -40,11 +40,13 @@ public class DaydreamModel {
         this.controller = controller;
     }
 
-    public void showTC() {
-        if (drawingSurface == null)
-            drawingSurface = new TabletCanvas();
-        else
-            drawingSurface.setVisible(true);
+    public void showTC(boolean b) {
+        if (drawingSurface == null){
+            drawingSurface = new TabletCanvas(this.controller);
+            return;
+        }
+        
+        drawingSurface.setVisible(b);
     }
 
 
@@ -234,6 +236,10 @@ public class DaydreamModel {
 
     public BenchmarkModel getBenchmarkModel() {
         return benchmarkModel;
+    }
+
+    void sendTabletImage() {
+        this.controller.sendCanvasImage();
     }
 
 }

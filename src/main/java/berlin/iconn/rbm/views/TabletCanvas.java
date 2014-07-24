@@ -54,17 +54,17 @@ public class TabletCanvas extends PenAdapter {
     float brushSize;
     float opacity;
     BasicStroke stroke;
+    DaydreamController daydreamController;
 
-    public TabletCanvas() {
-        JButton jbutton1 = new JButton("Clear");
-        jbutton1.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                //System.out.println("Do " + ae.getActionCommand());
-                //saveCurrentImage("E:\\assinatura.jpg");
-                clearImage();
-            }
-
+    public TabletCanvas(DaydreamController dm) {
+        daydreamController = dm;
+        JButton clearButton = new JButton("Clear");
+        clearButton.addActionListener((ActionEvent ae) -> {
+            clearImage();
+        });
+        JButton sendButton = new JButton("Send");
+        sendButton.addActionListener((ActionEvent ae) -> {
+            daydreamController.sendCanvasImage();
         });
         panel.setCursor(Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR));
         frame.setSize(new Dimension(300, 330));
@@ -73,7 +73,8 @@ public class TabletCanvas extends PenAdapter {
 
         //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jp.add(panel);
-        jp.add(jbutton1);
+        jp.add(clearButton);
+        jp.add(sendButton);
 
         // Use the AwtPenToolkit to register a PenListener on the panel:
         AwtPenToolkit.addPenListener(panel, this);
@@ -149,7 +150,7 @@ public class TabletCanvas extends PenAdapter {
     }
 
     public void onRelease() {
-        
+        //daydreamModel.sendTabletImage();
     }
     
     private void clearImage() {
@@ -174,5 +175,4 @@ public class TabletCanvas extends PenAdapter {
     public void setVisible(boolean tmp) {
         frame.setVisible(tmp);
     }
-
 }

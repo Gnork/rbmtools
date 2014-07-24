@@ -61,13 +61,6 @@ public class RunHiddenModel {
         return image;
     }
 
-    public void showTC() {
-        if (drawingSurface == null)
-            drawingSurface = new TabletCanvas();
-        else
-            drawingSurface.setVisible(true);
-    }
-
     public Image loadCanvasImage(int visWidth, int visHeight) {
 
         this.calcImageData = DataConverter.processPixelData(drawingSurface.getCurrentImage(), this.benchmarkModel.getImageEdgeSize(), this.benchmarkModel.isBinarizeImages(), this.benchmarkModel.isInvertImages(), this.benchmarkModel.getMinData(), this.benchmarkModel.getMaxData(), this.benchmarkModel.isRgb());

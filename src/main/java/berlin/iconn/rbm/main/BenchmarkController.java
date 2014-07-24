@@ -5,7 +5,6 @@
  */
 package berlin.iconn.rbm.main;
 
-import berlin.iconn.number_reconstructor.MainTabletCanvas;
 import berlin.iconn.rbm.tools.Chooser;
 import berlin.iconn.rbm.views.DaydreamController;
 import berlin.iconn.rbm.views.FeatureViewer;
@@ -52,9 +51,7 @@ import javafx.stage.WindowEvent;
 public class BenchmarkController extends AController {
 
     private BenchmarkModel model;
-    
-    private MainTabletCanvas tabletCanvas;
-    
+        
     @FXML
     private AnchorPane view;
 
@@ -153,16 +150,6 @@ public class BenchmarkController extends AController {
 
         loadImageSet(new File("images/Test_10x5/"));
         this.update();
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    tabletCanvas = new MainTabletCanvas();
-                } catch (MalformedURLException ex) {
-                    Logger.getLogger(MainTabletCanvas.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        });
     }
 
   // Loading
